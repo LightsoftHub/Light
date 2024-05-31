@@ -10,22 +10,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
           dotnet-version: '8.x'
+
     - name: Install dependencies
       run: |
+        dotnet restore framework/src/Specification/Specification.csproj
         dotnet restore framework/src/EntityFrameworkCore/EntityFrameworkCore.csproj
         
     - name: Build
       run: |
+        dotnet build src/Specification/Specification.csproj --configuration Release --no-restore
         dotnet build src/EntityFrameworkCore/EntityFrameworkCore.csproj --configuration Release --no-restore
 
     - name: Publish to Nuget.org
       run: |
         rm -rf nuget/
         
+        dotnet pack --no-build src/Specification/Specification.csproj --configuration Release --output nuget
         dotnet pack --no-build src/EntityFrameworkCore/EntityFrameworkCore.csproj --configuration Release --output nuget
         
         dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json
