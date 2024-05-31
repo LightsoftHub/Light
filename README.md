@@ -1,4 +1,4 @@
-<img align="left" width="116" height="116" src="https://github.com/mizuvu/Megazord/blob/main/.github/c-sharp-logo.png" />
+<img align="left" width="116" height="116" src="https://github.com/MSWCenter/Light/blob/dev/.github/c-sharp-logo.png" />
  
  # Light Framework Packages
 <br/>
