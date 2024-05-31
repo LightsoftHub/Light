@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>A simple package with a base Specification class.</Description>
 	<Summary>A simple package with a base Specification class.</Summary>
-	<Version>0.0.0.1</Version>
+	<Version>0.0.0.2</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
