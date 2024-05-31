@@ -15,12 +15,12 @@ jobs:
       with:
           dotnet-version: '8.x'
     - name: Install dependencies
-      run: dotnet restore src/Result/Result.csproj
+      run: dotnet restore framework/src/Result/Result.csproj
     - name: Build
-      run: dotnet build src/Result/Result.csproj --configuration Release --no-restore
+      run: dotnet build framework/src/Result/Result.csproj --configuration Release --no-restore
 
     - name: Publish to Nuget.org
       run: |
         rm -rf nuget/
-        dotnet pack --no-build src/Result/Result.csproj --configuration Release --output nuget
+        dotnet pack --no-build framework/src/Result/Result.csproj --configuration Release --output nuget
         dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json
