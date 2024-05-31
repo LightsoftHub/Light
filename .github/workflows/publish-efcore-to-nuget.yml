@@ -16,18 +16,16 @@ jobs:
           dotnet-version: '8.x'
     - name: Install dependencies
       run: |
-        dotnet restore src/EfCore/EfCore.csproj
-        dotnet restore src/EfCore.Extensions/EfCore.Extensions.csproj
+        dotnet restore framework/src/EntityFrameworkCore/EntityFrameworkCore.csproj
+        
     - name: Build
       run: |
-        dotnet build src/EfCore/EfCore.csproj --configuration Release --no-restore
-        dotnet build src/EfCore.Extensions/EfCore.Extensions.csproj --configuration Release --no-restore
+        dotnet build src/EntityFrameworkCore/EntityFrameworkCore.csproj --configuration Release --no-restore
 
     - name: Publish to Nuget.org
       run: |
         rm -rf nuget/
         
-        dotnet pack --no-build src/EfCore/EfCore.csproj --configuration Release --output nuget
-        dotnet pack --no-build src/EfCore.Extensions/EfCore.Extensions.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/EntityFrameworkCore/EntityFrameworkCore.csproj --configuration Release --output nuget
         
         dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json
