@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>netstandard2.0</TargetFramework>
+	<RootNamespace>Light</RootNamespace>
+	<AssemblyName>MSW.Light.Result</AssemblyName>
+	<Title>MSW.Light.Result</Title>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<Authors>minhvu</Authors>
+	<Description>Package contains common result models.</Description>
+	<Summary>Package contains common result models.</Summary>
+	<Version>0.0.0.1</Version>
+	<PackageTags>light;framework</PackageTags>
+	<PackageIcon>icon.png</PackageIcon>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Include="..\..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
