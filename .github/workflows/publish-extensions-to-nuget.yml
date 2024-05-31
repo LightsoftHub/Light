@@ -17,19 +17,16 @@ jobs:
           
     - name: Install dependencies
       run: |
-        dotnet restore src/Extensions/Extensions.csproj
-        dotnet restore src/Extensions.DependencyInjection/Extensions.DependencyInjection.csproj
+        dotnet restore framework/src/Extensions/Extensions.csproj
       
     - name: Build
       run: |
-        dotnet build src/Extensions/Extensions.csproj --configuration Release --no-restore
-        dotnet build src/Extensions.DependencyInjection/Extensions.DependencyInjection.csproj --configuration Release --no-restore
+        dotnet build framework/src/Extensions/Extensions.csproj --configuration Release --no-restore
 
     - name: Publish to Nuget.org
       run: |
         rm -rf nuget/
         
-        dotnet pack --no-build src/Extensions/Extensions.csproj --configuration Release --output nuget
-        dotnet pack --no-build src/Extensions.DependencyInjection/Extensions.DependencyInjection.csproj --configuration Release --output nuget
+        dotnet pack --no-build framework/src/Extensions/Extensions.csproj --configuration Release --output nuget
         
         dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json
