@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application.Contracts\Application.Contracts.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
 	<None Include="..\..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 

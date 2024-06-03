@@ -1,9 +1,8 @@
-﻿using Light.Files.Excel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.IO;
 
-namespace Light.Files
+namespace Light.Files.Excel
 {
     public interface IExcelService
     {

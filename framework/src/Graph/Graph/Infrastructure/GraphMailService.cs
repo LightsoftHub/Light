@@ -1,4 +1,4 @@
-﻿using Light.Mail;
+﻿using Light.Mail.Contracts;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Light.Graph
+namespace Light.Graph.Infrastructure
 {
     public class GraphMailService : IGraphMailService
     {

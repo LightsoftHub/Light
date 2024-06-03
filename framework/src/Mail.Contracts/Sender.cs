@@ -1,4 +1,4 @@
-﻿namespace Light.Mail
+﻿namespace Light.Mail.Contracts
 {
     public class Sender
     {

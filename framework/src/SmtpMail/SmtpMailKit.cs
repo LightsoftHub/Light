@@ -1,4 +1,4 @@
-﻿using Light.Mail;
+﻿using Light.Mail.Contracts;
 using MailKit.Net.Smtp;
 using MimeKit;
 using System.Threading;

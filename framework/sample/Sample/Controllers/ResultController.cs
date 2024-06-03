@@ -1,9 +1,9 @@
-﻿using Mapster;
+﻿using Light.AspNetCore.Hosting.Authorization;
+using Light.Extensions;
+using Light.Models;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using Light.Models;
-using Light.Extensions;
-using Light.AspNetCore.Hosting.Authorization;
 
 namespace Sample.Controllers
 {

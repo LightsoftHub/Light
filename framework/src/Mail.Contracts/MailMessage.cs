@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Light.Mail
+namespace Light.Mail.Contracts
 {
     public class MailMessage
     {

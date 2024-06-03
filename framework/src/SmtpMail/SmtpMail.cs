@@ -1,4 +1,4 @@
-﻿using Light.Mail;
+﻿using Light.Mail.Contracts;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -6,7 +6,7 @@ namespace Light.SmtpMail
 {
     public class SmtpMail
     {
-        public async Task SendAsync(Sender sender, Mail.MailMessage mail, SmtpSettings settings)
+        public async Task SendAsync(Sender sender, Mail.Contracts.MailMessage mail, SmtpSettings settings)
         {
             var message = new System.Net.Mail.MailMessage
             {

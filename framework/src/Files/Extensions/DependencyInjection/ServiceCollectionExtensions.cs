@@ -1,4 +1,5 @@
-﻿using Light.Files;
+﻿using Light.Files.Excel;
+using Light.Files.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Light.Extensions.DependencyInjection

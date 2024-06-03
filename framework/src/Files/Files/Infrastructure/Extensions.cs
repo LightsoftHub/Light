@@ -1,7 +1,7 @@
 ﻿using ClosedXML.Excel;
 using System.IO;
 
-namespace Light.Files
+namespace Light.Files.Infrastructure
 {
     internal static class Extensions
     {

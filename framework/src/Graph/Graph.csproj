@@ -28,11 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application.Contracts\Application.Contracts.csproj" />
+	<None Include="..\..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-	<None Include="..\..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
+    <ProjectReference Include="..\Mail.Contracts\Mail.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
