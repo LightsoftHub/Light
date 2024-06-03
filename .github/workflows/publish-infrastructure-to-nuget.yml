@@ -1,0 +1,45 @@
+name: Publish Infrastructure to Nuget.org
+
+on:
+  workflow_dispatch
+  
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+          dotnet-version: '8.x'
+          
+    - name: Install dependencies
+      run: |
+        dotnet restore framework/src/Files/Files.csproj
+        dotnet restore framework/src/Serilog/Serilog.csproj
+        dotnet restore framework/src/Mail.Contracts/Mail.Contracts.csproj
+        dotnet restore framework/src/SmtpMail/SmtpMail.csproj
+        dotnet restore framework/src/Graph/Graph.csproj
+        
+    - name: Build
+      run: |
+        dotnet build framework/src/Files/Files.csproj --configuration Release --no-restore
+        dotnet build framework/src/Serilog/Serilog.csproj --configuration Release --no-restore
+        dotnet build framework/src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --no-restore
+        dotnet build framework/src/SmtpMail/SmtpMail.csproj --configuration Release --no-restore
+        dotnet build framework/src/Graph/Graph.csproj --configuration Release --no-restore
+        
+    - name: Publish to Nuget.org
+      run: |
+        rm -rf nuget/
+
+        dotnet pack --no-build framework/src/Files/Files.csproj --configuration Release --output nuget
+        dotnet pack --no-build framework/src/Serilog/Serilog.csproj --configuration Release --output nuget
+        dotnet pack --no-build framework/src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --output nuget
+        dotnet pack --no-build framework/src/SmtpMail/SmtpMail.csproj --configuration Release --output nuget
+        dotnet pack --no-build framework/src/Graph/Graph.csproj --configuration Release --output nuget
+        
+        dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json

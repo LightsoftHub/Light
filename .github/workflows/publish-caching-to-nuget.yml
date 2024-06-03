@@ -1,4 +1,4 @@
-name: Publish Caching extension to Nuget.org
+name: Publish Caching to Nuget.org
 
 on:
   workflow_dispatch
@@ -10,6 +10,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
