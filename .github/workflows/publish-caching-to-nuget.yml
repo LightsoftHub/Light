@@ -17,19 +17,16 @@ jobs:
           
     - name: Install dependencies
       run: |
-        dotnet restore src/Extensions.Caching.Abstractions/Extensions.Caching.Abstractions.csproj
-        dotnet restore src/Extensions.Caching/Extensions.Caching.csproj
+        dotnet restore framework/src/Caching/Caching.csproj
         
     - name: Build
       run: |
-        dotnet build src/Extensions.Caching.Abstractions/Extensions.Caching.Abstractions.csproj --configuration Release --no-restore
-        dotnet build src/Extensions.Caching/Extensions.Caching.csproj --configuration Release --no-restore
+        dotnet build framework/src/Caching/Caching.csproj --configuration Release --no-restore
         
     - name: Publish to Nuget.org
       run: |
         rm -rf nuget/
         
-        dotnet pack --no-build src/Extensions.Caching.Abstractions/Extensions.Caching.Abstractions.csproj --configuration Release --output nuget
-        dotnet pack --no-build src/Extensions.Caching/Extensions.Caching.csproj --configuration Release --output nuget
+        dotnet pack --no-build framework/src/Caching/Caching.csproj --configuration Release --output nuget
         
         dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json
