@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Light.Domain.Interfaces;
+namespace Light.Contracts;
 
 /// <summary>
 /// Execute a query for read data from Database
