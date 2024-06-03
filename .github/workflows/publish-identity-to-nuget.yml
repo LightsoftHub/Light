@@ -1,4 +1,4 @@
-name: Publish Result to Nuget.org
+name: Publish Identity to Nuget.org
 
 on:
   workflow_dispatch
