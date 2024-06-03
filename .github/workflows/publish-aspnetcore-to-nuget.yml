@@ -18,12 +18,14 @@ jobs:
 
     - name: Install dependencies
       run: |
+        dotnet restore framework/src/Ddd.Core/Ddd.Core.csproj
         dotnet restore framework/src/AspNetCore/AspNetCore.csproj
         dotnet restore framework/src/AspNetCore.Builder/AspNetCore.Builder.csproj
         dotnet restore framework/src/AspNetCore.Hosting/AspNetCore.Hosting.csproj
 
     - name: Build
       run: |
+        dotnet build framework/src/Ddd.Core/Ddd.Core.csproj --configuration Release --no-restore
         dotnet build framework/src/AspNetCore/AspNetCore.csproj --configuration Release --no-restore
         dotnet build framework/src/AspNetCore.Builder/AspNetCore.Builder.csproj --configuration Release --no-restore
         dotnet build framework/src/AspNetCore.Hosting/AspNetCore.Hosting.csproj --configuration Release --no-restore
@@ -32,6 +34,7 @@ jobs:
       run: |
         rm -rf nuget/
 
+        dotnet pack --no-build framework/src/Ddd.Core/Ddd.Core.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/AspNetCore/AspNetCore.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/AspNetCore.Builder/AspNetCore.Builder.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/AspNetCore.Hosting/AspNetCore.Hosting.csproj --configuration Release --output nuget
