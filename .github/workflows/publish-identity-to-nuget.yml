@@ -1,0 +1,39 @@
+name: Publish Result to Nuget.org
+
+on:
+  workflow_dispatch
+  
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+          dotnet-version: '8.x'
+          
+    - name: Install dependencies
+      run: |
+        dotnet restore modules/identity/ActiveDirectory/ActiveDirectory.csproj
+        dotnet restore modules/identity/Identity/Identity.csproj
+        dotnet restore modules/identity/Result/Result.csproj
+
+    - name: Build
+      run: |
+        dotnet build modules/identity/ActiveDirectory/ActiveDirectory.csproj --configuration Release --no-restore
+        dotnet build modules/identity/Identity/Identity.csproj --configuration Release --no-restore
+        dotnet build modules/identity/Identity.EntityFrameworkCore/Identity.EntityFrameworkCore.csproj --configuration Release --no-restore
+
+    - name: Publish to Nuget.org
+      run: |
+        rm -rf nuget/
+
+        dotnet pack --no-build modules/identity/ActiveDirectory/ActiveDirectory.csproj --configuration Release --output nuget
+        dotnet pack --no-build modules/identity/Identity/Identity.csproj --configuration Release --output nuget
+        dotnet pack --no-build modules/identity/Identity.EntityFrameworkCore/Identity.EntityFrameworkCore.csproj --configuration Release --output nuget
+        
+        dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json
