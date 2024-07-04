@@ -1,4 +1,5 @@
 global using Light.Repositories;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Light.AspNetCore.Hosting;
 using Light.AspNetCore.Hosting.JwtAuth;
 using Light.AspNetCore.Hosting.Middlewares;
@@ -7,6 +8,8 @@ using Light.Caching.Infrastructure;
 using Light.Extensions.DependencyInjection;
 using Light.Serilog;
 using Light.SmtpMail;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sample.Data;
 using Sample.HealthChecks;
 using Sample.SoapCore;
@@ -58,6 +61,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddApiVersion(1);
 builder.Services.AddSwagger(builder.Configuration, true);
+builder.Services.TryAddEnumerable(
+    ServiceDescriptor.Transient<IApiDescriptionProvider, SubgroupDescriptionProvider>());
 
 builder.Services.AddGlobalExceptionHandler();
 
@@ -75,7 +80,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(builder.Configuration, true);
+    app.UseSwagger(builder.Configuration,true);
 }
 
 //app.UseMiddlewares(builder.Configuration);
