@@ -38,6 +38,8 @@ namespace Light.Models
 
         public bool Succeeded => Code == ResultCode.Ok;
 
+        public bool IsFailed => !Succeeded;
+
         public string Message { get; set; } = "";
 
         public IEnumerable<string> Errors { get; set; } = new List<string>();

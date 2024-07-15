@@ -64,6 +64,8 @@ namespace Light.Models
 
         public bool Succeeded => Code == ResultCode.Ok && Data != null;
 
+        public bool IsFailed => !Succeeded;
+
         public string Message { get; set; } = "";
 
         public IEnumerable<string> Errors { get; set; } = Array.Empty<string>();

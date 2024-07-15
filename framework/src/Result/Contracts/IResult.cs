@@ -8,6 +8,8 @@ namespace Light.Contracts
 
         bool Succeeded { get; }
 
+        bool IsFailed { get; }
+
         string Message { get; }
 
         IEnumerable<string> Errors { get; }
