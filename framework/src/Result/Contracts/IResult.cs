@@ -8,7 +8,7 @@ namespace Light.Contracts
 
         bool Succeeded { get; }
 
-        bool IsFailed { get; }
+        bool Failed { get; }
 
         string Message { get; }
 

@@ -39,7 +39,7 @@ namespace Light.Models
 
         public bool Succeeded => Code == ResultCode.Ok && Data != null;
 
-        public bool IsFailed => !Succeeded;
+        public bool Failed => !Succeeded;
 
         public string Message { get; set; } = "";
 
