@@ -1,5 +1,4 @@
 ﻿using Light.Contracts;
-using System;
 using System.Collections.Generic;
 
 namespace Light.Models
@@ -59,12 +58,15 @@ namespace Light.Models
         public static Result NotFound(params string[] errors) =>
             new Result(ResultCode.NotFound, errors);
 
-        public static Result NotFound<TObject>(object queryValue)
+        public static Result QueryNotFound(string objectName, object queryValue)
         {
-            var message = $"Query object {typeof(TObject).Name} by {queryValue} not found";
+            var message = $"Query object {objectName} by {queryValue} not found";
 
             return new Result(ResultCode.NotFound, new List<string> { message });
         }
+
+        public static Result NotFound<TObject>(object queryValue) =>
+            QueryNotFound(typeof(TObject).Name, queryValue);
 
         public static Result Conflict(params string[] errors) =>
             new Result(ResultCode.Conflict, errors);
