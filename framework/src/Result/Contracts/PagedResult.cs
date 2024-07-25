@@ -1,9 +1,8 @@
-﻿using Light.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Light.Models
+namespace Light.Contracts
 {
     public class PagedResult<T> : IResult<IEnumerable<T>>
     {
@@ -13,11 +12,11 @@ namespace Light.Models
         {
             if (data == null)
             {
-                Code = ResultCode.NotFound;
+                Code = ResultCode.Error.ToString();
             }
             else
             {
-                Code = ResultCode.Ok;
+                Code = ResultCode.Ok.ToString();
 
                 PagedInfo = pagedInfo;
 
@@ -29,11 +28,11 @@ namespace Light.Models
         {
             if (data == null)
             {
-                Code = ResultCode.NotFound;
+                Code = ResultCode.Error.ToString();
             }
             else
             {
-                Code = ResultCode.Ok;
+                Code = ResultCode.Ok.ToString();
 
                 PagedInfo = new PagedInfo(page, pageSize, count);
 
@@ -45,11 +44,11 @@ namespace Light.Models
         {
             if (data == null)
             {
-                Code = ResultCode.NotFound;
+                Code = ResultCode.Error.ToString();
             }
             else
             {
-                Code = ResultCode.Ok;
+                Code = ResultCode.Ok.ToString();
 
                 var page = 1;
                 var count = data.Count();
@@ -60,11 +59,9 @@ namespace Light.Models
             }
         }
 
-        public ResultCode Code { get; set; }
+        public string Code { get; set; }
 
-        public bool Succeeded => Code == ResultCode.Ok && Data != null;
-
-        public bool Failed => !Succeeded;
+        public bool Succeeded => Code == ResultCode.Ok.ToString() && Data != null;
 
         public string Message { get; set; } = "";
 

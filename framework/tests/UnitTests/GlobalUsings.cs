@@ -1,4 +1,4 @@
 global using FluentAssertions;
 global using Light.Contracts;
-global using Light.Models;
+global using Light.Extensions;
 global using Xunit;

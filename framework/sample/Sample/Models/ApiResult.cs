@@ -1,4 +1,4 @@
-﻿using Light.Models;
+﻿using Light.Contracts;
 
 namespace Sample.Models;
 

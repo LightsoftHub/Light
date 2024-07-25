@@ -1,5 +1,5 @@
-﻿using Light.Extensions;
-using Light.Models;
+﻿using Light.Contracts;
+using Light.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Controllers

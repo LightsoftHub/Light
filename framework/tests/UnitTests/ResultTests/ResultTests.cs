@@ -13,19 +13,19 @@ namespace UnitTests.ResultTests
         }
 
         [Fact]
-        public void Should_Return_Correct_Code()
+        public void Should_Map_Correct_ResultCode()
         {
             var success = Result.Success();
             var error = Result.Error();
-            var badRequest = Result.BadRequest();
             var unauthorized = Result.Unauthorized();
             var notFound = Result.NotFound();
+            var unknown = new Result { Code = "OtherCode" };
 
-            success.Code.Should().Be(ResultCode.Ok);
-            error.Code.Should().Be(ResultCode.Error);
-            badRequest.Code.Should().Be(ResultCode.BadRequest);
-            unauthorized.Code.Should().Be(ResultCode.Unauthorized);
-            notFound.Code.Should().Be(ResultCode.NotFound);
+            success.MapResultCode().Should().Be(ResultCode.Ok);
+            error.MapResultCode().Should().Be(ResultCode.Error);
+            unauthorized.MapResultCode().Should().Be(ResultCode.Unauthorized);
+            notFound.MapResultCode().Should().Be(ResultCode.NotFound);
+            unknown.MapResultCode().Should().Be(ResultCode.Unknown);
         }
 
         [Theory]
@@ -38,12 +38,18 @@ namespace UnitTests.ResultTests
         {
             var result = new Result
             {
-                Code = code,
+                Code = code.ToString(),
                 Message = message,
             };
 
-            result.Code.Should().Be(code);
-            result.Succeeded.Should().Be(code == ResultCode.Ok);
+            var mappedResultCode = result.MapResultCode();
+            var isSucceeded = mappedResultCode == ResultCode.Ok;
+
+            mappedResultCode.Should().Be(code);
+
+            result.Succeeded.Should().Be(isSucceeded);
+            result.IsFailed().Should().Be(!isSucceeded);
+
             result.Message.Should().Be(message);
         }
 

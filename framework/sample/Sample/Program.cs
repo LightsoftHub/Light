@@ -57,7 +57,9 @@ builder.Services.AddJwtAuth(issuer!, key!);
 
 //builder.Services.AddTelegram();
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddInvalidModelStateHandler();
 
 builder.Services.AddApiVersion(1);
 builder.Services.AddSwagger(builder.Configuration, true);
@@ -85,8 +87,9 @@ if (app.Environment.IsDevelopment())
 
 //app.UseMiddlewares(builder.Configuration);
 app.UseRequestLoggingMiddleware(builder.Configuration);
-app.UseExceptionHandlerMiddleware(); // must inject after Inbound Logging
-//app.UseExceptionHandlerMiddleware();
+//app.UseExceptionHandlerMiddleware(); // must inject after Inbound Logging
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

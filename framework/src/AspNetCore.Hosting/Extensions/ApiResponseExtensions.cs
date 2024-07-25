@@ -1,4 +1,5 @@
 ﻿using Light.Contracts;
+using Light.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Light.AspNetCore.Hosting.Extensions;
@@ -13,12 +14,11 @@ public static class ApiResponseExtensions
     /// </summary>
     /// <param name="result"></param>
     /// <returns></returns>
-    public static ObjectResult Ok(this IResult result)
+    public static IActionResult ToActionResult(this IResult result)
     {
-        return new ObjectResult(default)
+        return new ObjectResult(result)
         {
-            StatusCode = (int)result.Code,
-            Value = result
+            StatusCode = (int)result.MapHttpStatusCode()
         };
     }
 }

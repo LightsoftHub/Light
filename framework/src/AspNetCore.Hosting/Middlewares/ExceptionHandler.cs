@@ -1,11 +1,11 @@
 ﻿using Light.Application.Common.Exceptions;
-using Light.Contracts;
-using Light.Models;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
+using System.Net.Mime;
 using System.Text.Json;
+using Light.Contracts;
 
 namespace Light.AspNetCore.Hosting.Middlewares;
 
@@ -34,7 +34,7 @@ public class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExceptionHand
         }
 
         string? message;
-        var errors = new List<string>();
+        //var errors = new List<string>();
 
         switch (exception)
         {
@@ -51,7 +51,7 @@ public class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExceptionHand
             case Exception e:
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 message = $"Error with Trace ID: {traceId}";
-                errors.Add(e.Message);
+                //errors.Add(e.Message);
                 break;
 
             default:
@@ -62,19 +62,25 @@ public class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExceptionHand
 
         // Write exception log with Trace ID
         var exceptionSource = exception.TargetSite?.DeclaringType?.FullName;
-        var log = $"Source: {exceptionSource}\r\nTrace ID: {traceId}\r\nStatus Code: {response.StatusCode}\r\nError: {exception.Message}";
-        logger.LogError("{log}", log);
+
+        var errorModel = new
+        {
+            trace_id = traceId,
+            response_code = response.StatusCode,
+            source = exceptionSource,
+            //exception = errors
+        };
+
+        logger.LogError("{@log}", errorModel);
 
         // Write exception as Result
         if (!response.HasStarted)
         {
-            response.ContentType = "application/json";
-
             var result = new Result
             {
-                Code = (ResultCode)response.StatusCode,
+                Code = response.StatusCode.ToString(),
                 Message = message,
-                Errors = errors,
+                //Errors = errors,
             };
 
             var jsonOptions = new JsonSerializerOptions
@@ -82,6 +88,8 @@ public class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExceptionHand
                 DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
+
+            response.ContentType = MediaTypeNames.Application.Json;
 
             await response.WriteAsJsonAsync(result, jsonOptions, cancellationToken: cancellationToken);
         }

@@ -1,18 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace Light.Contracts
+﻿namespace Light.Contracts
 {
     public interface IResult
     {
-        ResultCode Code { get; }
+        string Code { get; }
 
         bool Succeeded { get; }
 
-        bool Failed { get; }
-
         string Message { get; }
-
-        IEnumerable<string> Errors { get; }
     }
 
     public interface IResult<out T> : IResult
