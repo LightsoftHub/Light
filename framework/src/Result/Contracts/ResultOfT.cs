@@ -8,17 +8,9 @@
 
         protected internal Result(T data, string message)
         {
-            if (data == null)
-            {
-                Code = ResultCode.Error.ToString();
-                Message = $"Null value object {typeof(T).Name}";
-            }
-            else
-            {
-                Code = ResultCode.Ok.ToString();
-                Message = message;
-                Data = data;
-            }
+            Code = ResultCode.Ok.ToString();
+            Message = message;
+            Data = data;
         }
 
         protected internal Result(ResultCode code, string message)
