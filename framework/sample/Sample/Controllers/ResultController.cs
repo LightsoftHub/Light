@@ -1,5 +1,4 @@
-﻿using Light.AspNetCore.Hosting.Authorization;
-using Light.AspNetCore.Hosting.Extensions;
+﻿using Light.AspNetCore.Hosting.Extensions;
 using Light.Contracts;
 using Light.Extensions;
 using Mapster;

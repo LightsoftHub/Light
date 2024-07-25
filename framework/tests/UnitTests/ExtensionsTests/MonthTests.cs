@@ -1,7 +1,4 @@
-﻿using Light.Extensions;
-using System.Collections;
-
-namespace UnitTests.ExtensionsTests
+﻿namespace UnitTests.ExtensionsTests
 {
     public class MonthTests
     {

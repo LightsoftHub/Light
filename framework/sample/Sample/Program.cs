@@ -1,5 +1,4 @@
 global using Light.Repositories;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Light.AspNetCore.Hosting;
 using Light.AspNetCore.Hosting.JwtAuth;
 using Light.AspNetCore.Hosting.Middlewares;
@@ -82,7 +81,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(builder.Configuration,true);
+    app.UseSwagger(builder.Configuration, true);
 }
 
 //app.UseMiddlewares(builder.Configuration);

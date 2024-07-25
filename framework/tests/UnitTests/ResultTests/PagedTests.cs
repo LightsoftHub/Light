@@ -1,5 +1,3 @@
-using Light.Extensions;
-
 namespace UnitTests.ResultTests
 {
     public class PagedTests

@@ -1,11 +1,11 @@
 ﻿using Light.Application.Common.Exceptions;
+using Light.Contracts;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Net.Mime;
 using System.Text.Json;
-using Light.Contracts;
 
 namespace Light.AspNetCore.Hosting.Middlewares;
 

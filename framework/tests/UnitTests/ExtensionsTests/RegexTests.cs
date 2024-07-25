@@ -1,6 +1,4 @@
-﻿using Light.Extensions;
-
-namespace UnitTests.ExtensionsTests
+﻿namespace UnitTests.ExtensionsTests
 {
     public class RegexTests
     {
