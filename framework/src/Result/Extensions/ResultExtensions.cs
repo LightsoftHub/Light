@@ -1,5 +1,5 @@
 ﻿using Light.Contracts;
-using Light.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,11 +7,22 @@ namespace Light.Extensions
 {
     public static class ResultExtensions
     {
+        public static ResultCode MapResultCode(this IResult result)
+        {
+            Enum.TryParse(result.Code, out ResultCode resultCode);
+            return resultCode;
+        }
+
+        public static bool IsFailed(this IResult result)
+        {
+            return !result.Succeeded;
+        }
+
         public static PagedResult<T> ToPagedResult<T>(this IEnumerable<T> list, int page = 1, int pageSize = 10)
         {
             if (list == null)
             {
-                return new PagedResult<T> { Code = ResultCode.Error };
+                return new PagedResult<T> { Code = ResultCode.Error.ToString() };
             }
 
             page = page < 1 ? 1 : page;

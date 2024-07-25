@@ -1,5 +1,3 @@
-using Light.Extensions;
-
 namespace UnitTests.ExtensionsTests
 {
     public class DataConverterTests

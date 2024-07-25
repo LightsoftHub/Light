@@ -1,6 +1,5 @@
 ﻿using Light.Contracts;
 using Light.EntityFrameworkCore.Extensions;
-using Light.Models;
 
 namespace Light.EntityFrameworkCore.Extensions;
 

@@ -1,5 +1,5 @@
-using Light.SmtpMail;
 using Light.Mail.Contracts;
+using Light.SmtpMail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 

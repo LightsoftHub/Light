@@ -1,6 +1,5 @@
 ﻿using Light.Application.Common.Exceptions;
 using Light.Contracts;
-using Light.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
@@ -78,9 +77,9 @@ public class ExceptionHandlerMiddleware(RequestDelegate next,
 
                 var result = new Result
                 {
-                    Code = (ResultCode)response.StatusCode,
+                    Code = response.StatusCode.ToString(),
                     Message = message,
-                    Errors = errors,
+                    //Errors = errors,
                 };
 
                 var jsonOptions = new JsonSerializerOptions

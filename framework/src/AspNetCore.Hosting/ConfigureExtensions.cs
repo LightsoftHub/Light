@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Light.AspNetCore.Hosting.Extensions;
-using Light.Models;
+using Light.Contracts;
+using Light.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -101,22 +102,33 @@ public static class ConfigureExtensions
     /// <summary>
     /// Custom Invalid Model State Response
     /// </summary>
-    public static IMvcBuilder ConfigureInvalidModelStateResponse(this IMvcBuilder builder)
+    public static IMvcBuilder AddInvalidModelStateHandler(this IMvcBuilder builder)
     {
         return builder.ConfigureApiBehaviorOptions(options =>
         {
             // custom Invalid model state response
             options.InvalidModelStateResponseFactory = context =>
             {
-                var errors = context.ModelState.Keys
-                    .SelectMany(key => context.ModelState[key]!.Errors.Select(x => $"{key}: {x.ErrorMessage}"))
-                    .ToArray();
+                var errors = context.ModelState
+                    .ToDictionary(k => k.Key, v => v.Value!.Errors.Select(s => s.ErrorMessage))
+                    .Select(s =>
+                    {
+                        // convert error from dictionary to model_prop: error1,error2,...
+                        var modelState = $"{s.Key}: {string.Join(",", s.Value)}";
 
-                var apiError = Result.BadRequest(errors);
+                        return modelState;
+                    });
+
+                var apiError = new Result
+                {
+                    Code = ResultCode.BadRequest.ToString(),
+                    // convert errors to Model_Erorr1|Model_Error2|....
+                    Message = string.Join("|", errors)
+                };
 
                 var result = new ObjectResult(apiError)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)apiError.MapHttpStatusCode()
                 };
                 result.ContentTypes.Add(MediaTypeNames.Application.Json);
 

@@ -1,6 +1,6 @@
-﻿using Light.AspNetCore.Hosting.Authorization;
+﻿using Light.AspNetCore.Hosting.Extensions;
+using Light.Contracts;
 using Light.Extensions;
-using Light.Models;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -22,25 +22,30 @@ namespace Sample.Controllers
             _list = list;
         }
 
-
         [HttpGet]
         public IActionResult Get()
         {
-            var auth = HttpContext.Request.ReadBasicAuthorization();
-            Console.WriteLine(auth);
-
-            return Ok(_list.ToPagedResult(6, 5));
+            //var res = Result.NotFound("Error message");
+            var res = new Result { Code = "ABC", Message = "" };
+            return res.ToActionResult();
         }
 
-        [HttpGet("mapper-list")]
-        public IActionResult GetPaged(int page, int size)
+
+        [HttpGet("paged")]
+        public IActionResult GetPaged()
+        {
+            return _list.ToPagedResult(6, 5).ToActionResult();
+        }
+
+        [HttpGet("mapper-paged")]
+        public IActionResult GetMapperPaged(int page, int size)
         {
             var paged = _list.ToPagedResult(page, size);
             var result = paged.Adapt<PagedResult<int>>();
-            return Ok(result);
+            return result.ToActionResult();
         }
 
-        [HttpGet("deserialize-list")]
+        [HttpGet("deserialize-paged")]
         public IActionResult DeserializePaged(int page, int size)
         {
             var list = _list.ToPagedResult(page, size);
@@ -48,14 +53,14 @@ namespace Sample.Controllers
 
             var result = JsonSerializer.Deserialize<PagedResult<int>>(json);
 
-            return Ok(result);
+            return result!.ToActionResult();
         }
 
         [HttpGet("error")]
         public IActionResult Error()
         {
-            var error = Result.Error("Error1", "Error2", "Error3", "Error4");
-            var errorT = Result<string>.Error("Error1", "Error2", "Error3", "Error4");
+            var error = Result.Error("Error1");
+            var errorT = Result<string>.Error("Error1");
 
             return Ok(new { error, errorT });
         }

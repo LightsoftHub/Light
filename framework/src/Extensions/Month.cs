@@ -9,7 +9,7 @@ namespace Light.Extensions
             // first day of month
             FirstDay = new DateTime(date.Year, date.Month, 01);
         }
-        
+
         public DateTime FirstDay { get; }
 
         // first next month day -1 minute = last day of month at 23:59:59

@@ -1,5 +1,4 @@
 global using Light.Repositories;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Light.AspNetCore.Hosting;
 using Light.AspNetCore.Hosting.JwtAuth;
 using Light.AspNetCore.Hosting.Middlewares;
@@ -57,7 +56,9 @@ builder.Services.AddJwtAuth(issuer!, key!);
 
 //builder.Services.AddTelegram();
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddInvalidModelStateHandler();
 
 builder.Services.AddApiVersion(1);
 builder.Services.AddSwagger(builder.Configuration, true);
@@ -80,13 +81,14 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(builder.Configuration,true);
+    app.UseSwagger(builder.Configuration, true);
 }
 
 //app.UseMiddlewares(builder.Configuration);
 app.UseRequestLoggingMiddleware(builder.Configuration);
-app.UseExceptionHandlerMiddleware(); // must inject after Inbound Logging
-//app.UseExceptionHandlerMiddleware();
+//app.UseExceptionHandlerMiddleware(); // must inject after Inbound Logging
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

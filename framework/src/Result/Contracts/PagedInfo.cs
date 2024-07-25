@@ -1,7 +1,6 @@
-﻿using Light.Contracts;
-using System;
+﻿using System;
 
-namespace Light.Models
+namespace Light.Contracts
 {
     public class PagedInfo : IPagedInfo
     {
