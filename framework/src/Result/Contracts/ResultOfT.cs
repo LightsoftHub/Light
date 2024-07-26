@@ -10,12 +10,15 @@
         {
             if (data == null)
             {
-
+                Code = ResultCode.Unknown.ToString();
             }
-            
-            Code = ResultCode.Ok.ToString();
-            Message = message;
-            Data = data;
+            else
+            {
+                Code = ResultCode.Ok.ToString();
+                Succeeded = true;
+                Message = message;
+                Data = data;
+            }
         }
 
         protected internal Result(ResultCode code, string message)

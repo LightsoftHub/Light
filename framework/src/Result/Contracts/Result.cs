@@ -7,6 +7,7 @@
         protected internal Result(ResultCode code)
         {
             Code = code.ToString();
+            Succeeded = code == ResultCode.Ok;
         }
 
         protected internal Result(ResultCode code, string message) : this(code)
@@ -16,7 +17,7 @@
 
         public string Code { get; set; }
 
-        public bool Succeeded => Code == ResultCode.Ok.ToString();
+        public bool Succeeded { get; set; }
 
         public string Message { get; set; } = "";
 
