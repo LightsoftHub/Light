@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-    <PackageReference Include="MSW.Light.Result" Version="0.0.0.6" />
+    <PackageReference Include="MSW.Light.Result" Version="0.0.0.7" />
   </ItemGroup>
 
   <ItemGroup>
