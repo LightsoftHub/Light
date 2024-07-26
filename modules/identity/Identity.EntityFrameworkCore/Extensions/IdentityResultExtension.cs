@@ -5,7 +5,7 @@ public static class IdentityResultExtensions
     public static Result ToResult(this Microsoft.AspNetCore.Identity.IdentityResult result)
     {
         var error = string.Join("|", result.Errors.Select(e => e.Description));
-        
+
         return result.Succeeded
             ? Result.Success()
             : Result.Error(error);

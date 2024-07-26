@@ -1,8 +1,6 @@
 using Light.Identity.EntityFrameworkCore;
 using Light.Identity.EntityFrameworkCore.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 namespace WebApi.Data;

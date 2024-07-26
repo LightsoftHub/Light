@@ -1,5 +1,4 @@
-﻿using Light.Contracts;
-using Light.Identity;
+﻿using Light.Identity;
 
 namespace WebApi.Models;
 
