@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Light.EntityFrameworkCore.Extensions;
+using Light.Specification;
+using Microsoft.AspNetCore.Identity;
 
 namespace Light.Identity.EntityFrameworkCore.Services;
 
@@ -18,14 +20,26 @@ public class UserService(UserManager<User> userManager) : IUserService
 
     public virtual async Task<IResult<IEnumerable<UserDto>>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var users = await userManager.Users
+        return await userManager.Users
             .AsNoTracking()
             .OrderByDescending(x => x.CreatedOn)
             .ThenBy(x => x.UserName)
             .MapToDto()
-            .ToListAsync(cancellationToken);
+            .ToListResultAsync(cancellationToken);
+    }
 
-        return Result<IEnumerable<UserDto>>.Success(users);
+    public virtual Task<PagedResult<UserDto>> GetPagedAsync(ISearchUserRequest request, CancellationToken cancellationToken = default)
+    {
+        return userManager.Users
+            .WhereIf(!string.IsNullOrEmpty(request.Value), x =>
+                x.UserName!.Contains(request.Value!)
+                || x.PhoneNumber!.Contains(request.Value!)
+                || x.Email!.Contains(request.Value!))
+            .AsNoTracking()
+            .OrderByDescending(x => x.CreatedOn)
+            .ThenBy(x => x.UserName)
+            .MapToDto()
+            .ToPagedResultAsync(request.Page, request.PageSize, cancellationToken);
     }
 
     public virtual async Task<IResult<UserDto>> GetByIdAsync(string id)

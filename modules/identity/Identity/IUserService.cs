@@ -8,6 +8,11 @@ public interface IUserService
     Task<IResult<IEnumerable<UserDto>>> GetAllAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Search user with pagination
+    /// </summary>
+    Task<PagedResult<UserDto>> GetPagedAsync(ISearchUserRequest request, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Get user by Id
     /// </summary>
     Task<IResult<UserDto>> GetByIdAsync(string id);

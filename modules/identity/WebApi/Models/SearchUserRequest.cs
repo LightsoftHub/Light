@@ -1,8 +1,9 @@
 ﻿using Light.Contracts;
+using Light.Identity;
 
 namespace WebApi.Models;
 
-public class SearchUserRequest : IPage
+public class SearchUserRequest : ISearchUserRequest
 {
     public int Page { get; set; } = 1;
 

@@ -23,7 +23,7 @@ public class UsersController(
     [HttpGet("search")]
     public async Task<IActionResult> GetAsync([FromQuery] SearchUserRequest request)
     {
-        return Ok(await userService.GetAllAsync());
+        return Ok(await userService.GetPagedAsync(request));
     }
 
     [HttpPost]
