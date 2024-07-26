@@ -8,6 +8,11 @@
 
         protected internal Result(T data, string message)
         {
+            if (data == null)
+            {
+
+            }
+            
             Code = ResultCode.Ok.ToString();
             Message = message;
             Data = data;
@@ -19,9 +24,11 @@
             Message = message;
         }
 
+        public static implicit operator T(Result<T> result) => result.Data;
+
         public string Code { get; set; }
 
-        public bool Succeeded => Code == ResultCode.Ok.ToString() && Data != null;
+        public bool Succeeded { get; set; }
 
         public string Message { get; set; } = "";
 
@@ -29,6 +36,12 @@
 
         public static Result<T> Success(T data, string message = "") =>
             new Result<T>(data, message);
+
+        public static Result<T> Forbidden(string message = "") =>
+            new Result<T>(ResultCode.Forbidden, message);
+
+        public static Result<T> Unauthorized(string message = "") =>
+            new Result<T>(ResultCode.Unauthorized, message);
 
         public static Result<T> NotFound(string objectName, object queryValue)
         {

@@ -3,6 +3,7 @@ using Light.Identity.EntityFrameworkCore.Options;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebApi.Data;
+using WebApi.Models;
 
 namespace WebApi.Controllers;
 
@@ -15,6 +16,12 @@ public class UsersController(
 {
     [HttpGet]
     public async Task<IActionResult> GetAsync()
+    {
+        return Ok(await userService.GetAllAsync());
+    }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> GetAsync([FromQuery] SearchUserRequest request)
     {
         return Ok(await userService.GetAllAsync());
     }

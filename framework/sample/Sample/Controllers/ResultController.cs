@@ -30,11 +30,18 @@ namespace Sample.Controllers
             return res.ToActionResult();
         }
 
+        [HttpGet("find")]
+        public IActionResult FindValue()
+        {
+            var model = _list.Select(s => s.ToString()).FirstOrDefault(x => x == "A");
+            return Result<string>.Success(model).ToActionResult();
+        }
+
 
         [HttpGet("paged")]
-        public IActionResult GetPaged()
+        public IActionResult GetPaged(int page = 1, int pageSize = 10)
         {
-            return _list.ToPagedResult(6, 5).ToActionResult();
+            return _list.ToPagedResult(page, pageSize).ToActionResult();
         }
 
         [HttpGet("mapper-paged")]
@@ -63,12 +70,6 @@ namespace Sample.Controllers
             var errorT = Result<string>.Error("Error1");
 
             return Ok(new { error, errorT });
-        }
-
-        [HttpGet("success")]
-        public IActionResult GetSuccess()
-        {
-            return Ok(Result.Success());
         }
     }
 }

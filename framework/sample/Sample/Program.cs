@@ -1,5 +1,6 @@
 global using Light.Repositories;
 using Light.AspNetCore.Hosting;
+using Light.AspNetCore.Hosting.ExceptionHandler;
 using Light.AspNetCore.Hosting.JwtAuth;
 using Light.AspNetCore.Hosting.Middlewares;
 using Light.AspNetCore.Hosting.Swagger;
@@ -65,7 +66,7 @@ builder.Services.AddSwagger(builder.Configuration, true);
 builder.Services.TryAddEnumerable(
     ServiceDescriptor.Transient<IApiDescriptionProvider, SubgroupDescriptionProvider>());
 
-builder.Services.AddGlobalExceptionHandler();
+//builder.Services.AddGlobalExceptionHandler();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 builder.Services.AutoAddDependencies();
@@ -84,11 +85,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger(builder.Configuration, true);
 }
 
+app.UseMiddleware<TraceIdMiddleware>();
 //app.UseMiddlewares(builder.Configuration);
 app.UseRequestLoggingMiddleware(builder.Configuration);
-//app.UseExceptionHandlerMiddleware(); // must inject after Inbound Logging
+app.UseExceptionHandlerMiddleware(); // must inject after Inbound Logging
 
-app.UseExceptionHandler();
+//app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

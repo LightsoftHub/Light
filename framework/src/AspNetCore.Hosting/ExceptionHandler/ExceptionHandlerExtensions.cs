@@ -1,26 +1,25 @@
 ﻿using Light.Application.Common.Exceptions;
 using Light.Contracts;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Net.Mime;
 using System.Text.Json;
 
-namespace Light.AspNetCore.Hosting.Middlewares;
+namespace Light.AspNetCore.Hosting.ExceptionHandler;
 
-public class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExceptionHandler
+internal static class ExceptionHandlerExtensions
 {
-    public async ValueTask<bool> TryHandleAsync(
-        HttpContext httpContext,
+    public static async Task HandleExceptionAsync(
+        this HttpContext httpContext,
         Exception exception,
-        CancellationToken cancellationToken)
+        ILogger logger,
+        CancellationToken cancellationToken = default)
     {
-        // Not write exception from Hangfire
-        bool isHangfire = httpContext.Request.Path.ToString().Contains("hangfire");
-        var isHangfireLoginError = exception.Message.Contains("StatusCode cannot be set because the response has already started.");
-        if (isHangfire && isHangfireLoginError)
-            return true;
+        // exclude trace exception from Hangfire
+        var isHangfireException = IsHangfireException(httpContext, exception);
+        if (isHangfireException)
+            return;
 
         var traceId = httpContext.TraceIdentifier;
         var response = httpContext.Response;
@@ -34,29 +33,22 @@ public class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExceptionHand
         }
 
         string? message;
-        //var errors = new List<string>();
 
         switch (exception)
         {
             case ExceptionBase e:
                 response.StatusCode = (int)e.StatusCode;
-                message = $"{e.Message.Trim()} with Trace ID: {traceId}";
+                message = $"{e.Message.Trim()} with Trace ID {traceId}";
                 break;
 
             case KeyNotFoundException:
                 response.StatusCode = (int)HttpStatusCode.NotFound;
-                message = $"Not Found with Trace ID: {traceId}";
-                break;
-
-            case Exception e:
-                response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                message = $"Error with Trace ID: {traceId}";
-                //errors.Add(e.Message);
+                message = $"Not Found with Trace ID {traceId}";
                 break;
 
             default:
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                message = $"Internal Server Error with Trace ID: {traceId}";
+                message = $"Internal Server Error with Trace ID {traceId}";
                 break;
         }
 
@@ -68,7 +60,7 @@ public class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExceptionHand
             trace_id = traceId,
             response_code = response.StatusCode,
             source = exceptionSource,
-            //exception = errors
+            exception = exception.Message,
         };
 
         logger.LogError("{@log}", errorModel);
@@ -80,7 +72,6 @@ public class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExceptionHand
             {
                 Code = response.StatusCode.ToString(),
                 Message = message,
-                //Errors = errors,
             };
 
             var jsonOptions = new JsonSerializerOptions
@@ -97,7 +88,15 @@ public class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExceptionHand
         {
             logger.LogError("Can't write error response. Response has already started.");
         }
+    }
 
-        return true;
+    private static bool IsHangfireException(HttpContext httpContext, Exception exception)
+    {
+        // Not write exception from Hangfire
+        bool isHangfire = httpContext.Request.Path.ToString().Contains("hangfire");
+
+        var isHangfireLoginError = exception.Message.Contains("StatusCode cannot be set because the response has already started.");
+
+        return isHangfire && isHangfireLoginError;
     }
 }

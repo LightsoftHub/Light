@@ -1,5 +1,6 @@
 ﻿using Light.Contracts;
 using Light.Extensions;
+using Light.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Controllers
@@ -26,7 +27,10 @@ namespace Sample.Controllers
         {
             Result? result = default;
 
-            result.ThrowIfNull();
+            //result.ThrowIfNull();
+
+            if (result is null)
+                throw new NotFoundException("Result not found");
 
             return Ok();
         }

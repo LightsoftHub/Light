@@ -145,7 +145,7 @@ public class TokenService(
         if (user == null
             || user.Status.IsActive is false
             || user.IsDeleted)
-            return Result<TokenDto>.BadRequest("Invalid credentials.");
+            return Result<TokenDto>.Error("Invalid credentials.");
 
         var token = await IssueTokenForUserAsync(user);
 
@@ -177,16 +177,16 @@ public class TokenService(
         // get userID from UserPrincipal
         var userId = userPrincipal.FindFirstValue(_claimTypes.UserId);
         if (string.IsNullOrEmpty(userId))
-            return Result<TokenDto>.BadRequest("Invalid token.");
+            return Result<TokenDto>.Error("Invalid token.");
 
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null || user.Status.IsActive is false)
-            return Result<TokenDto>.BadRequest("Invalid token.");
+            return Result<TokenDto>.Error("Invalid token.");
 
         // check refresh token is exist or not out of lifetime
         var isTokenValid = await CheckRefreshTokenAsync(userId, refreshToken);
         if (isTokenValid is false)
-            return Result<TokenDto>.BadRequest("Invalid token.");
+            return Result<TokenDto>.Error("Invalid token.");
 
         var token = await IssueTokenForUserAsync(user);
 
