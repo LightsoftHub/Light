@@ -20,15 +20,13 @@ jobs:
       run: |
         dotnet restore framework/src/Ddd.Core/Ddd.Core.csproj
         dotnet restore framework/src/AspNetCore/AspNetCore.csproj
-        dotnet restore framework/src/AspNetCore.Builder/AspNetCore.Builder.csproj
-        dotnet restore framework/src/AspNetCore.Hosting/AspNetCore.Hosting.csproj
+        dotnet restore framework/src/AspNetCore.Extensions/AspNetCore.Extensions.csproj
 
     - name: Build
       run: |
         dotnet build framework/src/Ddd.Core/Ddd.Core.csproj --configuration Release --no-restore
         dotnet build framework/src/AspNetCore/AspNetCore.csproj --configuration Release --no-restore
-        dotnet build framework/src/AspNetCore.Builder/AspNetCore.Builder.csproj --configuration Release --no-restore
-        dotnet build framework/src/AspNetCore.Hosting/AspNetCore.Hosting.csproj --configuration Release --no-restore
+        dotnet build framework/src/AspNetCore.Extensions/AspNetCore.Extensions.csproj --configuration Release --no-restore
 
     - name: Publish to Nuget.org
       run: |
@@ -36,7 +34,6 @@ jobs:
 
         dotnet pack --no-build framework/src/Ddd.Core/Ddd.Core.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/AspNetCore/AspNetCore.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/AspNetCore.Builder/AspNetCore.Builder.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/AspNetCore.Hosting/AspNetCore.Hosting.csproj --configuration Release --output nuget
+        dotnet pack --no-build framework/src/AspNetCore.Extensions/AspNetCore.Extensions.csproj --configuration Release --output nuget
 
         dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json
