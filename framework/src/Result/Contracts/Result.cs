@@ -33,11 +33,8 @@
         public static Result NotFound(string message = "") =>
             new Result(ResultCode.NotFound, message);
 
-        public static Result NotFound(string objectName, object queryValue)
-        {
-            var message = $"Query object {objectName} by {queryValue} not found";
-            return new Result(ResultCode.NotFound, message);
-        }
+        public static Result NotFound(string objectName, object queryValue) =>
+            new Result(ResultCode.NotFound, $"Query object {objectName} by {queryValue} not found");
 
         public static Result NotFound<TObject>(object queryValue) =>
             NotFound(typeof(TObject).Name, queryValue);

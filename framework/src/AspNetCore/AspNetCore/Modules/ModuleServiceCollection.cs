@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Light.Extensions.DependencyInjection
+namespace Light.AspNetCore.Modules
 {
     public abstract class ModuleServiceCollection : IModuleServiceCollection
     {

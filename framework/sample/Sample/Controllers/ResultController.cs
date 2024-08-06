@@ -1,5 +1,4 @@
-﻿using Light.AspNetCore.Hosting.Extensions;
-using Light.Contracts;
+﻿using Light.Contracts;
 using Light.Extensions;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +26,13 @@ namespace Sample.Controllers
         {
             //var res = Result.NotFound("Error message");
             var res = new Result { Code = "ABC", Message = "" };
+            return res.ToActionResult();
+        }
+
+        [HttpGet("success")]
+        public IActionResult GetSuccess()
+        {
+            var res = Result.Success();
             return res.ToActionResult();
         }
 

@@ -1,5 +1,4 @@
-﻿using Light.AspNetCore.Builder;
-using Light.Extensions.DependencyInjection;
+﻿using Light.AspNetCore.Modules;
 
 namespace Sample.Modules;
 
@@ -35,11 +34,10 @@ public class ProductConfigServices :
 
         return services;
     }
-    /*
+
     public IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder,
         IConfiguration configuration) =>
         builder
             .UseMiddleware<ProductMiddleware>();
-    */
 }
 

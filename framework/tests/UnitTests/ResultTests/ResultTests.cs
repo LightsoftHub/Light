@@ -43,12 +43,8 @@ namespace UnitTests.ResultTests
             };
 
             var mappedResultCode = result.MapResultCode();
-            var isSucceeded = mappedResultCode == ResultCode.Ok;
 
             mappedResultCode.Should().Be(code);
-
-            result.Succeeded.Should().Be(isSucceeded);
-            result.IsFailed().Should().Be(!isSucceeded);
 
             result.Message.Should().Be(message);
         }

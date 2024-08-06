@@ -1,6 +1,6 @@
-﻿using Light.Contracts;
+﻿using Light.Application.Common.Exceptions;
+using Light.Contracts;
 using Light.Extensions;
-using Light.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Controllers

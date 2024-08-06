@@ -1,9 +1,8 @@
+global using Light.AspNetCore.Mvc;
 global using Light.Repositories;
-using Light.AspNetCore.Hosting;
-using Light.AspNetCore.Hosting.ExceptionHandler;
-using Light.AspNetCore.Hosting.JwtAuth;
-using Light.AspNetCore.Hosting.Middlewares;
-using Light.AspNetCore.Hosting.Swagger;
+using Light.AspNetCore.Builder;
+using Light.AspNetCore.Middlewares;
+using Light.AspNetCore.Swagger;
 using Light.Caching.Infrastructure;
 using Light.Extensions.DependencyInjection;
 using Light.Serilog;

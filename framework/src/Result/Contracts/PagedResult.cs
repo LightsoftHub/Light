@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Light.Contracts
@@ -11,6 +10,7 @@ namespace Light.Contracts
         public PagedResult(IEnumerable<T> data, PagedInfo pagedInfo)
         {
             Code = ResultCode.Ok.ToString();
+            Succeeded = true;
             PagedInfo = pagedInfo;
             Data = data;
         }
@@ -18,6 +18,7 @@ namespace Light.Contracts
         public PagedResult(IEnumerable<T> data, int page, int pageSize, int count)
         {
             Code = ResultCode.Ok.ToString();
+            Succeeded = true;
             PagedInfo = new PagedInfo(page, pageSize, count);
             Data = data;
         }
@@ -28,17 +29,16 @@ namespace Light.Contracts
             var count = data.Count();
 
             Code = ResultCode.Ok.ToString();
+            Succeeded = true;
             PagedInfo = new PagedInfo(page, count, count);
             Data = data;
         }
 
         public string Code { get; set; }
 
-        public bool Succeeded => Code == ResultCode.Ok.ToString() && Data != null;
+        public bool Succeeded { get; set; }
 
         public string Message { get; set; } = "";
-
-        public IEnumerable<string> Errors { get; set; } = Array.Empty<string>();
 
         public PagedInfo PagedInfo { get; set; }
 
