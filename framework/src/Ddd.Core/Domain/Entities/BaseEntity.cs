@@ -31,7 +31,7 @@ public abstract class BaseEntity : IEntity, IEvent
 
 /// <summary>
 ///     A base class for DDD Entities. Includes support for domain events dispatched post-persistence.
-///     support both GUID and int IDs, change to EntityBase&lt;TId&gt; and use TId as the type for Id.
+///     support both GUID and int IDs, change to EntityBase and use TId as the type for Id.
 /// </summary>
 public abstract class BaseEntity<TId> : BaseEntity, IEntity<TId>
 {

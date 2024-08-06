@@ -18,7 +18,7 @@ public abstract class AuditableEntity : BaseEntity, IAuditableEntity
 
 /// <summary>
 ///     A base class for DDD Auditable Entities. Includes support for domain events dispatched post-persistence.
-///     support both GUID and int IDs, change to EntityBase&lt;TId&gt; and use TId as the type for Id.
+///     support both GUID and int IDs, change to EntityBase and use TId as the type for Id.
 /// </summary>
 public abstract class AuditableEntity<TId> : AuditableEntity, IEntity<TId>
 {

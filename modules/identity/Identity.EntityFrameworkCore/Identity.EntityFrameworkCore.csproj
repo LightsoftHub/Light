@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<RootNamespace>Light.Identity.EntityFrameworkCore</RootNamespace>
-	<AssemblyName>MSW.Light.Identity.EntityFrameworkCore</AssemblyName>
-	<Title>MSW.Light.Identity.EntityFrameworkCore</Title>
+	<AssemblyName>Lightsoft.Identity.EntityFrameworkCore</AssemblyName>
+	<Title>Lightsoft.Identity.EntityFrameworkCore</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Identity module provider that uses Entity Framework Core.</Description>
@@ -24,9 +24,9 @@
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.*" />
 	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.*" />
 	<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.*" />
-	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-	<PackageReference Include="MSW.Light.Ddd.Core" Version="0.0.0.4" />
-	<PackageReference Include="MSW.Light.EntityFrameworkCore" Version="0.0.0.7" />
+	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
+	<PackageReference Include="Lightsoft.Ddd.Core" Version="0.0.0.1" />
+	<PackageReference Include="Lightsoft.EntityFrameworkCore" Version="0.0.0.1" />
   </ItemGroup>
 
   <ItemGroup>

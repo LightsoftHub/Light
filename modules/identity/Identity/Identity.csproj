@@ -5,13 +5,13 @@
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<RootNamespace>Light.Identity</RootNamespace>
-	<AssemblyName>MSW.Light.Identity</AssemblyName>
-	<Title>MSW.Light.Identity</Title>
+	<AssemblyName>Lightsoft.Identity</AssemblyName>
+	<Title>Lightsoft.Identity</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Identity module package.</Description>
 	<Summary>Identity module package.</Summary>
-	<Version>0.0.0.3</Version>
+	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -21,8 +21,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-    <PackageReference Include="MSW.Light.Result" Version="0.0.0.7" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
+    <PackageReference Include="Lightsoft.Result" Version="0.0.0.1" />
   </ItemGroup>
 
   <ItemGroup>

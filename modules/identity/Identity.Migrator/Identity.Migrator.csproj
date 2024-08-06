@@ -6,8 +6,8 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light.Identity.Migrator</RootNamespace>
-	<AssemblyName>MSW.Light.Identity.Migrator</AssemblyName>
-	<Title>MSW.Light.Identity.Migrator</Title>
+	<AssemblyName>Lightsoft.Identity.Migrator</AssemblyName>
+	<Title>Lightsoft.Identity.Migrator</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Seed Identity database.</Description>

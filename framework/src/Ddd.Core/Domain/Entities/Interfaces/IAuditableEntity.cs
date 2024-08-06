@@ -2,11 +2,11 @@
 
 public interface IAuditableEntity
 {
-    DateTimeOffset CreatedOn { get; }
+    DateTimeOffset CreatedOn { get; set; }
 
-    string? CreatedBy { get; }
+    string? CreatedBy { get; set; }
 
-    DateTimeOffset? LastModifiedOn { get; }
+    DateTimeOffset? LastModifiedOn { get; set; }
 
-    string? LastModifiedBy { get; }
+    string? LastModifiedBy { get; set; }
 }

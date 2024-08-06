@@ -2,9 +2,9 @@
 
 public interface ISoftDelete
 {
-    bool IsDeleted { get; }
+    bool IsDeleted { get; set; }
 
-    DateTimeOffset? DeletedOn { get; }
+    DateTimeOffset? DeletedOn { get; set; }
 
-    string? DeletedBy { get; }
+    string? DeletedBy { get; set; }
 }
