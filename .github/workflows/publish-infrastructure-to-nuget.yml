@@ -18,7 +18,7 @@ jobs:
           
     - name: Install dependencies
       run: |
-        dotnet restore framework/src/Files/Files.csproj
+        dotnet restore framework/src/FileGenerator/FileGenerator.csproj
         dotnet restore framework/src/Serilog/Serilog.csproj
         dotnet restore framework/src/Mail.Contracts/Mail.Contracts.csproj
         dotnet restore framework/src/SmtpMail/SmtpMail.csproj
@@ -26,7 +26,7 @@ jobs:
         
     - name: Build
       run: |
-        dotnet build framework/src/Files/Files.csproj --configuration Release --no-restore
+        dotnet build framework/src/FileGenerator/FileGenerator.csproj --configuration Release --no-restore
         dotnet build framework/src/Serilog/Serilog.csproj --configuration Release --no-restore
         dotnet build framework/src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --no-restore
         dotnet build framework/src/SmtpMail/SmtpMail.csproj --configuration Release --no-restore
@@ -36,7 +36,7 @@ jobs:
       run: |
         rm -rf nuget/
 
-        dotnet pack --no-build framework/src/Files/Files.csproj --configuration Release --output nuget
+        dotnet pack --no-build framework/src/FileGenerator/FileGenerator.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/Serilog/Serilog.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/SmtpMail/SmtpMail.csproj --configuration Release --output nuget
