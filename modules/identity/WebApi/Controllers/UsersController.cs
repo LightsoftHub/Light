@@ -1,6 +1,7 @@
 ﻿using Light.Identity;
 using Light.Identity.EntityFrameworkCore.Options;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using WebApi.Data;
 using WebApi.Models;
@@ -46,20 +47,23 @@ public class UsersController(
         return Ok(value);
     }
 
-    [HttpGet("attributes/{id}")]
-    public async Task<IActionResult> GetAttributes(string id)
+    [HttpGet("{userId}/get_attributes")]
+    public async Task<IActionResult> GetAttributes(string userId)
     {
-        var obj = await userAttributeService.GetUserAttributesAsync(id);
+        var obj = await userAttributeService.GetUserAttributesAsync(userId);
 
         return Ok(obj);
     }
 
-    [HttpGet("attributes")]
-    public async Task<IActionResult> GetAttributes(string userId, string key, string value)
+    [HttpPut("{userId}/update_attribute")]
+    public async Task<IActionResult> GetAttributes(string userId, Dictionary<string, string> values)
     {
-        var obj = await userAttributeService.AddAsync(userId, key, value);
+        foreach (var record in values)
+        {
+            await userAttributeService.AddAsync(userId, record.Key, record.Value);
+        }
 
-        return Ok(obj);
+        return Ok();
     }
 
     [HttpDelete("attributes")]
