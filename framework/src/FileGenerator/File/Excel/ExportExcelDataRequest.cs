@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Light.Files.Excel
+namespace Light.File.Excel
 {
     public class ExportExcelDataRequest
     {

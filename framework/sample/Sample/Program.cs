@@ -45,7 +45,7 @@ builder.Services.AddCache(opt =>
 
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SMTPMail"));
 
-builder.Services.AddFiles();
+builder.Services.AddFileGenerator();
 
 builder.Services.AddTestOptions(builder.Configuration);
 

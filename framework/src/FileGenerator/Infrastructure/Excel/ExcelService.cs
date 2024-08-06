@@ -1,12 +1,12 @@
 ﻿using ClosedXML.Excel;
-using Light.Files.Excel;
+using Light.File.Excel;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 
-namespace Light.Files.Infrastructure
+namespace Light.Infrastructure.Excel
 {
     public class ExcelService : IExcelService
     {

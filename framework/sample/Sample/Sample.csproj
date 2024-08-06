@@ -24,7 +24,7 @@
     <ProjectReference Include="..\..\src\Ddd.Core\Ddd.Core.csproj" />
     <ProjectReference Include="..\..\src\EntityFrameworkCore\EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\src\Extensions\Extensions.csproj" />
-    <ProjectReference Include="..\..\src\Files\Files.csproj" />
+    <ProjectReference Include="..\..\src\FileGenerator\FileGenerator.csproj" />
     <ProjectReference Include="..\..\src\Graph\Graph.csproj" />
     <ProjectReference Include="..\..\src\Result\Result.csproj" />
     <ProjectReference Include="..\..\src\Serilog\Serilog.csproj" />

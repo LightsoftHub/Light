@@ -1,12 +1,12 @@
-﻿using Light.Files.Excel;
-using Light.Files.Infrastructure;
+﻿using Light.File.Excel;
+using Light.Infrastructure.Excel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Light.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddFiles(this IServiceCollection services)
+        public static IServiceCollection AddFileGenerator(this IServiceCollection services)
         {
             services.AddTransient<IExcelService, ExcelService>();
 
