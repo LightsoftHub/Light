@@ -4,8 +4,8 @@
 	<TargetFramework>netstandard2.1</TargetFramework>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light.SmtpMail</RootNamespace>
-	<AssemblyName>MSW.Light.SmtpMail</AssemblyName>
-	<Title>MSW.Light.SmtpMail</Title>
+	<AssemblyName>Lightsoft.SmtpMail</AssemblyName>
+	<Title>Lightsoft.SmtpMail</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Mail package services using STMP, MailKit.</Description>

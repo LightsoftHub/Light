@@ -4,8 +4,8 @@
 	<TargetFramework>netstandard2.1</TargetFramework>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light</RootNamespace>
-	<AssemblyName>MSW.Light.Files</AssemblyName>
-	<Title>MSW.Light.Files</Title>
+	<AssemblyName>Lightsoft.Files</AssemblyName>
+	<Title>Lightsoft.Files</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Package for generate document files.</Description>

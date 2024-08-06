@@ -5,13 +5,13 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light</RootNamespace>
-	<AssemblyName>MSW.Light.Ddd.Core</AssemblyName>
-	<Title>MSW.Light.Ddd.Core</Title>
+	<AssemblyName>Lightsoft.Ddd.Core</AssemblyName>
+	<Title>Lightsoft.Ddd.Core</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Package containing useful base interfaces, classes, enums, value objects.</Description>
 	<Summary>Package containing useful base interfaces, classes, enums, value objects.</Summary>
-	<Version>0.0.0.4</Version>
+	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReleaseNotes></PackageReleaseNotes>

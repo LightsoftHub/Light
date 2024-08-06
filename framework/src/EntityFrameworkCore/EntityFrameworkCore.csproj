@@ -5,13 +5,13 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light</RootNamespace>
-	<AssemblyName>MSW.Light.EntityFrameworkCore</AssemblyName>
-	<Title>MSW.Light.EntityFrameworkCore</Title>
+	<AssemblyName>Lightsoft.EntityFrameworkCore</AssemblyName>
+	<Title>Lightsoft.EntityFrameworkCore</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>EF Core plugin package containing EF Core evaluator.</Description>
 	<Summary>EF Core plugin package containing EF Core evaluator.</Summary>
-	<Version>0.0.0.7</Version>
+	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>

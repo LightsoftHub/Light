@@ -4,13 +4,13 @@
 	<TargetFramework>netstandard2.1</TargetFramework>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light.Extensions</RootNamespace>
-	<AssemblyName>MSW.Light.Extensions</AssemblyName>
-	<Title>MSW.Light.Extensions</Title>
+	<AssemblyName>Lightsoft.Extensions</AssemblyName>
+	<Title>Lightsoft.Extensions</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>A simple package to process data faster.</Description>
 	<Summary>A simple package to process data faster.</Summary>
-	<Version>0.0.0.4</Version>
+	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReleaseNotes></PackageReleaseNotes>

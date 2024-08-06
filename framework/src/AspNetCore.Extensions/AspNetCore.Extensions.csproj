@@ -5,13 +5,13 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light</RootNamespace>
-	<AssemblyName>MSW.Light.AspNetCore.Extensions</AssemblyName>
-	<Title>MSW.Light.AspNetCore.Extensions</Title>
+	<AssemblyName>Lightsoft.AspNetCore.Extensions</AssemblyName>
+	<Title>Lightsoft.AspNetCore.Extensions</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Package containing useful AspNetCore extensions.</Description>
 	<Summary>Package containing useful AspNetCore extensions.</Summary>
-	<Version>0.0.0.3</Version>
+	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>

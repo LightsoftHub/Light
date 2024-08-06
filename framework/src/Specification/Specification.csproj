@@ -4,13 +4,13 @@
 	<TargetFramework>netstandard2.1</TargetFramework>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light</RootNamespace>
-	<AssemblyName>MSW.Light.Specification</AssemblyName>
-	<Title>MSW.Light.Specification</Title>
+	<AssemblyName>Lightsoft.Specification</AssemblyName>
+	<Title>Lightsoft.Specification</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>A simple package with a base Specification class.</Description>
 	<Summary>A simple package with a base Specification class.</Summary>
-	<Version>0.0.0.2</Version>
+	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>

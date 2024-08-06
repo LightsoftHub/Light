@@ -4,8 +4,8 @@
 	<TargetFramework>netstandard2.1</TargetFramework>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light</RootNamespace>
-	<AssemblyName>MSW.Light.Graph</AssemblyName>
-	<Title>MSW.Light.Graph</Title>
+	<AssemblyName>Lightsoft.Graph</AssemblyName>
+	<Title>Lightsoft.Graph</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Package using Microsoft Graph.</Description>

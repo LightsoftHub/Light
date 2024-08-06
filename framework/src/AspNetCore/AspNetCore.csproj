@@ -4,13 +4,13 @@
 	<TargetFramework>netstandard2.1</TargetFramework>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light</RootNamespace>
-	<AssemblyName>MSW.Light.AspNetCore</AssemblyName>
-	<Title>MSW.Light.AspNetCore</Title>
+	<AssemblyName>Lightsoft.AspNetCore</AssemblyName>
+	<Title>Lightsoft.AspNetCore</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>AspNetCore base package.</Description>
 	<Summary>AspNetCore base package.</Summary>
-	<Version>0.0.0.3</Version>
+	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReleaseNotes></PackageReleaseNotes>

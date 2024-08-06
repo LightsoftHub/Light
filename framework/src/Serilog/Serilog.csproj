@@ -5,13 +5,13 @@
 	<ImplicitUsings>false</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<RootNamespace>Light.Serilog</RootNamespace>
-	<AssemblyName>MSW.Light.Serilog</AssemblyName>
-	<Title>MSW.Light.Serilog</Title>
+	<AssemblyName>Lightsoft.Serilog</AssemblyName>
+	<Title>Lightsoft.Serilog</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Logging package using Serilog.</Description>
 	<Summary>Logging package using Serilog.</Summary>
-	<Version>0.0.0.3</Version>
+	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>

@@ -4,8 +4,8 @@
 	<TargetFramework>netstandard2.1</TargetFramework>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light.Mail.Contracts</RootNamespace>
-	<AssemblyName>MSW.Light.Mail.Contracts</AssemblyName>
-	<Title>MSW.Light.Mail.Contracts</Title>
+	<AssemblyName>Lightsoft.Mail.Contracts</AssemblyName>
+	<Title>Lightsoft.Mail.Contracts</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Package containing application common models, abstractions, etc.</Description>
