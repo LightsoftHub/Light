@@ -13,6 +13,7 @@ using Sample.Data;
 using Sample.HealthChecks;
 using Sample.SoapCore;
 using Sample.TestOption;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,7 @@ builder.Services.AddGraphMail(opt =>
 });
 */
 
-
+var executingAssembly = Assembly.GetExecutingAssembly();
 
 builder.Services.AddData(builder.Configuration);
 var settings = builder.Configuration.GetSection("Caching").Get<CacheOptions>();
