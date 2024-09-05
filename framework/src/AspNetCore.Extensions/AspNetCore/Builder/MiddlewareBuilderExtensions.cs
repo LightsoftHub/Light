@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Light.AspNetCore.Builder;
 
-public static class MiddlewareExtensions
+public static class MiddlewareBuilderExtensions
 {
     internal const string RequestLoggingSectionName = "RequestLogging";
 

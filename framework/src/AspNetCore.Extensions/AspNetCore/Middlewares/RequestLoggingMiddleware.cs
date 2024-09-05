@@ -14,7 +14,7 @@ public class RequestLoggingMiddleware(
     ILogger<RequestLoggingMiddleware> logger)
 {
     private readonly RequestLoggingOptions _settings = configuration
-        .GetSection(MiddlewareExtensions.RequestLoggingSectionName)
+        .GetSection(MiddlewareBuilderExtensions.RequestLoggingSectionName)
         .Get<RequestLoggingOptions>()
         ?? throw new ArgumentNullException(nameof(RequestLoggingOptions));
 
