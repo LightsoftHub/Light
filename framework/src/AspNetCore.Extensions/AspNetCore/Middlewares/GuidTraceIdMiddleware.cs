@@ -2,7 +2,7 @@
 
 namespace Light.AspNetCore.Middlewares;
 
-public class TraceIdMiddleware(RequestDelegate next)
+public class GuidTraceIdMiddleware(RequestDelegate next)
 {
     public async Task Invoke(HttpContext context)
     {

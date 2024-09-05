@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package contains EventBus implementation.</Description>
 	<Summary>Package contains EventBus implementation.</Summary>
-	<Version>0.0.0.2</Version>
+	<Version>0.0.0.3</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.4" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />
 	<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
   </ItemGroup>
 
