@@ -9,7 +9,7 @@ public static class MiddlewareApplicationBuilderExtensions
 {
     internal const string RequestLoggingSectionName = "RequestLogging";
 
-    public static IApplicationBuilder UseRequestLogging(this IApplicationBuilder app, IConfiguration configuration)
+    public static IApplicationBuilder UseLightRequestLogging(this IApplicationBuilder app, IConfiguration configuration)
     {
         var settings = configuration.GetSection(RequestLoggingSectionName).Get<RequestLoggingOptions>();
         if (settings is not null && settings.Enable)
@@ -28,7 +28,7 @@ public static class MiddlewareApplicationBuilderExtensions
     }
 
     //[Obsolete("please use AddGlobalExceptionHandler() instead")]
-    public static IApplicationBuilder UseExceptionHandler(this IApplicationBuilder app)
+    public static IApplicationBuilder UseLightExceptionHandler(this IApplicationBuilder app)
     {
         app.UseMiddleware<ExceptionHandlerMiddleware>();
 
