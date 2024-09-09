@@ -88,7 +88,7 @@ if (app.Environment.IsDevelopment())
 app.UseGuidTraceId();
 //app.UseMiddlewares(builder.Configuration);
 app.UseRequestLogging(builder.Configuration);
-app.UseExceptionHandlerMiddleware(); // must inject after Inbound Logging
+MiddlewareApplicationBuilderExtensions.UseExceptionHandler(app); // must inject after Inbound Logging
 
 //app.UseExceptionHandler();
 

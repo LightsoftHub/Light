@@ -1,10 +1,11 @@
-﻿using Light.AspNetCore.Middlewares;
+﻿using Light.AspNetCore.ExceptionHandlers;
+using Light.AspNetCore.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 
 namespace Light.AspNetCore.Builder;
 
-public static class MiddlewareBuilderExtensions
+public static class MiddlewareApplicationBuilderExtensions
 {
     internal const string RequestLoggingSectionName = "RequestLogging";
 
@@ -22,6 +23,14 @@ public static class MiddlewareBuilderExtensions
     public static IApplicationBuilder UseGuidTraceId(this IApplicationBuilder app)
     {
         app.UseMiddleware<GuidTraceIdMiddleware>();
+
+        return app;
+    }
+
+    //[Obsolete("please use AddGlobalExceptionHandler() instead")]
+    public static IApplicationBuilder UseExceptionHandler(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<ExceptionHandlerMiddleware>();
 
         return app;
     }
