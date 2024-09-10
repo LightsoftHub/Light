@@ -1,4 +1,4 @@
-﻿using Light.AspNetCore.Modules;
+﻿using Light.AspNetCore.Modularity;
 using Light.EventBus.Abstractions;
 using Light.EventBus.Events;
 using Light.Extensions.DependencyInjection;

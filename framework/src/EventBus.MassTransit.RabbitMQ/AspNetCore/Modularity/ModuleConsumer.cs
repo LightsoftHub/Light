@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 
-namespace Light.AspNetCore.Modules
+namespace Light.AspNetCore.Modularity
 {
     public interface IModuleConsumer
     {
