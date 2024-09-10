@@ -10,53 +10,42 @@ namespace Light.Extensions.DependencyInjection
 {
     public static class ModuleServiceCollectionExtensions
     {
-        /// <summary>
-        /// Scan & configure all module services
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <param name="assemblies"></param>
-        /// <returns></returns>
-        public static IServiceCollection AutoConfigureModuleServices(
-            this IServiceCollection services,
-            IConfiguration configuration,
-            IEnumerable<Assembly> assemblies)
+        private static IEnumerable<T> GetClassesInheritFrom<T>(Assembly[] assemblies)
         {
-            // get from all assembly if not define assemblies to scan
-            assemblies ??= AppDomain.CurrentDomain.GetAssemblies();
-
-            // get all classes inherit from interface
-            var moduleServices = assemblies
-                .SelectMany(s => s.GetTypes())
-                .Where(x =>
-                    typeof(IModuleServiceCollection).IsAssignableFrom(x)
-                    && x.IsClass && !x.IsAbstract && !x.IsGenericType)
-                .Select(s => Activator.CreateInstance(s) as IModuleServiceCollection);
-
-            foreach (var instance in moduleServices)
+            if (assemblies == null || assemblies.Length == 0)
             {
-                instance?.ConfigureServices(services, configuration);
+                // get from all assembly if not define assemblies to scan
+                assemblies ??= AppDomain.CurrentDomain.GetAssemblies();
             }
 
-            return services;
+            // get all classes inherit from type of T
+            return assemblies
+                .SelectMany(s => s.GetTypes())
+                .Where(x =>
+                    typeof(T).IsAssignableFrom(x)
+                    && x.IsClass && !x.IsAbstract && !x.IsGenericType)
+                .Select(s => (T)Activator.CreateInstance(s));
         }
 
         /// <summary>
-        /// Scan & configure all module services
+        /// Scan & add module services with IConfiguration
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         /// <param name="assemblies"></param>
         /// <returns></returns>
-        public static IServiceCollection AutoConfigureModuleServices(
-            this IServiceCollection services,
+        public static IServiceCollection ScanModuleServices(this IServiceCollection services,
             IConfiguration configuration,
             params Assembly[] assemblies)
         {
-            if (assemblies is null || assemblies.Length == 0)
-                assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            // get all classes inherit from interface
+            var moduleServices = GetClassesInheritFrom<IModule>(assemblies);
 
-            services.AutoConfigureModuleServices(configuration, assemblies.AsEnumerable());
+            foreach (var instance in moduleServices)
+            {
+                instance?.ConfigureServices(services);
+                instance?.ConfigureServices(services, configuration);
+            }
 
             return services;
         }

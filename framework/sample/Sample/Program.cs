@@ -1,7 +1,6 @@
 global using Light.AspNetCore.Mvc;
 global using Light.Repositories;
 using Light.AspNetCore.Builder;
-using Light.AspNetCore.Middlewares;
 using Light.AspNetCore.Swagger;
 using Light.Caching.Infrastructure;
 using Light.Extensions.DependencyInjection;
@@ -13,96 +12,113 @@ using Sample.Data;
 using Sample.HealthChecks;
 using Sample.SoapCore;
 using Sample.TestOption;
+using Serilog;
 using System.Reflection;
 
-var builder = WebApplication.CreateBuilder(args);
+SerilogExtensions.EnsureInitialized();
 
-builder.LoadJsonConfigurations(["configurations"]);
-//builder.AddConfigurations(["D:", "configurations"]);
-//builder.AddJsonFiles();
-builder.Host.ConfigureSerilog();
-
-// Add services to the container.
-
-/*
-builder.Services.AddGraphMail(opt =>
+try
 {
-    opt.ClientSecret = "";
-    opt.ClientId = "";
-    opt.TenantId = "";
-});
-*/
+    var builder = WebApplication.CreateBuilder(args);
 
-var executingAssembly = Assembly.GetExecutingAssembly();
+    builder.LoadJsonConfigurations(["configurations"]);
+    //builder.AddConfigurations(["D:", "configurations"]);
+    //builder.AddJsonFiles();
+    builder.Host.ConfigureSerilog();
 
-builder.Services.AddData(builder.Configuration);
-var settings = builder.Configuration.GetSection("Caching").Get<CacheOptions>();
-builder.Services.AddCache(opt =>
-{
-    opt.Provider = settings!.Provider;
-    opt.RedisHost = settings.RedisHost;
-    opt.RedisPassword = settings.RedisPassword;
-});
+    // Add services to the container.
 
-builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SMTPMail"));
+    /*
+    builder.Services.AddGraphMail(opt =>
+    {
+        opt.ClientSecret = "";
+        opt.ClientId = "";
+        opt.TenantId = "";
+    });
+    */
 
-builder.Services.AddFileGenerator();
+    var executingAssembly = Assembly.GetExecutingAssembly();
 
-builder.Services.AddTestOptions(builder.Configuration);
+    builder.Services.AddData(builder.Configuration);
+    var settings = builder.Configuration.GetSection("Caching").Get<CacheOptions>();
+    builder.Services.AddCache(opt =>
+    {
+        opt.Provider = settings!.Provider;
+        opt.RedisHost = settings.RedisHost;
+        opt.RedisPassword = settings.RedisPassword;
+    });
 
-// Overide by BindConfiguration
-var issuer = builder.Configuration.GetValue<string>("JWT:Issuer");
-var key = builder.Configuration.GetValue<string>("JWT:SecretKey");
-builder.Services.AddJwtAuth(issuer!, key!);
+    builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SMTPMail"));
 
-//builder.Services.AddTelegram();
+    builder.Services.AddFileGenerator();
 
-builder.Services
-    .AddControllers()
-    .AddInvalidModelStateHandler();
+    builder.Services.AddTestOptions(builder.Configuration);
 
-builder.Services.AddApiVersion(1);
-builder.Services.AddSwagger(builder.Configuration, true);
-builder.Services.TryAddEnumerable(
-    ServiceDescriptor.Transient<IApiDescriptionProvider, SubgroupDescriptionProvider>());
+    // Overide by BindConfiguration
+    var issuer = builder.Configuration.GetValue<string>("JWT:Issuer");
+    var key = builder.Configuration.GetValue<string>("JWT:SecretKey");
+    builder.Services.AddJwtAuth(issuer!, key!);
 
-//builder.Services.AddGlobalExceptionHandler();
+    //builder.Services.AddTelegram();
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
-builder.Services.AutoAddDependencies();
+    builder.Services
+        .AddControllers()
+        .AddInvalidModelStateHandler();
 
-builder.Services.AutoConfigureModuleServices(builder.Configuration);
+    builder.Services.AddApiVersion(1);
+    builder.Services.AddSwagger(builder.Configuration, true);
+    builder.Services.TryAddEnumerable(
+        ServiceDescriptor.Transient<IApiDescriptionProvider, SubgroupDescriptionProvider>());
 
-builder.Services.AddAppSoapCore();
+    //builder.Services.AddGlobalExceptionHandler();
 
-builder.Services.AddHealthChecksService();
+    builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+    builder.Services.AutoAddDependencies();
 
-var app = builder.Build();
+    builder.Services.ScanModuleServices(builder.Configuration, executingAssembly);
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger(builder.Configuration, true);
+    builder.Services.AddAppSoapCore();
+
+    builder.Services.AddHealthChecksService();
+
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger(builder.Configuration, true);
+    }
+
+    app.UseGuidTraceId();
+    //app.UseMiddlewares(builder.Configuration);
+    app.UseLightRequestLogging(builder.Configuration);
+    app.UseLightExceptionHandler(); // must inject after Inbound Logging
+
+    //app.UseExceptionHandler();
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.UseAppSoapCore();
+
+    app.ScanModulePipelines(builder.Configuration, executingAssembly);
+    app.ScanModuleJobs(builder.Configuration, executingAssembly);
+
+    app.MapControllers();
+
+    app.MapHealthChecksEndpoint();
+
+    app.Run();
 }
-
-app.UseGuidTraceId();
-//app.UseMiddlewares(builder.Configuration);
-app.UseRequestLogging(builder.Configuration);
-MiddlewareApplicationBuilderExtensions.UseExceptionHandler(app); // must inject after Inbound Logging
-
-//app.UseExceptionHandler();
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.UseAppSoapCore();
-
-app.AutoConfigureModulePipelines(builder.Configuration);
-
-app.MapControllers();
-
-app.MapHealthChecksEndpoint();
-
-app.Run();
+catch (Exception ex) when (!ex.GetType().Name.Equals("StopTheHostException", StringComparison.Ordinal))
+{
+    SerilogExtensions.EnsureInitialized();
+    Log.Fatal(ex, "Unhandled exception");
+}
+finally
+{
+    Log.Information("Shut down complete.");
+    Log.CloseAndFlush();
+}
