@@ -2,6 +2,7 @@
 using Light.AspNetCore.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Light.AspNetCore.Builder;
 
@@ -9,9 +10,12 @@ public static class MiddlewareApplicationBuilderExtensions
 {
     internal const string RequestLoggingSectionName = "RequestLogging";
 
-    public static IApplicationBuilder UseLightRequestLogging(this IApplicationBuilder app, IConfiguration configuration)
+    public static IApplicationBuilder UseLightRequestLogging(this IApplicationBuilder app)
     {
+        var configuration = app.ApplicationServices.GetRequiredService<IConfiguration>();
+
         var settings = configuration.GetSection(RequestLoggingSectionName).Get<RequestLoggingOptions>();
+
         if (settings is not null && settings.Enable)
         {
             app.UseMiddleware<RequestLoggingMiddleware>();

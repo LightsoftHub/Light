@@ -1,5 +1,4 @@
 ﻿using Asp.Versioning.ApiExplorer;
-using Light.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +21,7 @@ public static class Startup
         return settings;
     }
 
-    public static IServiceCollection AddSwagger(this IServiceCollection services, IConfiguration configuration, bool versionDefinition = false)
+    public static IServiceCollection AddSwagger(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<SwaggerSettings>(configuration.GetSection(_sectionName));
 
@@ -30,7 +29,7 @@ public static class Startup
 
         if (settings.Enable)
         {
-            if (versionDefinition)
+            if (settings.VersionDefinition)
             {
                 services.AddTransient<IConfigureOptions<SwaggerGenOptions>, CustomSwaggerOptions>();
             }
@@ -63,15 +62,15 @@ public static class Startup
         return services;
     }
 
-    public static IApplicationBuilder UseSwagger(this IApplicationBuilder app, IConfiguration configuration, bool versionDefinition = false)
+    public static IApplicationBuilder UseSwagger(this IApplicationBuilder app)
     {
-        var settings = GetSettings(configuration);
+        var settings = app.ApplicationServices.GetRequiredService<IOptions<SwaggerSettings>>().Value;
 
         if (settings.Enable)
         {
-            app.UseSwagger();
+            SwaggerBuilderExtensions.UseSwagger(app);
 
-            if (versionDefinition)
+            if (settings.VersionDefinition)
             {
                 var provider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
 

@@ -7,5 +7,7 @@
         public string? Title { get; set; }
 
         public string? AuthMode { get; set; }
+
+        public bool VersionDefinition { get; set; }
     }
 }

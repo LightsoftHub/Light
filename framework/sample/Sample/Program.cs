@@ -66,7 +66,7 @@ try
         .AddInvalidModelStateHandler();
 
     builder.Services.AddApiVersion(1);
-    builder.Services.AddSwagger(builder.Configuration, true);
+    builder.Services.AddSwagger(builder.Configuration);
     builder.Services.TryAddEnumerable(
         ServiceDescriptor.Transient<IApiDescriptionProvider, SubgroupDescriptionProvider>());
 
@@ -75,7 +75,7 @@ try
     builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
     builder.Services.AutoAddDependencies();
 
-    builder.Services.ScanModuleServices(builder.Configuration, executingAssembly);
+    builder.Services.AddModules(builder.Configuration, executingAssembly);
 
     builder.Services.AddAppSoapCore();
 
@@ -86,12 +86,12 @@ try
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
-        app.UseSwagger(builder.Configuration, true);
+        app.UseSwagger();
     }
 
     app.UseGuidTraceId();
     //app.UseMiddlewares(builder.Configuration);
-    app.UseLightRequestLogging(builder.Configuration);
+    app.UseLightRequestLogging();
     app.UseLightExceptionHandler(); // must inject after Inbound Logging
 
     //app.UseExceptionHandler();
@@ -103,8 +103,8 @@ try
 
     app.UseAppSoapCore();
 
-    app.ScanModulePipelines(builder.Configuration, executingAssembly);
-    app.ScanModuleJobs(builder.Configuration, executingAssembly);
+    app.UseModules(executingAssembly);
+    app.ScanModuleJobs(executingAssembly);
 
     app.MapControllers();
 

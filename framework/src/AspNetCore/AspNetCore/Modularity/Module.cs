@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Light.AspNetCore.Modules
+namespace Light.AspNetCore.Modularity
 {
-    public interface IModule
+    internal interface IModule
     {
         /// <summary>
         /// Add Module Service Collection

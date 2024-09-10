@@ -1,4 +1,4 @@
-﻿using Light.AspNetCore.Modules;
+﻿using Light.AspNetCore.Modularity;
 
 namespace Sample.Modules;
 
@@ -17,8 +17,7 @@ public class OrderServices : Module
 
 public class OrderPipelines : ModulePipeline
 {
-    public override IApplicationBuilder UseJobPipelines(IApplicationBuilder builder,
-        IConfiguration configuration)
+    public override IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder)
     {
         builder.UseMiddleware<OrderMiddleware>();
 
@@ -28,13 +27,13 @@ public class OrderPipelines : ModulePipeline
     }  
 }
 
-public class OrderModuleJob : ModuleJobPipeline
+public class OrderJobs : ModuleJob
 {
-    public override IApplicationBuilder UseJobPipelines(IApplicationBuilder builder, IConfiguration configuration)
+    public override IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder)
     {
         var scope = builder.ApplicationServices.CreateScope();
 
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<OrderModuleJob>>();
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<OrderJobs>>();
 
         logger.LogWarning("Order Jobs injected");
 
@@ -42,11 +41,9 @@ public class OrderModuleJob : ModuleJobPipeline
     }
 }
 
-public class ProductModule :
-    IModule,
-    IModulePipeline
+public class ProductServices : Module
 {
-    public IServiceCollection ConfigureServices(IServiceCollection services)
+    public override IServiceCollection ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton<ProductMiddleware>();
         services.AddTransient<ProductModuleService>();
@@ -55,34 +52,25 @@ public class ProductModule :
 
         return services;
     }
-
-    public IServiceCollection ConfigureServices(IServiceCollection services, IConfiguration configuration)
-    {
-        return services;
-    }
-
-    public IApplicationBuilder UseJobPipelines(IApplicationBuilder builder, IConfiguration configuration) =>
-        builder
-            .UseMiddleware<ProductMiddleware>();
-
-    public IApplicationBuilder UseJobPipelines(IApplicationBuilder builder) => builder;
 }
 
-public class ProductModuleJob : IModuleJobPipeline
+public class ProductPipelines : ModulePipeline
 {
-    public IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder)
+    public override IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder) =>
+        builder
+            .UseMiddleware<ProductMiddleware>();
+}
+
+public class ProductJobs : ModuleJob
+{
+    public override IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder)
     {
         var scope = builder.ApplicationServices.CreateScope();
 
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<ProductModuleJob>>();
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<ProductJobs>>();
 
-        logger.LogInformation("Product Jobs injected");
+        logger.LogInformation("Module Product Jobs injected");
 
-        return builder;
-    }
-
-    public IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder, IConfiguration configuration)
-    {
         return builder;
     }
 }
