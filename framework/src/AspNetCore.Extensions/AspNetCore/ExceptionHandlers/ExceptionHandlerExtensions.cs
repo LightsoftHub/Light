@@ -36,6 +36,27 @@ internal static class ExceptionHandlerExtensions
 
         switch (exception)
         {
+            case ValidationException e:
+                {
+                    response.StatusCode = (int)e.StatusCode;
+                    message = $"{e.Message.Trim()} with Trace ID {traceId}";
+
+                    var errors = e.ValidationErrors
+                        .Select(s =>
+                        {
+                            // convert error from dictionary to model_prop: error1,error2,...
+                            var modelState = $"{s.Key}: {string.Join(",", s.Value)}";
+
+                            return modelState;
+                        });
+
+                    if (errors.Any())
+                    {
+                        message = string.Join("|", errors);
+                    }
+
+                    break;
+                }
             case ExceptionBase e:
                 response.StatusCode = (int)e.StatusCode;
                 message = $"{e.Message.Trim()} with Trace ID {traceId}";
