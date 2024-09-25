@@ -16,7 +16,7 @@ namespace Light.Extensions.DependencyInjection
             IConfiguration configuration,
             bool includeJobs = false,
             params Assembly[] assemblies)
-            where T : AspNetCore.Modularity.Module
+            where T : LightModule
         {
             if (assemblies == null || assemblies.Length == 0)
             {
@@ -34,13 +34,13 @@ namespace Light.Extensions.DependencyInjection
 
             foreach (var instance in moduleServices)
             {
-                instance?.Add(services);
-                instance?.Add(services, configuration);
+                instance?.ConfigureServices(services);
+                instance?.ConfigureServices(services, configuration);
 
                 if (includeJobs)
                 {
-                    instance?.AddJob(services);
-                    instance?.AddJob(services, configuration);
+                    instance?.ConfigureJobs(services);
+                    instance?.ConfigureJobs(services, configuration);
                 }
             }
 
@@ -54,6 +54,6 @@ namespace Light.Extensions.DependencyInjection
             IConfiguration configuration,
             bool includeJobs = false,
             params Assembly[] assemblies) =>
-            services.AddModules<AspNetCore.Modularity.Module>(configuration, includeJobs, assemblies);
+            services.AddModules<LightModule>(configuration, includeJobs, assemblies);
     }
 }

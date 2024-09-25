@@ -1,77 +1,67 @@
 ﻿using Light.AspNetCore.Modularity;
+using Light.AspNetCore.Modularity.Pipelines;
 
 namespace Sample.Modules;
 
-public class OrderServices : Module
+public class OrderServices : LightModule
 {
-    public override IServiceCollection ConfigureServices(IServiceCollection services, IConfiguration configuration)
+    public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<OrderMiddleware>();
         services.AddSingleton<OrderModuleService>();
 
-        Serilog.Log.Warning("Module {name} injected", GetType().FullName);
-
-        return services;
+        //Serilog.Log.Warning("Module {name} injected", GetType().FullName);
     }
 }
 
 public class OrderPipelines : ModulePipeline
 {
-    public override IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder)
+    public override void Use(IApplicationBuilder builder)
     {
         builder.UseMiddleware<OrderMiddleware>();
 
-        Serilog.Log.Warning("Module {name} injected", GetType().FullName);
-
-        return builder;
+        //Serilog.Log.Warning("Module {name} injected", GetType().FullName);
     }  
 }
 
-public class OrderJobs : ModuleJob
+public class OrderJobs : ModulePipeline
 {
-    public override IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder)
+    public override void Use(IApplicationBuilder builder)
     {
-        var scope = builder.ApplicationServices.CreateScope();
+        //var scope = builder.ApplicationServices.CreateScope();
 
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<OrderJobs>>();
+        //var logger = scope.ServiceProvider.GetRequiredService<ILogger<OrderJobs>>();
 
-        logger.LogWarning("Order Jobs injected");
-
-        return builder;
+        //logger.LogWarning("Order Jobs injected");
     }
 }
 
-public class ProductServices : Module
+public class ProductServices : LightModule
 {
-    public override IServiceCollection ConfigureServices(IServiceCollection services)
+    public override void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton<ProductMiddleware>();
         services.AddTransient<ProductModuleService>();
 
-        Serilog.Log.Warning("Module Product service injected");
-
-        return services;
+        //Serilog.Log.Warning("Module Product service injected");
     }
 }
 
 public class ProductPipelines : ModulePipeline
 {
-    public override IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder) =>
+    public override void Use(IApplicationBuilder builder)
+    {
         builder
             .UseMiddleware<ProductMiddleware>();
-}
+    }
 
-public class ProductJobs : ModuleJob
-{
-    public override IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder)
+    public override void UseJob(IApplicationBuilder builder)
     {
-        var scope = builder.ApplicationServices.CreateScope();
+        //var scope = builder.ApplicationServices.CreateScope();
 
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<ProductJobs>>();
+        //var logger = scope.ServiceProvider.GetRequiredService<ILogger<ProductJobs>>();
 
-        logger.LogInformation("Module Product Jobs injected");
-
-        return builder;
+        //logger.LogInformation("Module Product Jobs injected");
     }
 }
 

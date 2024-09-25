@@ -75,7 +75,7 @@ try
     builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
     builder.Services.AutoAddDependencies();
 
-    builder.Services.AddModules(builder.Configuration, executingAssembly);
+    builder.Services.AddModules(builder.Configuration, true, executingAssembly);
 
     builder.Services.AddAppSoapCore();
 
@@ -103,8 +103,7 @@ try
 
     app.UseAppSoapCore();
 
-    app.UseModules(executingAssembly);
-    app.ScanModuleJobs(executingAssembly);
+    app.UseModules(true, executingAssembly);
 
     app.MapControllers();
 
