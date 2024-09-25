@@ -23,6 +23,7 @@ jobs:
         dotnet restore framework/src/Mail.Contracts/Mail.Contracts.csproj
         dotnet restore framework/src/SmtpMail/SmtpMail.csproj
         dotnet restore framework/src/Graph/Graph.csproj
+        dotnet restore framework/src/EventBus.MassTransit.RabbitMQ/EventBus.MassTransit.RabbitMQ.csproj
         
     - name: Build
       run: |
@@ -31,6 +32,7 @@ jobs:
         dotnet build framework/src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --no-restore
         dotnet build framework/src/SmtpMail/SmtpMail.csproj --configuration Release --no-restore
         dotnet build framework/src/Graph/Graph.csproj --configuration Release --no-restore
+        dotnet build framework/src/EventBus.MassTransit.RabbitMQ/EventBus.MassTransit.RabbitMQ.csproj --configuration Release --no-restore
         
     - name: Publish to Nuget.org
       run: |
@@ -41,5 +43,6 @@ jobs:
         dotnet pack --no-build framework/src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/SmtpMail/SmtpMail.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/Graph/Graph.csproj --configuration Release --output nuget
+        dotnet pack --no-build framework/src/EventBus.MassTransit.RabbitMQ/EventBus.MassTransit.RabbitMQ.csproj --configuration Release --output nuget
         
         dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json
