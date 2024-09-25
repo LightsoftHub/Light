@@ -12,13 +12,11 @@ namespace Light.Extensions.DependencyInjection
         /// <summary>
         /// Scan & add module services with IConfiguration
         /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <param name="assemblies"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddModules(this IServiceCollection services,
+        public static IServiceCollection AddModules<T>(this IServiceCollection services,
             IConfiguration configuration,
+            bool includeJobs = false,
             params Assembly[] assemblies)
+            where T : LightModule
         {
             if (assemblies == null || assemblies.Length == 0)
             {
@@ -30,17 +28,32 @@ namespace Light.Extensions.DependencyInjection
             var moduleServices = assemblies
                 .SelectMany(s => s.GetTypes())
                 .Where(x =>
-                    typeof(IModule).IsAssignableFrom(x)
+                    typeof(T).IsAssignableFrom(x)
                     && x.IsClass && !x.IsAbstract && !x.IsGenericType)
                 .Select(s => Activator.CreateInstance(s) as IModule);
 
             foreach (var instance in moduleServices)
             {
-                instance?.ConfigureServices(services);
-                instance?.ConfigureServices(services, configuration);
+                instance?.Add(services);
+                instance?.Add(services, configuration);
+
+                if (includeJobs)
+                {
+                    instance?.AddJob(services);
+                    instance?.AddJob(services, configuration);
+                }
             }
 
             return services;
         }
+
+        /// <summary>
+        /// Scan & add module services with IConfiguration
+        /// </summary>
+        public static IServiceCollection AddModules(this IServiceCollection services,
+            IConfiguration configuration,
+            bool includeJobs = false,
+            params Assembly[] assemblies) =>
+            services.AddModules<LightModule>(configuration, includeJobs, assemblies);
     }
 }

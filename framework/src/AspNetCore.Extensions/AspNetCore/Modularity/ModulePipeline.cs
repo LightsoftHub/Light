@@ -7,17 +7,17 @@ internal interface IModulePipeline
     /// <summary>
     /// Configure Module Application Builder
     /// </summary>
-    /// <param name="builder"></param>
-    /// <returns></returns>
-    IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder);
+    IApplicationBuilder Use(IApplicationBuilder builder);
+
+    /// <summary>
+    /// For separate job pipelines
+    /// </summary>
+    IApplicationBuilder UseJob(IApplicationBuilder builder);
 }
 
 public abstract class ModulePipeline : IModulePipeline
 {
-    public virtual IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder) => builder;
-}
+    public virtual IApplicationBuilder Use(IApplicationBuilder builder) => builder;
 
-public abstract class ModuleJob : IModulePipeline
-{
-    public virtual IApplicationBuilder ConfigurePipelines(IApplicationBuilder builder) => builder;
+    public virtual IApplicationBuilder UseJob(IApplicationBuilder builder) => builder;
 }

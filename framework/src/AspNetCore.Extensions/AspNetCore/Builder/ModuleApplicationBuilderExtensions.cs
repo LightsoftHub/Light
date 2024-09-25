@@ -6,9 +6,13 @@ namespace Light.AspNetCore.Builder;
 
 public static class ModuleApplicationBuilderExtensions
 {
-    private static IApplicationBuilder ConfigureModulePipelines<T>(this IApplicationBuilder builder,
+    /// <summary>
+    /// Scan & use module pipelines
+    /// </summary>
+    public static IApplicationBuilder UseModules<T>(this IApplicationBuilder builder,
+        bool includeJobs = false,
         params Assembly[] assemblies)
-        where T : IModulePipeline
+        where T : ModulePipeline
     {
         if (assemblies == null || assemblies.Length == 0)
         {
@@ -26,7 +30,12 @@ public static class ModuleApplicationBuilderExtensions
 
         foreach (var instance in modulePipelines)
         {
-            instance?.ConfigurePipelines(builder);
+            instance?.Use(builder);
+
+            if (includeJobs)
+            {
+                instance?.UseJob(builder);
+            }
         }
 
         return builder;
@@ -36,26 +45,10 @@ public static class ModuleApplicationBuilderExtensions
     /// <summary>
     /// Scan & use module pipelines
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="configuration"></param>
-    /// <param name="assemblies"></param>
-    /// <returns></returns>
     public static IApplicationBuilder UseModules(this IApplicationBuilder builder,
+        bool includeJobs = false,
         params Assembly[] assemblies)
     {
-        return builder.ConfigureModulePipelines<ModulePipeline>(assemblies);
-    }
-
-    /// <summary>
-    /// Scan & use module job pipelines
-    /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="configuration"></param>
-    /// <param name="assemblies"></param>
-    /// <returns></returns>
-    public static IApplicationBuilder ScanModuleJobs(this IApplicationBuilder builder,
-        params Assembly[] assemblies)
-    {
-        return builder.ConfigureModulePipelines<ModuleJob>(assemblies);
+        return builder.UseModules<ModulePipeline>(includeJobs, assemblies);
     }
 }
