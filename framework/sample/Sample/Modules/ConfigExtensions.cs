@@ -2,7 +2,7 @@
 
 namespace Sample.Modules;
 
-public class OrderServices : LightModule
+public class OrderServices : Module
 {
     public override IServiceCollection ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
@@ -41,7 +41,7 @@ public class OrderJobs : ModuleJob
     }
 }
 
-public class ProductServices : LightModule
+public class ProductServices : Module
 {
     public override IServiceCollection ConfigureServices(IServiceCollection services)
     {

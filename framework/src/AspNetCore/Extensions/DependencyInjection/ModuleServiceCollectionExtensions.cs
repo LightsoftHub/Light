@@ -16,7 +16,7 @@ namespace Light.Extensions.DependencyInjection
             IConfiguration configuration,
             bool includeJobs = false,
             params Assembly[] assemblies)
-            where T : LightModule
+            where T : AspNetCore.Modularity.Module
         {
             if (assemblies == null || assemblies.Length == 0)
             {
@@ -54,6 +54,6 @@ namespace Light.Extensions.DependencyInjection
             IConfiguration configuration,
             bool includeJobs = false,
             params Assembly[] assemblies) =>
-            services.AddModules<LightModule>(configuration, includeJobs, assemblies);
+            services.AddModules<AspNetCore.Modularity.Module>(configuration, includeJobs, assemblies);
     }
 }
