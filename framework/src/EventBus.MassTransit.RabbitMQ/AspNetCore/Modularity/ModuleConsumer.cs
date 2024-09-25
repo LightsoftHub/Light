@@ -2,20 +2,19 @@
 
 namespace Light.AspNetCore.Modularity
 {
-    public interface IModuleConsumer
+    internal interface IModuleConsumer
     {
         /// <summary>
-        /// Add Module Masstransit Comsumers
+        /// Add Module MassTransit Consumers
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        IBusRegistrationConfigurator AddComsumers(
-            IBusRegistrationConfigurator configurator) => configurator;
+        void AddConsumers(IBusRegistrationConfigurator configurator);
     }
 
     public abstract class ModuleConsumer : IModuleConsumer
     {
-        public virtual IBusRegistrationConfigurator AddComsumers(
-            IBusRegistrationConfigurator configurator) => configurator;
+        public virtual void AddConsumers(IBusRegistrationConfigurator configurator)
+        { }
     }
 }

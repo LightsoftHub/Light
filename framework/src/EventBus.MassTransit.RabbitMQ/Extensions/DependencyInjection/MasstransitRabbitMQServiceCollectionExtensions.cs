@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace Light.Extensions.DependencyInjection
 {
-    public static class MasstransitRabbitMQServiceCollectionExtensions
+    public static class MassTransitRabbitMQServiceCollectionExtensions
     {
         private static IRabbitMqBusFactoryConfigurator UseRabbitMQ(
             this IRabbitMqBusFactoryConfigurator rabbitMqBusFactoryConfigurator,
@@ -64,7 +64,7 @@ namespace Light.Extensions.DependencyInjection
 
             foreach (var instance in moduleConsumers)
             {
-                instance?.AddComsumers(configurator);
+                instance?.AddConsumers(configurator);
             }
 
             return configurator;
