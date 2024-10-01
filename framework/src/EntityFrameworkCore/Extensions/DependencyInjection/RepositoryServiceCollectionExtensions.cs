@@ -8,7 +8,7 @@ public static class RepositoryServiceCollectionExtensions
 {
     /// <summary>
     /// Use default Repositories & Unit Of Work
-    ///     Entities & DbContext will inject manualy
+    ///     Entities & DbContext will inject manually
     /// </summary>
     public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
     {
@@ -30,7 +30,7 @@ public static class RepositoryServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Use custom Unit Of Work implement from base UOW abtractions
+    /// Use custom Unit Of Work implement from base UOW abstractions
     /// </summary>
     public static IServiceCollection AddUnitOfWork<TInterface, TImplement>(this IServiceCollection services)
         where TInterface : IUnitOfWork

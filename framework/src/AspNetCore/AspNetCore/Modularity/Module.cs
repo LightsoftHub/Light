@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Light.AspNetCore.Modularity
 {
-    public abstract class LightModule : IModule
+    public abstract class Module : IModuleServiceCollection
     {
         public virtual void ConfigureServices(IServiceCollection services)
         { }

@@ -1,7 +1,7 @@
-using MassTransit;
-using System.Reflection;
 using EventBusSample.Common;
 using Light.Extensions.DependencyInjection;
+using MassTransit;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

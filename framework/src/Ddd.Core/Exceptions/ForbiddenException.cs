@@ -1,5 +1,5 @@
 using System.Net;
 
-namespace Light.Application.Common.Exceptions;
+namespace Light.Exceptions;
 
 public class ForbiddenException(string message) : ExceptionBase(message, HttpStatusCode.Forbidden);

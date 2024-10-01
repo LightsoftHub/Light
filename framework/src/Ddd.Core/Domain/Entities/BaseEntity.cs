@@ -35,5 +35,6 @@ public abstract class BaseEntity : IEntity, IEvent
 /// </summary>
 public abstract class BaseEntity<TId> : BaseEntity, IEntity<TId>
 {
-    public virtual TId Id { get; protected set; } = default!;
+    public virtual TId Id { get; set; } = default!;
 }
+

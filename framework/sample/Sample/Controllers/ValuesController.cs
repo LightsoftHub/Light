@@ -1,5 +1,5 @@
-﻿using Light.Application.Common.Exceptions;
-using Light.Contracts;
+﻿using Light.Contracts;
+using Light.Exceptions;
 using Light.Extensions;
 using Microsoft.AspNetCore.Mvc;
 

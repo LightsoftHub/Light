@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Mail package services using STMP, MailKit.</Description>
 	<Summary>Mail package services using STMP, MailKit.</Summary>
-	<Version>0.0.0.1</Version>
+	<Version>0.0.0.2</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -22,7 +22,6 @@
 
   <ItemGroup>
 	<PackageReference Include="MailKit" Version="4.*" />
-	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.*" />
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
 	<PackageReference Include="MimeKit" Version="4.*" />
   </ItemGroup>

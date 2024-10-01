@@ -4,16 +4,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace Light.EntityFrameworkCore.Repositories;
 
 /// <inheritdoc/>
-public abstract class UnitOfWorkBase : IUnitOfWork
+public abstract class UnitOfWorkBase(DbContext context) : IUnitOfWork
 {
-    private readonly DbContext _context;
-    private readonly Dictionary<Type, object> _repositories;
-
-    protected UnitOfWorkBase(DbContext context)
-    {
-        _context = context;
-        _repositories = [];
-    }
+    private readonly Dictionary<Type, object> _repositories = [];
 
     /// <inheritdoc/>
     public IRepositoryBase<T> Repository<T>(bool useCustomRepository = false)
@@ -28,7 +21,7 @@ public abstract class UnitOfWorkBase : IUnitOfWork
         if (useCustomRepository)
         {
             // use custom repository if available
-            var customRepository = _context.GetService<IRepository<T>>();
+            var customRepository = context.GetService<IRepository<T>>();
             if (customRepository != null)
             {
                 _repositories[typeof(T)] = customRepository;
@@ -37,39 +30,39 @@ public abstract class UnitOfWorkBase : IUnitOfWork
         }
 
         // use default repository
-        var repository = new Repository<T>(_context);
+        var repository = new Repository<T>(context);
         _repositories[typeof(T)] = repository;
         return repository;
     }
 
     /// <inheritdoc/>
-    public virtual int SaveChanges() => _context.SaveChanges();
+    public virtual int SaveChanges() => context.SaveChanges();
 
     /// <inheritdoc/>
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        => await _context.SaveChangesAsync(cancellationToken);
+        => await context.SaveChangesAsync(cancellationToken);
 
     /// <inheritdoc/>
     public virtual async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
-        => await _context.Database.BeginTransactionAsync(cancellationToken);
+        => await context.Database.BeginTransactionAsync(cancellationToken);
 
     /// <inheritdoc/>
     public virtual async Task CommitAsync(CancellationToken cancellationToken = default)
-        => await _context.Database.CommitTransactionAsync(cancellationToken);
+        => await context.Database.CommitTransactionAsync(cancellationToken);
 
     /// <inheritdoc/>
     public virtual async Task RollbackAsync(CancellationToken cancellationToken = default)
-        => await _context.Database.RollbackTransactionAsync(cancellationToken);
+        => await context.Database.RollbackTransactionAsync(cancellationToken);
 
     public void Dispose()
     {
-        _context.Dispose();
+        context.Dispose();
         GC.SuppressFinalize(this);
     }
 
     public async ValueTask DisposeAsync()
     {
-        await _context.DisposeAsync();
+        await context.DisposeAsync();
         GC.SuppressFinalize(this);
     }
 }

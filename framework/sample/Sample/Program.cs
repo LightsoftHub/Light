@@ -15,7 +15,7 @@ using Sample.TestOption;
 using Serilog;
 using System.Reflection;
 
-SerilogExtensions.EnsureInitialized();
+SerilogConfigurationExtensions.EnsureInitialized();
 
 try
 {
@@ -113,7 +113,7 @@ try
 }
 catch (Exception ex) when (!ex.GetType().Name.Equals("StopTheHostException", StringComparison.Ordinal))
 {
-    SerilogExtensions.EnsureInitialized();
+    SerilogConfigurationExtensions.EnsureInitialized();
     Log.Fatal(ex, "Unhandled exception");
 }
 finally

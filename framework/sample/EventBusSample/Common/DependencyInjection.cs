@@ -1,18 +1,15 @@
-﻿using Light.AspNetCore.Modules;
+﻿using Light.AspNetCore.Modularity;
 using MassTransit;
 
 namespace EventBusSample.Common
 {
     public class SampleModuleConsumers : ModuleConsumer
     {
-        public override IBusRegistrationConfigurator AddComsumers(
-            IBusRegistrationConfigurator configurator)
+        public override void AddConsumers(IBusRegistrationConfigurator configurator)
         {
             configurator.AddConsumer<ColorChangedConsumer, ColorChangedConsumerDefinition>();
 
             Console.WriteLine($"Module {GetType().Name} injected");
-
-            return configurator;
         }
     }
 }

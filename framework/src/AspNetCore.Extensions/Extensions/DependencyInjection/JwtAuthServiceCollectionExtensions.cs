@@ -1,4 +1,4 @@
-using Light.Application.Common.Exceptions;
+using Light.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;

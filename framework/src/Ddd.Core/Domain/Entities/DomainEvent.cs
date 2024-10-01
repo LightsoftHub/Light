@@ -8,5 +8,5 @@ namespace Light.Domain.Entities;
 /// </summary>
 public abstract record DomainEvent : INotification
 {
-    public DateTime TriggeredOn { get; protected set; } = DateTime.UtcNow;
+    public virtual DateTime TriggeredOn { get; protected set; } = DateTime.UtcNow;
 }

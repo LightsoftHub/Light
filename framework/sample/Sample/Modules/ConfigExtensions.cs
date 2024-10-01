@@ -1,9 +1,6 @@
-﻿using Light.AspNetCore.Modularity;
-using Light.AspNetCore.Modularity.Pipelines;
+﻿namespace Sample.Modules;
 
-namespace Sample.Modules;
-
-public class OrderServices : LightModule
+public class OrderServices : Light.AspNetCore.Modularity.Module
 {
     public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
@@ -14,29 +11,17 @@ public class OrderServices : LightModule
     }
 }
 
-public class OrderPipelines : ModulePipeline
+public class OrderPipelines : Light.AspNetCore.Modularity.ModulePipeline
 {
-    public override void Use(IApplicationBuilder builder)
+    public override void ConfigurePipelines(IApplicationBuilder builder)
     {
         builder.UseMiddleware<OrderMiddleware>();
 
         //Serilog.Log.Warning("Module {name} injected", GetType().FullName);
-    }  
-}
-
-public class OrderJobs : ModulePipeline
-{
-    public override void Use(IApplicationBuilder builder)
-    {
-        //var scope = builder.ApplicationServices.CreateScope();
-
-        //var logger = scope.ServiceProvider.GetRequiredService<ILogger<OrderJobs>>();
-
-        //logger.LogWarning("Order Jobs injected");
     }
 }
 
-public class ProductServices : LightModule
+public class ProductServices : Light.AspNetCore.Modularity.Module
 {
     public override void ConfigureServices(IServiceCollection services)
     {
@@ -47,21 +32,12 @@ public class ProductServices : LightModule
     }
 }
 
-public class ProductPipelines : ModulePipeline
+public class ProductPipelines : Light.AspNetCore.Modularity.ModulePipeline
 {
-    public override void Use(IApplicationBuilder builder)
+    public override void ConfigurePipelines(IApplicationBuilder builder)
     {
         builder
             .UseMiddleware<ProductMiddleware>();
-    }
-
-    public override void UseJob(IApplicationBuilder builder)
-    {
-        //var scope = builder.ApplicationServices.CreateScope();
-
-        //var logger = scope.ServiceProvider.GetRequiredService<ILogger<ProductJobs>>();
-
-        //logger.LogInformation("Module Product Jobs injected");
     }
 }
 

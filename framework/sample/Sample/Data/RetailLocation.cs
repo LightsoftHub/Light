@@ -1,9 +1,9 @@
-﻿using Light.Domain.Entities.Interfaces;
+﻿using Light.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sample.Data;
 
-public partial class RetailLocation : IEntity
+public partial class RetailLocation : BaseAuditableEntity
 {
     [MinLength(10)]
     public string Code { get; set; } = null!;
@@ -23,14 +23,6 @@ public partial class RetailLocation : IEntity
 
     [MinLength(5)]
     public string? Country { get; set; }
-
-    public DateTimeOffset CreatedOn { get; set; }
-
-    public string? CreatedBy { get; set; }
-
-    public DateTimeOffset? LastModifiedOn { get; set; }
-
-    public string? LastModifiedBy { get; set; }
 
     public virtual ICollection<RetailStore> RetailStores { get; } = new List<RetailStore>();
 }

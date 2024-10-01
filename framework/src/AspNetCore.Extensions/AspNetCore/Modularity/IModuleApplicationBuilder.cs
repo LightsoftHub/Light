@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace Light.AspNetCore.Modularity.Pipelines;
+namespace Light.AspNetCore.Modularity;
 
-internal interface IModulePipeline
+internal interface IModuleApplicationBuilder
 {
     /// <summary>
     /// Configure Module Application Builder

@@ -7,7 +7,7 @@ namespace Light.Serilog
     {
         public static IHostBuilder ConfigureSerilog(this IHostBuilder host)
         {
-            return host.UseSerilog(SerilogExtensions.Configure);
+            return host.UseSerilog(SerilogConfigurationExtensions.Configure);
         }
     }
 }

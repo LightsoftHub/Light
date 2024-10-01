@@ -1,4 +1,4 @@
-﻿using Light.Application.Common.Exceptions;
+﻿using Light.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;

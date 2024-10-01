@@ -1,13 +1,19 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Elastic.Channels;
+using Elastic.CommonSchema.Serilog;
+using Elastic.Ingest.Elasticsearch;
+using Elastic.Ingest.Elasticsearch.DataStreams;
+using Elastic.Serilog.Sinks;
+using Elastic.Transport;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Sinks.Elasticsearch;
 using System;
+using Log = Serilog.Log;
 using Serilogger = Serilog.Core.Logger;
 
 namespace Light.Serilog
 {
-    public static class SerilogExtensions
+    public static class SerilogConfigurationExtensions
     {
         public static void EnsureInitialized()
         {
@@ -142,13 +148,22 @@ namespace Light.Serilog
                         serviceName = applicationName;
                     }
 
-                    logger.WriteTo.Async(w => w.Elasticsearch(new ElasticsearchSinkOptions(new Uri(endpoint))
+                    var indexFormat = $"{serviceName}-{environment}-{DateTime.UtcNow:yyyy-MM-dd}";
+
+                    var endpoints = new Uri[] { new Uri(endpoint) };
+
+                    logger.WriteTo.Async(w => w.Elasticsearch(endpoints, opts =>
                     {
-                        IndexFormat = $"{serviceName}-{environment}-{DateTime.UtcNow:yyyy-MM-dd}",
-                        AutoRegisterTemplate = true,
-                        NumberOfReplicas = 1,
-                        NumberOfShards = 2,
-                        ModifyConnectionSettings = x => x.BasicAuthentication(username, password)
+                        opts.DataStream = new DataStreamName(indexFormat);
+                        opts.TextFormatting = new EcsTextFormatterConfiguration();
+                        opts.BootstrapMethod = BootstrapMethod.Failure;
+                        opts.ConfigureChannel = channelOptions =>
+                        {
+                            channelOptions.BufferOptions = new BufferOptions();
+                        };
+                    }, transport =>
+                    {
+                        transport.Authentication(new BasicAuthentication(username, password));
                     }));
                 }
             }

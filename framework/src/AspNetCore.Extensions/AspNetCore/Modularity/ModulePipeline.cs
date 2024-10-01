@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace Light.AspNetCore.Modularity.Pipelines;
+namespace Light.AspNetCore.Modularity;
 
-public abstract class LightModule : IModulePipeline
+public abstract class ModulePipeline : IModuleApplicationBuilder
 {
     public virtual void ConfigurePipelines(IApplicationBuilder builder)
     { }
