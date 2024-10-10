@@ -6,6 +6,6 @@
 /// </summary>
 public abstract class Entity : BaseEntity<string>
 {
-    protected Entity() => Id = Ulid.NewUlid().ToString();
+    protected Entity() => Id = LightId.NewId();
 }
 

@@ -1,4 +1,5 @@
-﻿using Light.EventBus.Events;
+﻿using Light.Domain;
+using Light.EventBus.Events;
 
 namespace EventBusSample.Common;
 
@@ -6,7 +7,7 @@ public abstract record IntegrationEvent : IIntegrationEvent
 {
     protected IntegrationEvent()
     {
-        Id = Ulid.NewUlid().ToString();
+        Id = LightId.NewId();
         CreationDate = DateTime.UtcNow;
     }
 

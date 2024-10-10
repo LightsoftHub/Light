@@ -39,7 +39,7 @@ public class EntityTests
     public void Should_Have_Events()
     {
         var domainEvent = new TestEvent();
-        
+
         var entity = new DefaultEntity();
         var auditableEntity = new DefaultAuditableEntity();
 

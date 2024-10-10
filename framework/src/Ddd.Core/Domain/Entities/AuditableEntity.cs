@@ -6,5 +6,5 @@
 /// </summary>
 public abstract class AuditableEntity : BaseAuditableEntity<string>
 {
-    protected AuditableEntity() => Id = Ulid.NewUlid().ToString();
+    protected AuditableEntity() => Id = LightId.NewId();
 }
