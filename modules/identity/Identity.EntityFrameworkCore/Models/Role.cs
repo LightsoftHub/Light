@@ -5,6 +5,8 @@ namespace Light.Identity.EntityFrameworkCore.Models;
 
 public class Role : IdentityRole, IEntity, IAuditableEntity
 {
+    public Role() => Id = LightId.NewId();
+
     public string? Description { get; set; }
 
     public DateTimeOffset CreatedOn { get; set; }

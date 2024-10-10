@@ -5,6 +5,8 @@ namespace Light.Identity.EntityFrameworkCore.Models;
 
 public class User : IdentityUser, IEntity, IAuditableEntity, ISoftDelete
 {
+    public User() => Id = LightId.NewId();
+    
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }

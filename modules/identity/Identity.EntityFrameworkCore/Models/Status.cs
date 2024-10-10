@@ -1,6 +1,7 @@
 ﻿using Light.Domain.ValueObjects;
 
 namespace Light.Identity.EntityFrameworkCore.Models;
+
 public class Status : ValueObject
 {
     public Status() { }
