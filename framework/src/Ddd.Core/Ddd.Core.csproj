@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package containing useful base interfaces, classes, enums, value objects.</Description>
 	<Summary>Package containing useful base interfaces, classes, enums, value objects.</Summary>
-	<Version>0.0.0.3</Version>
+	<Version>0.0.0.4</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReleaseNotes></PackageReleaseNotes>
@@ -24,6 +24,7 @@
   <ItemGroup>
 	<PackageReference Include="MediatR" Version="12.*" />
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
+	<PackageReference Include="Ulid" Version="1.3.4" />
   </ItemGroup>
 
   <ItemGroup>

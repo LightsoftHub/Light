@@ -9,9 +9,7 @@ public static class ModuleApplicationBuilderExtensions
     /// <summary>
     /// Scan & configure module pipelines
     /// </summary>
-    public static IApplicationBuilder UseModules<T>(this IApplicationBuilder builder,
-        bool initializeJobs = false,
-        params Assembly[] assemblies)
+    public static IApplicationBuilder UseModules<T>(this IApplicationBuilder builder, Assembly[] assemblies)
         where T : ModulePipeline
     {
         if (assemblies == null || assemblies.Length == 0)
@@ -31,24 +29,16 @@ public static class ModuleApplicationBuilderExtensions
         foreach (var instance in modulePipelines)
         {
             instance?.ConfigurePipelines(builder);
-
-            if (initializeJobs)
-            {
-                instance?.InitializeJobs(builder);
-            }
         }
 
         return builder;
     }
 
-
     /// <summary>
     /// Scan & configure module pipelines
     /// </summary>
-    public static IApplicationBuilder UseModules(this IApplicationBuilder builder,
-        bool includeJobs = false,
-        params Assembly[] assemblies)
+    public static IApplicationBuilder UseModules(this IApplicationBuilder builder, Assembly[] assemblies)
     {
-        return builder.UseModules<ModulePipeline>(includeJobs, assemblies);
+        return builder.UseModules<ModulePipeline>(assemblies);
     }
 }

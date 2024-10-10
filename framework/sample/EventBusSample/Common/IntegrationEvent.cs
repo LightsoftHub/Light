@@ -6,11 +6,11 @@ public abstract record IntegrationEvent : IIntegrationEvent
 {
     protected IntegrationEvent()
     {
-        Id = Guid.NewGuid();
+        Id = Ulid.NewUlid().ToString();
         CreationDate = DateTime.UtcNow;
     }
 
-    public Guid Id { get; set; }
+    public string Id { get; set; }
 
     public DateTime CreationDate { get; set; }
 }

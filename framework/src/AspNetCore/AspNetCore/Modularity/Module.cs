@@ -10,11 +10,5 @@ namespace Light.AspNetCore.Modularity
 
         public virtual void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         { }
-
-        public virtual void ConfigureJobs(IServiceCollection services)
-        { }
-
-        public virtual void ConfigureJobs(IServiceCollection services, IConfiguration configuration)
-        { }
     }
 }

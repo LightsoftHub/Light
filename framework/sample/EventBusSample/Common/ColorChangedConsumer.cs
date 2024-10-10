@@ -15,8 +15,8 @@ public class ColorChangedConsumer(
 
         await Task.Delay(2000);
 
-        logger.LogInformation("Color changed from {oldColor} to {newColor} on {date}",
-            message.OldColor, message.NewColor, message.ChangeOn);
+        logger.LogInformation("Color changed from {oldColor} to {newColor} on {date} by {Id}",
+            message.OldColor, message.NewColor, message.ChangeOn, message.Id);
     }
 }
 

@@ -4,7 +4,7 @@ namespace Light.EventBus.Events
 {
     public interface IIntegrationEvent
     {
-        Guid Id { get; }
+        string Id { get; }
 
         DateTime CreationDate { get; }
     }

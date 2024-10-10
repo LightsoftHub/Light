@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>AspNetCore base package.</Description>
 	<Summary>AspNetCore base package.</Summary>
-	<Version>0.0.0.7</Version>
+	<Version>0.0.0.8</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReleaseNotes></PackageReleaseNotes>
