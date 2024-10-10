@@ -42,7 +42,7 @@ public static class ModuleJobDependencyInjectionExtensions
     /// <summary>
     /// Scan & add module jobs services with IConfiguration
     /// </summary>
-    public static IServiceCollection AddModules(this IServiceCollection services,
+    public static IServiceCollection AddModuleJobs(this IServiceCollection services,
         IConfiguration configuration,
         Assembly[] assemblies) =>
         services.AddModuleJobs<ModuleJob>(configuration, assemblies);
