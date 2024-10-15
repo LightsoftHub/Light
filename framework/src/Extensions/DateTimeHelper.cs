@@ -51,7 +51,7 @@ namespace Light.Extensions
         /// </summary>
         public static DateTime GetDateTimeFromSeconds(long value)
         {
-            return new DateTime(1970, 1, 1).AddSeconds(value);
+            return DateTimeOffset.FromUnixTimeSeconds(value).DateTime;
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Light.Extensions
         /// </summary>
         public static DateTime GetDateTimeFromMilliseconds(long value)
         {
-            return new DateTime(1970, 1, 1).AddMilliseconds(value);
+            return DateTimeOffset.FromUnixTimeMilliseconds(value).DateTime;
         }
     }
 }
