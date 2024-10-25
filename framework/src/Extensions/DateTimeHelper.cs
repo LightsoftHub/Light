@@ -5,7 +5,7 @@ namespace Light.Extensions
     public static class DateTimeHelper
     {
         /// <summary>
-        /// Use this for check different minutes from Now to DateTime
+        /// Use this for check remaining minutes from Now to DateTime
         /// </summary>
         /// <param name="dateTime"></param>
         /// <param name="mins"></param>
@@ -17,7 +17,7 @@ namespace Light.Extensions
         }
 
         /// <summary>
-        /// Use this for check different seconds from Now to DateTime
+        /// Use this for check remaining seconds from Now to DateTime
         /// </summary>
         /// <param name="dateTime"></param>
         /// <param name="seconds"></param>
@@ -26,6 +26,30 @@ namespace Light.Extensions
         {
             var diff = dateTime - DateTime.Now;
             return diff.TotalSeconds <= seconds;
+        }
+
+        /// <summary>
+        /// Use this for check remaining hours from Now to DateTime
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="hours"></param>
+        /// <returns></returns>
+        public static bool IsNearlyInHours(this DateTime dateTime, int hours)
+        {
+            var diff = dateTime - DateTime.Now;
+            return diff.TotalHours <= hours;
+        }
+
+        /// <summary>
+        /// Use this for check remaining days from Now to DateTime
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="days"></param>
+        /// <returns></returns>
+        public static bool IsNearlyInDays(this DateTime dateTime, int days)
+        {
+            var diff = dateTime - DateTime.Now;
+            return diff.TotalDays <= days;
         }
 
         /// <summary>
