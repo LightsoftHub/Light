@@ -82,5 +82,16 @@ namespace Light.Extensions
                 && obj.GetType().IsGenericType
                 && obj.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>));
         }
+
+        /// <summary>
+        /// check object type is a dictionary
+        /// </summary>
+        public static bool IsDictionary(this object obj)
+        {
+            return obj != null
+                && obj is IDictionary
+                && obj.GetType().IsGenericType
+                && obj.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(Dictionary<,>));
+        }
     }
 }
