@@ -5,8 +5,8 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light.AspNetCore.Swagger</RootNamespace>
-	<AssemblyName>Light.AspNetCore.Swagger</AssemblyName>
-	<Title>Light.AspNetCore.Swagger</Title>
+	<AssemblyName>Lightsoft.AspNetCore.Swagger</AssemblyName>
+	<Title>Lightsoft.AspNetCore.Swagger</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Swagger package.</Description>
