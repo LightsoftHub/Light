@@ -29,6 +29,7 @@
     <ProjectReference Include="..\..\src\Result\Result.csproj" />
     <ProjectReference Include="..\..\src\Serilog\Serilog.csproj" />
     <ProjectReference Include="..\..\src\SmtpMail\SmtpMail.csproj" />
+    <ProjectReference Include="..\..\src\Swagger\Swagger.csproj" />
   </ItemGroup>
 
 </Project>

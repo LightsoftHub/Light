@@ -22,7 +22,7 @@ internal static class ExceptionHandlerExtensions
         var isHangfireException = IsHangfireException(httpContext, exception);
         if (isHangfireException)
             return;
-        
+
         var traceId = httpContext.TraceIdentifier;
         var response = httpContext.Response;
 

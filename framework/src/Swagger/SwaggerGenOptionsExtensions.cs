@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -21,7 +20,7 @@ namespace Light.AspNetCore.Swagger
 
                 Reference = new OpenApiReference
                 {
-                    Id = JwtBearerDefaults.AuthenticationScheme,
+                    Id = "Bearer",
                     Type = ReferenceType.SecurityScheme
                 }
             };
