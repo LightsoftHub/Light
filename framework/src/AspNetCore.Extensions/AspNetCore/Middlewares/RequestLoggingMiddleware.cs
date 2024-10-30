@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -16,26 +17,7 @@ public class RequestLoggingMiddleware(
 
     public async Task InvokeAsync(HttpContext context)
     {
-        HttpRequest request = context.Request;
-
-        var traceId = context.TraceIdentifier;
-        var ip = request.HttpContext.Connection.RemoteIpAddress;
-        var clientIp = ip == null ? "UnknownIP" : ip.ToString();
-
-        var requestMethod = request.Method;
-        var requestPath = request.Path;
-        var requestQuery = request.QueryString.ToString();
-        var requestScheme = request.Scheme;
-        //var requestHost = request.Host.ToString();
-
-        // default exclude
-        var excludePath = new List<string> { "hangfire", "swagger" };
-        if (_settings.ExcludePaths is not null)
-            excludePath.AddRange(_settings.ExcludePaths);
-
-        var skipWriteLog = excludePath.Any(c => requestPath.ToString().Contains(c));
-
-        if (skipWriteLog)
+        if (CheckSkipWriteLog(context.Request))
         {
             // Continue processing the request
             await next(context);
@@ -45,14 +27,11 @@ public class RequestLoggingMiddleware(
             var timer = new Stopwatch();
             timer.Start();
 
-            var logContent = $"FromIP: {clientIp} TraceID: {traceId}";
+            var logContent = "";
 
             if (_settings.IncludeRequest)
             {
-                var requestBody = await ReadBodyAsync(request);
-
-                if (!string.IsNullOrEmpty(requestBody))
-                    logContent += $"\r\nRequest: {requestBody}";
+                logContent += await IncludeRequestAsync(context.Request);
             }
 
             if (_settings.IncludeResponse)
@@ -68,15 +47,12 @@ public class RequestLoggingMiddleware(
                     // Continue processing the request
                     await next(context);
 
-                    if (_settings.IncludeResponse) // write response log if enable
-                    {
-                        // Read the response body
-                        responseBody.Seek(0, SeekOrigin.Begin);
-                        string responseText = new StreamReader(responseBody).ReadToEnd();
+                    // Read the response body
+                    responseBody.Seek(0, SeekOrigin.Begin);
+                    string responseText = new StreamReader(responseBody).ReadToEnd();
 
-                        if (!string.IsNullOrEmpty(responseText))
-                            logContent += $"\r\nResponse: {responseText}";
-                    }
+                    if (!string.IsNullOrEmpty(responseText))
+                        logContent += $"\r\nResponse: {responseText}";
 
                     // Copy the response body back to the original stream
                     responseBody.Seek(0, SeekOrigin.Begin);
@@ -97,17 +73,27 @@ public class RequestLoggingMiddleware(
                 await next(context);
             }
 
-            // Log the response body
-            var statusCode = context.Response.StatusCode;
-            var contentType = context.Response.Headers.ContentType.ToString();
-
             timer.Stop();
 
-            var elapsedMilliseconds = timer.ElapsedMilliseconds;
-
-            logger.LogInformation("{scheme} {method} {statusCode} {RequestPath}{RequestQuery} in {elapsedMilliseconds} ms {log}",
-                requestScheme, requestMethod, statusCode, requestPath, requestQuery, elapsedMilliseconds, logContent);
+            WriteLog(context, timer.ElapsedMilliseconds, logContent);
         }
+    }
+
+    private bool CheckSkipWriteLog(HttpRequest httpRequest)
+    {
+        // default exclude
+        var excludePath = new List<string> { "hangfire", "swagger" };
+        if (_settings.ExcludePaths is not null)
+            excludePath.AddRange(_settings.ExcludePaths);
+
+        return excludePath.Any(c => httpRequest.Path.ToString().Contains(c));
+    }
+
+    private static async Task<string> IncludeRequestAsync(HttpRequest request)
+    {
+        var requestBody = await ReadBodyAsync(request);
+
+        return !string.IsNullOrEmpty(requestBody) ? $"\r\nRequest: {requestBody}" : "";
     }
 
     private static async Task<string> ReadBodyAsync(HttpRequest request)
@@ -135,5 +121,29 @@ public class RequestLoggingMiddleware(
 
         var obj = JsonSerializer.Deserialize<object>(json);
         return JsonSerializer.Serialize(obj);
+    }
+
+    private void WriteLog(HttpContext context, long elapsedMilliseconds, string logContent)
+    {
+        var httpRequest = context.Request;
+
+        var traceId = context.TraceIdentifier;
+        var ip = httpRequest.HttpContext.Connection.RemoteIpAddress;
+        var clientIp = ip == null ? "UnknownIP" : ip.ToString();
+
+        var requestMethod = httpRequest.Method;
+        var requestPath = httpRequest.Path;
+        var requestQuery = httpRequest.QueryString.ToString();
+        var requestScheme = httpRequest.Scheme;
+        //var requestHost = request.Host.ToString();
+
+        // Log the response body
+        var statusCode = context.Response.StatusCode;
+        var contentType = context.Response.Headers.ContentType.ToString();
+
+        logContent = $"FromIP: {clientIp} TraceID: {traceId}" + logContent;
+
+        logger.LogInformation("{scheme} {method} {statusCode} {RequestPath}{RequestQuery} in {elapsedMilliseconds} ms {log}",
+            requestScheme, requestMethod, statusCode, requestPath, requestQuery, elapsedMilliseconds, logContent);
     }
 }

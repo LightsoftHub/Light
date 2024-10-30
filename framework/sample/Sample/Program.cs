@@ -1,6 +1,7 @@
 global using Light.AspNetCore.Mvc;
 global using Light.Repositories;
 using Light.AspNetCore.Builder;
+using Light.AspNetCore.Middlewares;
 using Light.AspNetCore.Swagger;
 using Light.Caching.Infrastructure;
 using Light.Extensions.DependencyInjection;
@@ -61,6 +62,8 @@ try
     builder.Services.AddJwtAuth(issuer!, key!);
 
     //builder.Services.AddTelegram();
+
+    builder.Services.AddOptions<RequestLoggingOptions>().BindConfiguration("RequestLogging");
 
     builder.Services
         .AddControllers()

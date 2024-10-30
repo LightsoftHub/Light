@@ -3,11 +3,12 @@ using ExceptionHandlerOptions = Light.AspNetCore.ExceptionHandlers.ExceptionHand
 
 namespace Sample.TestOption
 {
-    public class ErrorHandlerOptions : IConfigureOptions<ExceptionHandlerOptions>
+    public class ErrorHandlerOptions(IConfiguration configuration) : IConfigureOptions<ExceptionHandlerOptions>
     {
         public void Configure(ExceptionHandlerOptions options)
         {
-            options.HideUnidentifiedException = false;
+            var readConfig = configuration.GetValue<bool>("HideUnidentifiedException");
+            options.HideUnidentifiedException = readConfig;
         }
     }
 }
