@@ -8,6 +8,9 @@ namespace Light.AspNetCore.Mvc;
 /// <summary>
 /// Abstract BaseApi Controller Class
 /// </summary>
+
+[ApiController]
+[Route("api/[controller]")]
 public abstract class ApiControllerBase : ControllerBase
 {
     private IMediator? _mediator;
