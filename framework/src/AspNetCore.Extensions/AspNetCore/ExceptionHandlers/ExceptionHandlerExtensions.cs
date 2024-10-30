@@ -1,7 +1,9 @@
 ﻿using Light.Contracts;
 using Light.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mime;
 using System.Text.Json;
@@ -20,7 +22,7 @@ internal static class ExceptionHandlerExtensions
         var isHangfireException = IsHangfireException(httpContext, exception);
         if (isHangfireException)
             return;
-
+        
         var traceId = httpContext.TraceIdentifier;
         var response = httpContext.Response;
 
@@ -33,6 +35,8 @@ internal static class ExceptionHandlerExtensions
         }
 
         string? message;
+
+        var settings = httpContext.RequestServices.GetRequiredService<IOptions<ExceptionHandlerOptions>>().Value;
 
         switch (exception)
         {
@@ -69,7 +73,9 @@ internal static class ExceptionHandlerExtensions
 
             default:
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                message = $"Internal Server Error with Trace ID {traceId}";
+                message = settings.HideUnidentifiedException
+                    ? $"Internal Server Error with Trace ID {traceId}"
+                    : $"{exception.Message.Trim()} with Trace ID {traceId}"; ;
                 break;
         }
 

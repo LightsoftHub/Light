@@ -15,7 +15,8 @@ using Sample.TestOption;
 using Serilog;
 using System.Reflection;
 
-SerilogConfigurationExtensions.EnsureInitialized();
+Serilogger.EnsureInitialized();
+Log.Information("Application start...");
 
 try
 {
@@ -89,7 +90,7 @@ try
         app.UseSwagger();
     }
 
-    app.UseGuidTraceId();
+    app.UseUlidTraceId();
     //app.UseMiddlewares(builder.Configuration);
     app.UseLightRequestLogging();
     app.UseLightExceptionHandler(); // must inject after Inbound Logging
@@ -113,7 +114,7 @@ try
 }
 catch (Exception ex) when (!ex.GetType().Name.Equals("StopTheHostException", StringComparison.Ordinal))
 {
-    SerilogConfigurationExtensions.EnsureInitialized();
+    Serilogger.EnsureInitialized();
     Log.Fatal(ex, "Unhandled exception");
 }
 finally

@@ -1,7 +1,6 @@
-﻿using Light.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -9,14 +8,11 @@ namespace Light.AspNetCore.Middlewares;
 
 public class RequestLoggingMiddleware(
     RequestDelegate next,
-    IConfiguration configuration,
+    IOptions<RequestLoggingOptions> options,
     // must use Microsoft Logger because only Singleton services can be resolved by constructor injection in Middleware
     ILogger<RequestLoggingMiddleware> logger)
 {
-    private readonly RequestLoggingOptions _settings = configuration
-        .GetSection(MiddlewareApplicationBuilderExtensions.RequestLoggingSectionName)
-        .Get<RequestLoggingOptions>()
-        ?? throw new ArgumentNullException(nameof(RequestLoggingOptions));
+    private readonly RequestLoggingOptions _settings = options.Value;
 
     public async Task InvokeAsync(HttpContext context)
     {

@@ -12,20 +12,13 @@ public static class Startup
 {
     private const string _sectionName = "Swagger";
 
-    private static SwaggerSettings GetSettings(IConfiguration configuration)
-    {
-        var settings = configuration.GetSection(_sectionName).Get<SwaggerSettings>();
-
-        ArgumentNullException.ThrowIfNull(settings, nameof(SwaggerSettings));
-
-        return settings;
-    }
-
     public static IServiceCollection AddSwagger(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<SwaggerSettings>(configuration.GetSection(_sectionName));
 
-        var settings = GetSettings(configuration);
+        var settings = configuration.GetSection(_sectionName).Get<SwaggerSettings>();
+
+        ArgumentNullException.ThrowIfNull(settings, nameof(SwaggerSettings));
 
         if (settings.Enable)
         {

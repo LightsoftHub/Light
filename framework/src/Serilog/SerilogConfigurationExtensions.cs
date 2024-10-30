@@ -8,24 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
-using Log = Serilog.Log;
-using Serilogger = Serilog.Core.Logger;
 
 namespace Light.Serilog
 {
     public static class SerilogConfigurationExtensions
     {
-        public static void EnsureInitialized()
-        {
-            if (Log.Logger.GetType() != typeof(Serilogger))
-            {
-                Log.Logger = new LoggerConfiguration()
-                    .Enrich.FromLogContext()
-                    .WriteTo.Console()
-                    .CreateLogger();
-            }
-        }
-
         private static LoggerConfiguration BaseConfig(this LoggerConfiguration logger)
         {
             logger

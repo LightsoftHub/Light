@@ -12,11 +12,7 @@ namespace Sample.Controllers
     public class TestController(
         IMemoryCache memoryCache,
         AlphaDbContext context,
-        IDateTimeService dateTimeService,
-        DataService dataService,
-        IData1Service data1Service,
-        IData2Service data2Service,
-        IData3Service data3Service) : ControllerBase
+        IDateTimeService dateTimeService) : ControllerBase
     {
         private readonly string _cacheKey = "Key";
 
@@ -50,19 +46,6 @@ namespace Sample.Controllers
         public IActionResult GetNowAsync()
         {
             return Ok(dateTimeService.Now);
-        }
-
-        [HttpGet("new_id")]
-        public IActionResult GetNewIdAsync()
-        {
-            var obj = new
-            {
-                Id1 = data1Service.NewId,
-                Id2 = data2Service.NewId,
-                Id3 = data3Service.NewId,
-            };
-
-            return Ok(obj);
         }
     }
 }

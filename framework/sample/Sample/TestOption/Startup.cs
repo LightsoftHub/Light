@@ -22,6 +22,8 @@ public static class Startup
         // Overide by BindConfiguration
         services.AddOptions<TestOptions>().BindConfiguration("Test1");
 
+        services.AddTransient<IConfigureOptions<Light.AspNetCore.ExceptionHandlers.ExceptionHandlerOptions>, ErrorHandlerOptions>();
+
         return services;
     }
 

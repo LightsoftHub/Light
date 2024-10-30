@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package containing useful AspNetCore extensions.</Description>
 	<Summary>Package containing useful AspNetCore extensions.</Summary>
-	<Version>0.0.0.16</Version>
+	<Version>0.0.0.17</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -24,8 +24,8 @@
 	<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.*" />
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.*" />
 	<PackageReference Include="Serilog.Sinks.File" Version="6.*" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.8.1" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.8.1" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.9.0" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.9.0" />
   </ItemGroup>
 
   <ItemGroup>
