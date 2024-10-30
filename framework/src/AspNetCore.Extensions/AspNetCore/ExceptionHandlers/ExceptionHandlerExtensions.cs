@@ -34,7 +34,7 @@ internal static class ExceptionHandlerExtensions
             }
         }
 
-        string? message;
+        string message = exception.Message.Trim();
 
         var settings = httpContext.RequestServices.GetRequiredService<IOptions<ExceptionHandlerOptions>>().Value;
 
@@ -43,7 +43,6 @@ internal static class ExceptionHandlerExtensions
             case ValidationException e:
                 {
                     response.StatusCode = (int)e.StatusCode;
-                    message = $"{e.Message.Trim()} with Trace ID {traceId}";
 
                     var errors = e.ValidationErrors
                         .Select(s =>
@@ -63,19 +62,16 @@ internal static class ExceptionHandlerExtensions
                 }
             case ExceptionBase e:
                 response.StatusCode = (int)e.StatusCode;
-                message = $"{e.Message.Trim()} with Trace ID {traceId}";
                 break;
 
             case KeyNotFoundException:
                 response.StatusCode = (int)HttpStatusCode.NotFound;
-                message = $"Not Found with Trace ID {traceId}";
+                message = $"Not Found";
                 break;
 
             default:
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                message = settings.HideUnidentifiedException
-                    ? $"Internal Server Error with Trace ID {traceId}"
-                    : $"{exception.Message.Trim()} with Trace ID {traceId}"; ;
+                message = settings.HideUndentifyException ? $"Internal Server Error" : message;
                 break;
         }
 
@@ -84,13 +80,12 @@ internal static class ExceptionHandlerExtensions
 
         var errorModel = new
         {
-            trace_id = traceId,
-            response_code = response.StatusCode,
             source = exceptionSource,
             exception = exception.Message,
         };
 
-        logger.LogError("{@log}", errorModel);
+        var errorContent = $"{traceId} error {response.StatusCode}";
+        logger.LogError("{errorContent} {@errorModel}", errorContent, errorModel);
 
         // Write exception as Result
         if (!response.HasStarted)
@@ -99,6 +94,7 @@ internal static class ExceptionHandlerExtensions
             {
                 Code = response.StatusCode.ToString(),
                 Message = message,
+                RequestId = traceId,
             };
 
             var jsonOptions = new JsonSerializerOptions

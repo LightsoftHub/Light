@@ -1,4 +1,6 @@
-﻿namespace Light.Contracts
+﻿using System;
+
+namespace Light.Contracts
 {
     public class Result : IResult
     {
@@ -20,6 +22,8 @@
         public bool Succeeded { get; set; }
 
         public string Message { get; set; } = "";
+
+        public string RequestId { get; set; } = Guid.NewGuid().ToString();
 
         public static Result Success(string message = "") =>
             new Result(ResultCode.Ok, message);

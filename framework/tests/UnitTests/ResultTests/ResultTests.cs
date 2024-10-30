@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace UnitTests.ResultTests
 {
     public class ResultTests
@@ -60,6 +62,19 @@ namespace UnitTests.ResultTests
 
             intId.Data.Should().Be(id);
             stringId.Data.Should().Be($"ID-{id}");
+        }
+
+        [Fact]
+        public void Should_Deserialize_Correct_Result()
+        {
+            var successJson = JsonSerializer.Serialize(Result.Success());
+            var errorJson = JsonSerializer.Serialize(Result.Error());
+
+            var success = JsonSerializer.Deserialize<Result>(successJson);
+            var error = JsonSerializer.Deserialize<Result>(errorJson);
+
+            success.MapResultCode().Should().Be(ResultCode.Ok);
+            error.MapResultCode().Should().Be(ResultCode.Error);
         }
     }
 }

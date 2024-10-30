@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Light.Contracts
@@ -39,6 +40,8 @@ namespace Light.Contracts
         public bool Succeeded { get; set; }
 
         public string Message { get; set; } = "";
+
+        public string RequestId { get; set; } = Guid.NewGuid().ToString();
 
         public PagedInfo PagedInfo { get; set; }
 

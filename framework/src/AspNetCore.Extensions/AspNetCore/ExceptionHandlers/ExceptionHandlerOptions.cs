@@ -2,5 +2,5 @@
 
 public class ExceptionHandlerOptions
 {
-    public bool HideUnidentifiedException { get; set; } = true;
+    public bool HideUndentifyException { get; set; } = true;
 }

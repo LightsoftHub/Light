@@ -8,7 +8,7 @@ namespace Sample.TestOption
         public void Configure(ExceptionHandlerOptions options)
         {
             var readConfig = configuration.GetValue<bool>("HideUnidentifiedException");
-            options.HideUnidentifiedException = readConfig;
+            options.HideUndentifyException = readConfig;
         }
     }
 }

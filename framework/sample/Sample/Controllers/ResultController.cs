@@ -8,7 +8,7 @@ namespace Sample.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ResultController : ControllerBase
+    public class ResultController : ApiControllerBase
     {
         private readonly List<int> _list;
 
@@ -25,8 +25,11 @@ namespace Sample.Controllers
         public IActionResult Get()
         {
             //var res = Result.NotFound("Error message");
-            var res = new Result { Code = "ABC", Message = "" };
-            return res.ToActionResult();
+            //var res = new Result { Code = "ABC", Message = "" };
+
+            var res = Result.Success();
+
+            return Ok(res);
         }
 
         [HttpGet("success")]

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -27,55 +26,13 @@ public class RequestLoggingMiddleware(
             var timer = new Stopwatch();
             timer.Start();
 
-            var logContent = "";
+            await WriteRequestBodyAsync(context);
 
-            if (_settings.IncludeRequest)
-            {
-                logContent += await IncludeRequestAsync(context.Request);
-            }
-
-            if (_settings.IncludeResponse)
-            {
-                // Create a new memory stream to capture the response
-                var originalBody = context.Response.Body;
-
-                try
-                {
-                    using var responseBody = new MemoryStream();
-                    context.Response.Body = responseBody;
-
-                    // Continue processing the request
-                    await next(context);
-
-                    // Read the response body
-                    responseBody.Seek(0, SeekOrigin.Begin);
-                    string responseText = new StreamReader(responseBody).ReadToEnd();
-
-                    if (!string.IsNullOrEmpty(responseText))
-                        logContent += $"\r\nResponse: {responseText}";
-
-                    // Copy the response body back to the original stream
-                    responseBody.Seek(0, SeekOrigin.Begin);
-                    await responseBody.CopyToAsync(originalBody);
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError("Unhandler exception when write request log with error {error}.", ex.Message);
-                }
-                finally
-                {
-                    context.Response.Body = originalBody;
-                }
-            }
-            else
-            {
-                // Continue processing the request
-                await next(context);
-            }
+            await WriteResponseAsync(context);
 
             timer.Stop();
 
-            WriteLog(context, timer.ElapsedMilliseconds, logContent);
+            WriteRequestLog(context, timer.ElapsedMilliseconds);
         }
     }
 
@@ -89,11 +46,46 @@ public class RequestLoggingMiddleware(
         return excludePath.Any(c => httpRequest.Path.ToString().Contains(c));
     }
 
-    private static async Task<string> IncludeRequestAsync(HttpRequest request)
+    private void WriteRequestLog(HttpContext context, long elapsedMilliseconds)
     {
-        var requestBody = await ReadBodyAsync(request);
+        var httpRequest = context.Request;
 
-        return !string.IsNullOrEmpty(requestBody) ? $"\r\nRequest: {requestBody}" : "";
+        var traceId = context.TraceIdentifier;
+        var ip = httpRequest.HttpContext.Connection.RemoteIpAddress;
+        var clientIp = ip == null ? "UnknownIP" : ip.ToString();
+
+        var requestMethod = httpRequest.Method;
+        var requestPath = httpRequest.Path;
+        var requestQuery = httpRequest.QueryString.ToString();
+        var requestScheme = httpRequest.Scheme;
+        //var requestHost = request.Host.ToString();
+
+        // Log the response body
+        var statusCode = context.Response.StatusCode;
+        var contentType = context.Response.Headers.ContentType.ToString();
+
+        var logContent = $"{traceId} {requestScheme} {requestMethod} {statusCode} {requestPath}{requestQuery} FromIP: {clientIp}";
+
+        logger.LogInformation("{content} in {elapsedMilliseconds} ms", logContent, elapsedMilliseconds);
+    }
+
+    private async Task WriteRequestBodyAsync(HttpContext context)
+    {
+        if (_settings.IncludeRequest is false)
+        {
+            return;
+        }
+
+        var requestBody = await ReadBodyAsync(context.Request);
+
+        if (string.IsNullOrEmpty(requestBody))
+        {
+            return;
+        }
+
+        var logContent = $"{context.TraceIdentifier} request {requestBody}";
+
+        logger.LogInformation("{content}", logContent);
     }
 
     private static async Task<string> ReadBodyAsync(HttpRequest request)
@@ -116,34 +108,56 @@ public class RequestLoggingMiddleware(
 
     private static string Minify(string json)
     {
-        if (string.IsNullOrEmpty(json))
-            return "<null>";
+        if (!string.IsNullOrEmpty(json))
+        {
+            var obj = JsonSerializer.Deserialize<object>(json);
+            json = JsonSerializer.Serialize(obj);
+        }
 
-        var obj = JsonSerializer.Deserialize<object>(json);
-        return JsonSerializer.Serialize(obj);
+        return json;
     }
 
-    private void WriteLog(HttpContext context, long elapsedMilliseconds, string logContent)
+    private async Task WriteResponseAsync(HttpContext context)
     {
-        var httpRequest = context.Request;
+        if (_settings.IncludeResponse is false)
+        {
+            await next(context);
+            return;
+        }
 
-        var traceId = context.TraceIdentifier;
-        var ip = httpRequest.HttpContext.Connection.RemoteIpAddress;
-        var clientIp = ip == null ? "UnknownIP" : ip.ToString();
+        // Create a new memory stream to capture the response
+        var originalBody = context.Response.Body;
 
-        var requestMethod = httpRequest.Method;
-        var requestPath = httpRequest.Path;
-        var requestQuery = httpRequest.QueryString.ToString();
-        var requestScheme = httpRequest.Scheme;
-        //var requestHost = request.Host.ToString();
+        try
+        {
+            using var responseBody = new MemoryStream();
+            context.Response.Body = responseBody;
 
-        // Log the response body
-        var statusCode = context.Response.StatusCode;
-        var contentType = context.Response.Headers.ContentType.ToString();
+            // Continue processing the request
+            await next(context);
 
-        logContent = $"FromIP: {clientIp} TraceID: {traceId}" + logContent;
+            // Read the response body
+            responseBody.Seek(0, SeekOrigin.Begin);
+            string responseText = new StreamReader(responseBody).ReadToEnd();
 
-        logger.LogInformation("{scheme} {method} {statusCode} {RequestPath}{RequestQuery} in {elapsedMilliseconds} ms {log}",
-            requestScheme, requestMethod, statusCode, requestPath, requestQuery, elapsedMilliseconds, logContent);
+            if (!string.IsNullOrEmpty(responseText))
+            {
+                var logContent = $"{context.TraceIdentifier} response {responseText}";
+
+                logger.LogInformation("{content}", logContent);
+            }
+
+            // Copy the response body back to the original stream
+            responseBody.Seek(0, SeekOrigin.Begin);
+            await responseBody.CopyToAsync(originalBody);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError("Unhandler exception when write request log with error {error}.", ex.Message);
+        }
+        finally
+        {
+            context.Response.Body = originalBody;
+        }
     }
 }

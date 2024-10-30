@@ -47,5 +47,12 @@ namespace Sample.Controllers
         {
             return Ok(dateTimeService.Now);
         }
+
+        [HttpGet("trace_id")]
+        public IActionResult TraceId()
+        {
+            var res = HttpContext.TraceIdentifier;
+            return Ok(res);
+        }
     }
 }
