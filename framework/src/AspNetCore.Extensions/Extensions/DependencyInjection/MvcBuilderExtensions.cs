@@ -57,7 +57,7 @@ public static class MvcBuilderExtensions
 
                 var apiError = new Result
                 {
-                    Code = ResultCode.BadRequest.ToString(),
+                    Code = ResultCode.bad_request.ToString(),
                     // convert errors to Model_Erorr1|Model_Error2|....
                     Message = string.Join("|", errors)
                 };

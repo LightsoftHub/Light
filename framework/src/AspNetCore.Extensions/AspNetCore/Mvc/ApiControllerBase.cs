@@ -29,13 +29,10 @@ public abstract class ApiControllerBase : ControllerBase
         return result.ToActionResult();
     }
 
-    /// <summary>
-    /// Add Trace ID to existing Result model response
-    /// </summary>
-    /// <returns></returns>
     [ApiExplorerSettings(IgnoreApi = true)]
-    public virtual IActionResult Ok(IResult result)
+    public virtual IActionResult Ok<T>(T data)
     {
+        var result = data as IResult ?? Result<T>.Success(data);
         result.RequestId = HttpContext.TraceIdentifier;
         return result.ToActionResult();
     }

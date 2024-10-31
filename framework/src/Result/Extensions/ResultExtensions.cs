@@ -22,7 +22,7 @@ namespace Light.Extensions
         {
             if (list == null)
             {
-                return new PagedResult<T> { Code = ResultCode.Error.ToString() };
+                return new PagedResult<T> { Code = ResultCode.error.ToString() };
             }
 
             page = page < 1 ? 1 : page;

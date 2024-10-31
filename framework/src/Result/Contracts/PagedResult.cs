@@ -10,7 +10,7 @@ namespace Light.Contracts
 
         public PagedResult(IEnumerable<T> data, PagedInfo pagedInfo)
         {
-            Code = ResultCode.Ok.ToString();
+            Code = ResultCode.success.ToString();
             Succeeded = true;
             PagedInfo = pagedInfo;
             Data = data;
@@ -18,7 +18,7 @@ namespace Light.Contracts
 
         public PagedResult(IEnumerable<T> data, int page, int pageSize, int count)
         {
-            Code = ResultCode.Ok.ToString();
+            Code = ResultCode.success.ToString();
             Succeeded = true;
             PagedInfo = new PagedInfo(page, pageSize, count);
             Data = data;
@@ -29,7 +29,7 @@ namespace Light.Contracts
             var page = 1;
             var count = data.Count();
 
-            Code = ResultCode.Ok.ToString();
+            Code = ResultCode.success.ToString();
             Succeeded = true;
             PagedInfo = new PagedInfo(page, count, count);
             Data = data;

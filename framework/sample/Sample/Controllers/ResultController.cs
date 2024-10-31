@@ -32,25 +32,40 @@ namespace Sample.Controllers
             return Ok(res);
         }
 
+        [HttpGet("object")]
+        public IActionResult GetObject()
+        {
+            var data = new { Id = 1, Name = "Test 1" };
+
+            return Ok(data);
+        }
+
         [HttpGet("success")]
         public IActionResult GetSuccess()
         {
             var res = Result.Success();
-            return res.ToActionResult();
+            return Ok(res);
+        }
+
+        [HttpGet("error")]
+        public IActionResult GetError()
+        {
+            var res = Result.Error();
+            return Ok(res);
         }
 
         [HttpGet("find")]
         public IActionResult FindValue()
         {
             var model = _list.Select(s => s.ToString()).FirstOrDefault(x => x == "A");
-            return Result<string>.Success(model).ToActionResult();
+            return Ok(model);
         }
 
 
         [HttpGet("paged")]
         public IActionResult GetPaged(int page = 1, int pageSize = 10)
         {
-            return _list.ToPagedResult(page, pageSize).ToActionResult();
+            return Ok(_list.ToPagedResult(page, pageSize));
         }
 
         [HttpGet("mapper-paged")]
@@ -58,7 +73,7 @@ namespace Sample.Controllers
         {
             var paged = _list.ToPagedResult(page, size);
             var result = paged.Adapt<PagedResult<int>>();
-            return result.ToActionResult();
+            return Ok(result);
         }
 
         [HttpGet("deserialize-paged")]
@@ -69,10 +84,10 @@ namespace Sample.Controllers
 
             var result = JsonSerializer.Deserialize<PagedResult<int>>(json);
 
-            return result!.ToActionResult();
+            return Ok(result);
         }
 
-        [HttpGet("error")]
+        [HttpGet("errors")]
         public IActionResult Error()
         {
             var error = Result.Error("Error1");

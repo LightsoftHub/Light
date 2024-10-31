@@ -12,11 +12,11 @@ namespace Light.Contracts
         {
             if (data == null)
             {
-                Code = ResultCode.Unknown.ToString();
+                Code = ResultCode.unknown.ToString();
             }
             else
             {
-                Code = ResultCode.Ok.ToString();
+                Code = ResultCode.success.ToString();
                 Succeeded = true;
                 Message = message;
                 Data = data;
@@ -45,21 +45,21 @@ namespace Light.Contracts
             new Result<T>(data, message);
 
         public static Result<T> Forbidden(string message = "") =>
-            new Result<T>(ResultCode.Forbidden, message);
+            new Result<T>(ResultCode.forbidden, message);
 
         public static Result<T> Unauthorized(string message = "") =>
-            new Result<T>(ResultCode.Unauthorized, message);
+            new Result<T>(ResultCode.unauthorized, message);
 
         public static Result<T> NotFound(string objectName, object queryValue)
         {
             var message = $"Query object {objectName} by {queryValue} not found";
-            return new Result<T>(ResultCode.NotFound, message);
+            return new Result<T>(ResultCode.not_found, message);
         }
 
         public static Result<T> NotFound<TObject>(object queryValue) =>
             NotFound(typeof(TObject).Name, queryValue);
 
         public static Result<T> Error(string message = "") =>
-            new Result<T>(ResultCode.Error, message);
+            new Result<T>(ResultCode.error, message);
     }
 }

@@ -23,19 +23,19 @@ namespace UnitTests.ResultTests
             var notFound = Result.NotFound();
             var unknown = new Result { Code = "OtherCode" };
 
-            success.MapResultCode().Should().Be(ResultCode.Ok);
-            error.MapResultCode().Should().Be(ResultCode.Error);
-            unauthorized.MapResultCode().Should().Be(ResultCode.Unauthorized);
-            notFound.MapResultCode().Should().Be(ResultCode.NotFound);
-            unknown.MapResultCode().Should().Be(ResultCode.Unknown);
+            success.MapResultCode().Should().Be(ResultCode.success);
+            error.MapResultCode().Should().Be(ResultCode.error);
+            unauthorized.MapResultCode().Should().Be(ResultCode.unauthorized);
+            notFound.MapResultCode().Should().Be(ResultCode.not_found);
+            unknown.MapResultCode().Should().Be(ResultCode.unknown);
         }
 
         [Theory]
-        [InlineData(ResultCode.Ok, "Success message")]
-        [InlineData(ResultCode.Error, "Error message")]
-        [InlineData(ResultCode.BadRequest, "BadRequest message")]
-        [InlineData(ResultCode.Unauthorized, "Unauthorized message")]
-        [InlineData(ResultCode.NotFound, "NotFound message")]
+        [InlineData(ResultCode.success, "Success message")]
+        [InlineData(ResultCode.error, "Error message")]
+        [InlineData(ResultCode.bad_request, "BadRequest message")]
+        [InlineData(ResultCode.unauthorized, "Unauthorized message")]
+        [InlineData(ResultCode.not_found, "NotFound message")]
         public void Should_Return_Correct_Result(ResultCode code, string message)
         {
             var result = new Result
@@ -73,8 +73,8 @@ namespace UnitTests.ResultTests
             var success = JsonSerializer.Deserialize<Result>(successJson);
             var error = JsonSerializer.Deserialize<Result>(errorJson);
 
-            success.MapResultCode().Should().Be(ResultCode.Ok);
-            error.MapResultCode().Should().Be(ResultCode.Error);
+            success.MapResultCode().Should().Be(ResultCode.success);
+            error.MapResultCode().Should().Be(ResultCode.error);
         }
     }
 }

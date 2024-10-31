@@ -11,17 +11,17 @@ namespace Light.Extensions
 
             switch (code)
             {
-                case ResultCode.Ok:
+                case ResultCode.success:
                     return HttpStatusCode.OK;
-                case ResultCode.BadRequest:
+                case ResultCode.bad_request:
                     return HttpStatusCode.BadRequest;
-                case ResultCode.Unauthorized:
+                case ResultCode.unauthorized:
                     return HttpStatusCode.Unauthorized;
-                case ResultCode.Forbidden:
+                case ResultCode.forbidden:
                     return HttpStatusCode.Forbidden;
-                case ResultCode.NotFound:
+                case ResultCode.not_found:
                     return HttpStatusCode.NotFound;
-                case ResultCode.Conflict:
+                case ResultCode.conflict:
                     return HttpStatusCode.Conflict;
                 default:
                     return HttpStatusCode.InternalServerError;

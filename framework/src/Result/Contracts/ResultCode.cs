@@ -2,13 +2,13 @@
 {
     public enum ResultCode
     {
-        Unknown,
-        Ok,
-        BadRequest,
-        Unauthorized,
-        Forbidden,
-        NotFound,
-        Conflict,
-        Error,
+        unknown,
+        success,
+        bad_request,
+        unauthorized,
+        forbidden,
+        not_found,
+        conflict,
+        error,
     }
 }
