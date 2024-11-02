@@ -1,12 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Light.Identity.EntityFrameworkCore;
+﻿namespace Light.Identity.EntityFrameworkCore;
 
 public class Tables
 {
+    public const string Roles = nameof(Roles);
+
+    public const string RoleClaims = nameof(RoleClaims);
+
     public const string Users = nameof(Users);
+
+    public const string UserRoles = nameof(UserRoles);
+
+    public const string UserClaims = nameof(UserClaims);
+
+    public const string UserLogins = nameof(UserLogins);
+
+    public const string UserTokens = nameof(UserTokens);
+
+    /* Custom tables */
+
+    public const string UserAttributes = nameof(UserAttributes);
+
+    public const string JwtTokens = nameof(JwtTokens);
 }
