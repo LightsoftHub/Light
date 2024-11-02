@@ -21,6 +21,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+app.UseAuthentication();
+
+await app.ConfigurePipelines();
 
 app.MapControllers();
 

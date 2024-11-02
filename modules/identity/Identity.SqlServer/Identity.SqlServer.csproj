@@ -4,13 +4,13 @@
 	<TargetFramework>net8.0</TargetFramework>
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<RootNamespace>Light.Identity</RootNamespace>
-	<AssemblyName>Lightsoft.Identity</AssemblyName>
-	<Title>Lightsoft.Identity</Title>
+	<RootNamespace>Light.Identity.SqlServer</RootNamespace>
+	<AssemblyName>Lightsoft.Identity.SqlServer</AssemblyName>
+	<Title>Lightsoft.Identity.SqlServer</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
-	<Description>Identity module package.</Description>
-	<Summary>Identity module package.</Summary>
+	<Description>Identity Migrator package.</Description>
+	<Summary>Identity Migrator package.</Summary>
 	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
@@ -21,12 +21,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.*" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
-    <PackageReference Include="Lightsoft.Result" Version="0.0.0.4" />
   </ItemGroup>
 
   <ItemGroup>
 	<None Include="..\..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Identity.EntityFrameworkCore\Identity.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

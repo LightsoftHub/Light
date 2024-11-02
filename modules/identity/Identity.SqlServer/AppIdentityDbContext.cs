@@ -1,7 +1,4 @@
-﻿using Light.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-namespace WebApi.Data;
+﻿namespace Light.Identity.SqlServer;
 
 public class AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : IdentityDbContext(options)
 {
@@ -9,5 +6,5 @@ public class AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options
 
     protected override bool SoftDelete => true;
 
-    protected override DateTimeOffset Time => DateTimeOffset.UtcNow.AddDays(2);
+    protected override DateTimeOffset AuditTime => DateTimeOffset.UtcNow.AddDays(2);
 }

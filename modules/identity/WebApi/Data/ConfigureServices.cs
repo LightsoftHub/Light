@@ -1,5 +1,6 @@
 using Light.Identity.EntityFrameworkCore;
 using Light.Identity.EntityFrameworkCore.Options;
+using Light.Identity.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -21,7 +22,8 @@ public static class ConfigureServices
         }
         else
         {
-            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(connectionStr));
+            services.AddDbContext<AppIdentityDbContext>(options => 
+                options.UseSqlServer(connectionStr, o => o.MigrationsAssembly("Lightsoft.Identity.SqlServer")));
         }
 
         services.AddIdentity<AppIdentityDbContext>(options =>
@@ -30,7 +32,7 @@ public static class ConfigureServices
 
             // Password settings
             options.Password.RequireDigit = false;
-            options.Password.RequiredLength = 10;
+            options.Password.RequiredLength = 3;
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequireUppercase = false;
             options.Password.RequireLowercase = false;
@@ -46,6 +48,13 @@ public static class ConfigureServices
         // custom claims options
         services.AddTransient<IConfigureOptions<ClaimTypeOptions>, CustomClaims>();
 
+        services.AddMigrator(configuration);
+
         return services;
+    }
+
+    public static async Task ConfigurePipelines(this WebApplication app)
+    {
+        await app.InitialiseDatabaseAsync();
     }
 }

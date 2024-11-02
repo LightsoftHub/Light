@@ -1,7 +1,11 @@
-﻿namespace Light.Identity.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+
+namespace Light.Identity.EntityFrameworkCore;
 
 public interface IIdentityDbContext
 {
+    DatabaseFacade Database { get; }
+
     DbSet<UserRole> UserRoles { get; }
 
     DbSet<UserAttribute> UserAttributes { get; }
