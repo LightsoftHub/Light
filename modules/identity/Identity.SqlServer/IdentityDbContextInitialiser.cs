@@ -15,11 +15,17 @@ public class IdentityDbContextInitialiser(
 
         try
         {
-            await context.Database.MigrateAsync();
+            if (context.Database.IsSqlServer() && context.Database.GetMigrations().Any())
+            {
+                if ((await context.Database.GetPendingMigrationsAsync()).Any())
+                {
+                    await context.Database.MigrateAsync();
 
-            var dbName = context.Database.GetDbConnection().Database;
+                    var dbName = context.Database.GetDbConnection().Database;
 
-            logger.LogInformation("Database {name} initialized", dbName);
+                    logger.LogInformation("Database {name} initialized", dbName);
+                }
+            }
         }
         catch (Exception ex)
         {

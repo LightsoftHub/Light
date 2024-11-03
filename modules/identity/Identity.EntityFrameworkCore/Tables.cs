@@ -1,6 +1,6 @@
 ﻿namespace Light.Identity.EntityFrameworkCore;
 
-public class Tables
+public abstract class Tables
 {
     public const string Roles = nameof(Roles);
 

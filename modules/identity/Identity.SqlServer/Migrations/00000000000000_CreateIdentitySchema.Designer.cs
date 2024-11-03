@@ -13,8 +13,6 @@ namespace Light.Identity.SqlServer.Migrations
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-            var modelNamespace = "Light.Identity.EntityFrameworkCore.Models";
-
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.0")
@@ -22,7 +20,7 @@ namespace Light.Identity.SqlServer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity($"{modelNamespace}.User", b =>
+            modelBuilder.Entity($"{typeof(User).FullName}", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -124,7 +122,7 @@ namespace Light.Identity.SqlServer.Migrations
                     b.ToTable(Tables.Users, Schemas.Identity);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity($"{typeof(Role).FullName}", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -168,7 +166,7 @@ namespace Light.Identity.SqlServer.Migrations
                     b.ToTable(Tables.Roles, Schemas.Identity);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity($"{typeof(RoleClaim).FullName}", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -193,7 +191,7 @@ namespace Light.Identity.SqlServer.Migrations
                     b.ToTable(Tables.RoleClaims, Schemas.Identity);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity($"{typeof(UserClaim).FullName}", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -218,7 +216,7 @@ namespace Light.Identity.SqlServer.Migrations
                     b.ToTable(Tables.UserClaims, Schemas.Identity);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity($"{typeof(UserLogin).FullName}", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -240,7 +238,7 @@ namespace Light.Identity.SqlServer.Migrations
                     b.ToTable(Tables.UserLogins, Schemas.Identity);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity($"{typeof(UserRole).FullName}", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -255,7 +253,7 @@ namespace Light.Identity.SqlServer.Migrations
                     b.ToTable(Tables.UserRoles, Schemas.Identity);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity($"{typeof(UserToken).FullName}", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -274,51 +272,51 @@ namespace Light.Identity.SqlServer.Migrations
                     b.ToTable(Tables.UserTokens, Schemas.Identity);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity($"{typeof(RoleClaim).FullName}", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne($"{typeof(Role).FullName}", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity($"{typeof(UserClaim).FullName}", b =>
                 {
-                    b.HasOne($"{modelNamespace}.User", null)
+                    b.HasOne($"{typeof(User).FullName}", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity($"{typeof(UserLogin).FullName}", b =>
                 {
-                    b.HasOne($"{modelNamespace}.User", null)
+                    b.HasOne($"{typeof(User).FullName}", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity($"{typeof(UserRole).FullName}", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne($"{typeof(Role).FullName}", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne($"{modelNamespace}.User", null)
+                    b.HasOne($"{typeof(User).FullName}", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity($"{typeof(UserToken).FullName}", b =>
                 {
-                    b.HasOne($"{modelNamespace}.User", null)
+                    b.HasOne($"{typeof(User).FullName}", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

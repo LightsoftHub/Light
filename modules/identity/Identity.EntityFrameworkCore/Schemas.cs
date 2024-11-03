@@ -1,6 +1,6 @@
 ﻿namespace Light.Identity.EntityFrameworkCore;
 
-public class Schemas
+public abstract class Schemas
 {
     public const string Audit = nameof(Audit);
 
