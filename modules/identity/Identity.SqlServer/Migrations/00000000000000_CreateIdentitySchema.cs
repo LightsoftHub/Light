@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 #nullable disable
 
@@ -16,6 +15,67 @@ namespace Light.Identity.SqlServer.Migrations
             migrationBuilder.EnsureSchema(name: Schemas.Audit);
 
             migrationBuilder.EnsureSchema(name: Schemas.System);
+
+            /* Custom */
+            migrationBuilder.CreateTable(
+                name: "AuditEntries",
+                schema: Schemas.Audit,
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 450, nullable: false),
+                    UserId = table.Column<string>(maxLength: 450, nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TableName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChangeOnTime = table.Column<DateTimeOffset>(nullable: false),
+                    OldValues = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NewValues = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AffectedColumns = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PrimaryKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditEntries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                schema: Schemas.System,
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 450, nullable: false),
+                    FromUserID = table.Column<string>(maxLength: 450, nullable: false),
+                    FromName = table.Column<string>(maxLength: 200, nullable: true),
+                    ToUserID = table.Column<string>(maxLength: 450, nullable: false),
+                    Title = table.Column<string>(maxLength: 250, nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MarkAsRead = table.Column<bool>(nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 450, nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(nullable: true),
+                    LastModifiedBy = table.Column<string>(maxLength: 450, nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: Tables.JwtTokens,
+                schema: Schemas.Identity,
+                columns: table => new
+                {
+                    UserId = table.Column<string>(maxLength: 450, nullable: false),
+                    Token = table.Column<string>(nullable: true),
+                    TokenExpiryTime = table.Column<DateTime>(nullable: true),
+                    RefreshToken = table.Column<string>(nullable: true),
+                    RefreshTokenExpiryTime = table.Column<DateTime>(nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey($"PK_{Tables.JwtTokens}", x => x.UserId);
+                });
+            /**/
 
             migrationBuilder.CreateTable(
                 name: Tables.Roles,
@@ -271,6 +331,10 @@ namespace Light.Identity.SqlServer.Migrations
 
             migrationBuilder.DropTable(
                 name: Tables.Users,
+                schema: Schemas.Identity);
+
+            migrationBuilder.DropTable(
+                name: Tables.JwtTokens,
                 schema: Schemas.Identity);
         }
     }

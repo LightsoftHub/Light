@@ -1,7 +1,6 @@
 ﻿using Light.Identity;
 using Light.Identity.EntityFrameworkCore.Options;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using WebApi.Data;
 using WebApi.Models;
