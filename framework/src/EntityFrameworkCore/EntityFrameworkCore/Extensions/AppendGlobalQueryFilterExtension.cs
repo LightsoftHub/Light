@@ -36,4 +36,17 @@ public static class ModelBuilderExtensions
 
         return modelBuilder;
     }
+
+    /// <summary>
+    /// Apply query filter by interface when condition is true
+    /// </summary>
+    public static ModelBuilder AppendGlobalQueryFilterIf<TInterface>(this ModelBuilder modelBuilder, bool condition, Expression<Func<TInterface, bool>> filter)
+    {
+        if (condition)
+        {
+            modelBuilder.AppendGlobalQueryFilter(filter);
+        }
+
+        return modelBuilder;
+    }
 }

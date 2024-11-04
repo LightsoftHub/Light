@@ -7,13 +7,13 @@ namespace Light.Domain.Entities;
 /// </summary>
 public abstract class BaseAuditableEntity : BaseEntity, IAuditableEntity
 {
-    public DateTimeOffset CreatedOn { get; set; }
+    public virtual DateTimeOffset CreatedOn { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public virtual string? CreatedBy { get; set; }
 
-    public DateTimeOffset? LastModifiedOn { get; set; }
+    public virtual DateTimeOffset? LastModifiedOn { get; set; }
 
-    public string? LastModifiedBy { get; set; }
+    public virtual string? LastModifiedBy { get; set; }
 }
 
 /// <summary>
