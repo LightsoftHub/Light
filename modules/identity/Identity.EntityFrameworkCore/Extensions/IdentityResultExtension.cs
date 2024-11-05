@@ -1,4 +1,4 @@
-﻿namespace Light.Identity.EntityFrameworkCore.Extensions;
+﻿namespace Light.Identity.Extensions;
 
 public static class IdentityResultExtensions
 {

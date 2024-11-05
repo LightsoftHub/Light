@@ -1,9 +1,10 @@
-﻿using Light.Identity.EntityFrameworkCore.Options;
-using Light.Identity.EntityFrameworkCore.Services;
+﻿using Light.Identity.EntityFrameworkCore;
+using Light.Identity.Options;
+using Light.Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Light.Identity.EntityFrameworkCore;
+namespace Light.Identity;
 
 public static class IdentityEfCoreModule
 {
@@ -47,6 +48,7 @@ public static class IdentityEfCoreModule
 
         services.AddScoped<IIdentityDbContext>(provider => provider.GetRequiredService<TContext>());
 
+        services.AddScoped<ITenantService, TenantService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserAttributeService, UserAttributeService>();
         services.AddScoped<IRoleService, RoleService>();

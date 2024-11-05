@@ -1,4 +1,5 @@
-﻿using Light.Identity.EntityFrameworkCore.Options;
+﻿using Light.Identity.EntityFrameworkCore;
+using Light.Identity.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -6,41 +7,38 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Light.Identity.EntityFrameworkCore.Services;
+namespace Light.Identity.Services;
 
 public class TokenService(
     UserManager<User> userManager,
     RoleManager<Role> roleManager,
     IOptions<ClaimTypeOptions> claimTypes,
     IOptions<JwtOptions> jwtOptions,
-    IIdentityDbContext db) : ITokenService
+    IIdentityDbContext context) : ITokenService
 {
-    private readonly UserManager<User> _userManager = userManager;
-    private readonly RoleManager<Role> _roleManager = roleManager;
     private readonly ClaimTypeOptions _claimTypes = claimTypes.Value;
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
-    private readonly IIdentityDbContext _db = db;
 
     /// <summary>
     /// Get all claims of User
     /// </summary>
     private async Task<IEnumerable<Claim>> GetClaimsAsync(User user)
     {
-        var userClaims = await _userManager.GetClaimsAsync(user);
-        var roles = await _userManager.GetRolesAsync(user);
+        var userClaims = await userManager.GetClaimsAsync(user);
+        var userRoles = await userManager.GetRolesAsync(user);
 
         var roleClaims = new List<Claim>();
         var permissionClaims = new List<Claim>();
 
-        foreach (var role in roles)
+        foreach (var userRole in userRoles)
         {
-            roleClaims.Add(new Claim(_claimTypes.Role, role));
+            roleClaims.Add(new Claim(_claimTypes.Role, userRole));
 
-            var thisRole = await _roleManager.FindByNameAsync(role);
-            if (thisRole is null)
+            var role = await roleManager.FindByNameAsync(userRole);
+            if (role is null)
                 continue;
 
-            var allClaimsForThisRoles = await _roleManager.GetClaimsAsync(thisRole);
+            var allClaimsForThisRoles = await roleManager.GetClaimsAsync(role);
 
             permissionClaims.AddRange(allClaimsForThisRoles);
         }
@@ -53,6 +51,7 @@ public class TokenService(
             new(_claimTypes.LastName, user.LastName ?? string.Empty),
             new(_claimTypes.PhoneNumber, user.PhoneNumber ?? string.Empty),
             new(_claimTypes.Email, user.Email ?? string.Empty),
+            new(_claimTypes.TenantId, user.TenantId ?? string.Empty),
         }
         .Union(userClaims)
         .Union(roleClaims)
@@ -106,14 +105,14 @@ public class TokenService(
     /// </summary>
     private async Task SaveTokenAsync(string userId, string refreshToken, DateTime refreshTokenExpiryTime)
     {
-        var entry = await _db.JwtTokens.FindAsync(userId);
+        var entry = await context.JwtTokens.FindAsync(userId);
 
         if (entry is not null)
         {
             entry.RefreshToken = refreshToken;
             entry.RefreshTokenExpiryTime = refreshTokenExpiryTime;
 
-            await _db.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
         else
         {
@@ -124,8 +123,8 @@ public class TokenService(
                 RefreshTokenExpiryTime = refreshTokenExpiryTime,
             };
 
-            await _db.JwtTokens.AddAsync(entity);
-            await _db.SaveChangesAsync();
+            await context.JwtTokens.AddAsync(entity);
+            await context.SaveChangesAsync();
         }
     }
 
@@ -134,7 +133,7 @@ public class TokenService(
     /// </summary>
     private async Task<bool> CheckRefreshTokenAsync(string userId, string refreshToken)
     {
-        return await _db.JwtTokens.AnyAsync(x =>
+        return await context.JwtTokens.AnyAsync(x =>
             x.UserId == userId
             && x.RefreshToken == refreshToken
             && x.RefreshTokenExpiryTime >= DateTime.Now);
@@ -154,14 +153,14 @@ public class TokenService(
 
     public async Task<IResult<TokenDto>> GetTokenByIdAsync(string userId)
     {
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await userManager.FindByIdAsync(userId);
 
         return await GetTokenAsync(user);
     }
 
     public async Task<IResult<TokenDto>> GetTokenByUserNameAsync(string userName)
     {
-        var user = await _userManager.FindByNameAsync(userName);
+        var user = await userManager.FindByNameAsync(userName);
 
         return await GetTokenAsync(user);
     }
@@ -179,7 +178,7 @@ public class TokenService(
         if (string.IsNullOrEmpty(userId))
             return Result<TokenDto>.Unauthorized("Invalid token.");
 
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await userManager.FindByIdAsync(userId);
         if (user == null || user.Status.IsActive is false)
             return Result<TokenDto>.Unauthorized("Invalid token.");
 

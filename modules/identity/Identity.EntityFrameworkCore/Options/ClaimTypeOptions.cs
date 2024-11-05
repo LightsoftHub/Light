@@ -1,4 +1,4 @@
-﻿namespace Light.Identity.EntityFrameworkCore.Options;
+﻿namespace Light.Identity.Options;
 
 public class ClaimTypeOptions
 {
@@ -25,4 +25,6 @@ public class ClaimTypeOptions
     public string Expiration { get; set; } = ClaimTypes.Expiration;
 
     public string AccessToken { get; set; } = ClaimTypes.AccessToken;
+
+    public string TenantId { get; set; } = ClaimTypes.TenantId;
 }

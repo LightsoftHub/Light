@@ -1,9 +1,9 @@
 ﻿using Light.Domain.Entities.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace Light.Identity.EntityFrameworkCore.Models;
+namespace Light.Identity.Models;
 
-public class User : IdentityUser, IEntity, IAuditableEntity, ISoftDelete
+public class User : IdentityUser, IEntity, IAuditableEntity, ISoftDelete, ITenant
 {
     public User() => Id = LightId.NewId();
 
@@ -28,6 +28,8 @@ public class User : IdentityUser, IEntity, IAuditableEntity, ISoftDelete
     public DateTimeOffset? DeletedOn { get; set; }
 
     public string? DeletedBy { get; set; }
+
+    public string? TenantId { get; set; }
 
     public void UpdateInfo(string? firstName, string? lastName, string? phoneNumber, string? email)
     {
@@ -60,5 +62,10 @@ public class User : IdentityUser, IEntity, IAuditableEntity, ISoftDelete
         PasswordHash = null;
         UseDomainPassword = false;
         Status.Update(IdentityStatus.unactive);
+    }
+
+    public void UpdateTenant(string? tenantId)
+    {
+        TenantId = tenantId;
     }
 }

@@ -1,3 +1,5 @@
+global using WebApi.Models;
+
 using WebApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);

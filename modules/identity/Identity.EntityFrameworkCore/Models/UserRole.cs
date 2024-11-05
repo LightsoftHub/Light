@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Light.Identity.EntityFrameworkCore.Models;
+namespace Light.Identity.Models;
 
 public class UserRole : IdentityUserRole<string>
 {

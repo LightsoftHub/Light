@@ -4,14 +4,14 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<RootNamespace>Light.Identity.EntityFrameworkCore</RootNamespace>
+	<RootNamespace>Light.Identity</RootNamespace>
 	<AssemblyName>Lightsoft.Identity.EntityFrameworkCore</AssemblyName>
 	<Title>Lightsoft.Identity.EntityFrameworkCore</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
 	<Description>Identity module provider that uses Entity Framework Core.</Description>
 	<Summary>Identity module provider that uses Entity Framework Core.</Summary>
-	<Version>0.0.0.4</Version>
+	<Version>0.0.0.5</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -25,8 +25,8 @@
 	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.*" />
 	<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.*" />
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
-	<PackageReference Include="Lightsoft.Ddd.Core" Version="0.0.0.5" />
-	<PackageReference Include="Lightsoft.EntityFrameworkCore" Version="0.0.0.3" />
+	<PackageReference Include="Lightsoft.Ddd.Core" Version="0.0.0.6" />
+	<PackageReference Include="Lightsoft.EntityFrameworkCore" Version="0.0.0.4" />
   </ItemGroup>
 
   <ItemGroup>

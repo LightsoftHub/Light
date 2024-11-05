@@ -75,6 +75,45 @@ namespace Light.Identity.SqlServer.Migrations
                 {
                     table.PrimaryKey($"PK_{Tables.JwtTokens}", x => x.UserId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "UserAttributes",
+                schema: Schemas.Identity,
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 450, nullable: false),
+                    UserId = table.Column<string>(maxLength: 450, nullable: false),
+                    Key = table.Column<string>(maxLength: 200, nullable: false),
+                    Value = table.Column<string>(maxLength: 450, nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 450, nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(nullable: true),
+                    LastModifiedBy = table.Column<string>(maxLength: 450, nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAttributes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: Tables.Tenants,
+                schema: Schemas.System,
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 450, nullable: false),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 450, nullable: true),
+                    LastModifiedOn = table.Column<DateTimeOffset>(nullable: true),
+                    LastModifiedBy = table.Column<string>(maxLength: 450, nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTimeOffset>(nullable: true),
+                    DeletedBy = table.Column<string>(nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey($"PK_{Tables.Tenants}", x => x.Id);
+                });
             /**/
 
             migrationBuilder.CreateTable(
@@ -93,6 +132,7 @@ namespace Light.Identity.SqlServer.Migrations
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
                     LastModifiedOn = table.Column<DateTimeOffset>(nullable: true),
                     LastModifiedBy = table.Column<string>(nullable: true),
+                    TenantId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -132,6 +172,7 @@ namespace Light.Identity.SqlServer.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTimeOffset>(nullable: true),
                     DeletedBy = table.Column<string>(nullable: true),
+                    TenantId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                 },
                 constraints: table =>
                 {

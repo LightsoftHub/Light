@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ActiveDirectory\ActiveDirectory.csproj" />
     <ProjectReference Include="..\Identity.EntityFrameworkCore\Identity.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Identity.SqlServer\Identity.SqlServer.csproj" />
   </ItemGroup>

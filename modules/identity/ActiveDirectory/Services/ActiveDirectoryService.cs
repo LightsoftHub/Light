@@ -12,6 +12,8 @@ public class ActiveDirectoryService(IOptions<DomainOptions> domain) : IActiveDir
 {
     private readonly DomainOptions _domain = domain.Value;
 
+    public bool IsConfigured() => !string.IsNullOrEmpty(_domain.Name);
+
     public Task<IResult> CheckPasswordSignInAsync(string userName, string password)
     {
         // Create a context that will allow you to connect to your Domain Controller

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Light.Identity.EntityFrameworkCore.Extensions;
+namespace Light.Identity.Extensions;
 
 public static class DataMapper
 {
@@ -47,6 +47,7 @@ public static class DataMapper
             Id = s.Id,
             Name = s.Name,
             Description = s.Description,
+            //TenantId = s.TenantId,
         };
 
         return query.Select(selectExp);
@@ -59,6 +60,7 @@ public static class DataMapper
             Id = role.Id,
             Name = role.Name,
             Description = role.Description,
+            //TenantId = role.TenantId,
         };
 
         return dto;

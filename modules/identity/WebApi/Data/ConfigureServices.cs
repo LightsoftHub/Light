@@ -1,7 +1,8 @@
-using Light.Identity.EntityFrameworkCore.Options;
+using Light.ActiveDirectory;
+using Light.Identity;
+using Light.Identity.Options;
 using Light.Identity.SqlServer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace WebApi.Data;
 
@@ -25,9 +26,16 @@ public static class ConfigureServices
         }
 
         // custom claims options
-        services.AddTransient<IConfigureOptions<ClaimTypeOptions>, CustomClaims>();
+        //services.AddTransient<IConfigureOptions<ClaimTypeOptions>, CustomClaims>();
 
         services.AddMigrator(configuration);
+
+        // Overide by BindConfiguration
+        services.AddOptions<JwtOptions>().BindConfiguration("JWT");
+
+        services.AddTokenServices();
+
+        services.AddActiveDirectory();
 
         return services;
     }
@@ -35,5 +43,6 @@ public static class ConfigureServices
     public static async Task ConfigurePipelines(this WebApplication app)
     {
         await app.InitialiseDatabaseAsync();
+        await Task.CompletedTask;
     }
 }

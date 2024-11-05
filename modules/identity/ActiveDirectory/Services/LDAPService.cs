@@ -13,6 +13,8 @@ public class LDAPService(IOptions<LdapOptions> options) : IActiveDirectoryServic
 {
     private readonly LdapOptions _options = options.Value;
 
+    public bool IsConfigured() => true;
+
     [SupportedOSPlatform("windows")]
     public Task<IResult> CheckPasswordSignInAsync(string userName, string password)
     {

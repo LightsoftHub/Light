@@ -1,5 +1,6 @@
 ﻿using Light.Domain.Entities.Interfaces;
 using Light.Domain.ValueObjects;
+using Light.EntityFrameworkCore.Extensions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Light.Identity.EntityFrameworkCore;
@@ -12,11 +13,27 @@ public abstract class IdentityDbContext(DbContextOptions options) :
 
     public virtual DbSet<JwtToken> JwtTokens => Set<JwtToken>();
 
+    public virtual DbSet<Tenant> Tenants => Set<Tenant>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<Role>().ToTable(name: Tables.Roles, Schemas.Identity);
+        builder.Entity<Role>(entity =>
+        {
+            entity.ToTable(name: Tables.Roles, Schemas.Identity);
+            /*
+            entity.OwnsOne(o => o.Tenant, a =>
+            {
+                a.WithOwner();
+
+                a.Property(a => a.Id);
+
+                a.Property(a => a.Name);
+            });
+            entity.Navigation(e => e.Tenant).IsRequired();
+            */
+        });
 
         builder.Entity<RoleClaim>().ToTable(name: Tables.RoleClaims, Schemas.Identity);
 
@@ -44,6 +61,11 @@ public abstract class IdentityDbContext(DbContextOptions options) :
             e.HasKey(x => x.UserId);
             e.ToTable(name: Tables.JwtTokens, Schemas.Identity);
         });
+
+        builder.Entity<Tenant>(e =>
+        {
+            e.ToTable(name: Tables.Tenants, Schemas.System);
+        });
     }
 
     public override int SaveChanges()
@@ -66,6 +88,9 @@ public abstract class IdentityDbContext(DbContextOptions options) :
 
     // for can change audit time from inherit class
     protected virtual DateTimeOffset AuditTime => DateTimeOffset.Now;
+
+    // for can change tenant from inherit class
+    protected virtual string? TenantId => null;
 
     protected virtual void AuditEntities()
     {
@@ -103,5 +128,20 @@ public abstract class IdentityDbContext(DbContextOptions options) :
                         break;
                 }
             });
+
+        if (!string.IsNullOrEmpty(TenantId))
+        {
+            ChangeTracker.Entries<ITenant>()
+                .ToList()
+                .ForEach(e =>
+                {
+                    switch (e.State)
+                    {
+                        case EntityState.Added:
+                            e.Entity.TenantId = TenantId;
+                            break;
+                    }
+                });
+        }
     }
 }

@@ -5,6 +5,8 @@ namespace Light.ActiveDirectory.Services;
 
 public class FakeActiveDirectoryService : IActiveDirectoryService
 {
+    public bool IsConfigured() => false;
+
     public Task<IResult> CheckPasswordSignInAsync(string userName, string password)
     {
         IResult result = Result.Unauthorized("Invalid credentials.");

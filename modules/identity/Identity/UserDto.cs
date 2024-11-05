@@ -20,5 +20,7 @@ public class UserDto
 
     public bool IsDeleted { get; set; }
 
+    public string? TenantId { get; set; }
+
     public IEnumerable<string> Roles { get; set; } = new List<string>();
 }

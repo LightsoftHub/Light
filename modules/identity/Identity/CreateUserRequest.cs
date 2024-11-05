@@ -15,4 +15,6 @@ public class CreateUserRequest
     public string? PhoneNumber { get; set; }
 
     public bool UseDomainPassword { get; set; }
+
+    public string? TenantId { get; set; }
 }

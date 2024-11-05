@@ -1,4 +1,4 @@
-﻿using Light.Identity.EntityFrameworkCore.Options;
+﻿using Light.Identity.Options;
 using Microsoft.Extensions.Options;
 
 namespace WebApi.Data;

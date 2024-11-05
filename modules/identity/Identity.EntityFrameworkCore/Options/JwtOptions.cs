@@ -1,4 +1,4 @@
-﻿namespace Light.Identity.EntityFrameworkCore.Options;
+﻿namespace Light.Identity.Options;
 
 public class JwtOptions
 {

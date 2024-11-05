@@ -1,4 +1,4 @@
-﻿namespace Light.Identity.EntityFrameworkCore.Models;
+﻿namespace Light.Identity.Models;
 
 public class UserAttribute : Domain.Entities.AuditableEntity
 {

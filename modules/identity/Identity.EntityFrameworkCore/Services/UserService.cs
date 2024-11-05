@@ -2,20 +2,10 @@
 using Light.Specification;
 using Microsoft.AspNetCore.Identity;
 
-namespace Light.Identity.EntityFrameworkCore.Services;
+namespace Light.Identity.Services;
 
 public class UserService(UserManager<User> userManager) : IUserService
 {
-    private async Task<IResult> CheckPasswordAsync(User user, string password)
-    {
-        var checkPassword = await userManager.CheckPasswordAsync(user, password);
-
-        if (checkPassword)
-            return Result.Success();
-
-        return Result.Error("Invalid credentials");
-    }
-
     protected UserManager<User> UserManager => userManager;
 
     public virtual async Task<IResult<IEnumerable<UserDto>>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -88,6 +78,16 @@ public class UserService(UserManager<User> userManager) : IUserService
         return await CheckPasswordAsync(user, password);
     }
 
+    private async Task<IResult> CheckPasswordAsync(User user, string password)
+    {
+        var checkPassword = await userManager.CheckPasswordAsync(user, password);
+
+        if (checkPassword)
+            return Result.Success();
+
+        return Result.Error("Invalid credentials");
+    }
+
     public virtual async Task<IResult<string>> CreateAsync(CreateUserRequest newUser)
     {
         var entity = new User
@@ -98,6 +98,7 @@ public class UserService(UserManager<User> userManager) : IUserService
             FirstName = newUser.FirstName,
             LastName = newUser.LastName,
             UseDomainPassword = newUser.UseDomainPassword,
+            TenantId = newUser.TenantId,
         };
 
         var identityResult = !string.IsNullOrEmpty(newUser.Password)
@@ -126,6 +127,8 @@ public class UserService(UserManager<User> userManager) : IUserService
 
         // auth by Domain
         user.ConnectDomain(updateUser.UseDomainPassword);
+
+        user.UpdateTenant(updateUser.TenantId);
 
         var updatedResult = await userManager.UpdateAsync(user);
         if (!updatedResult.Succeeded)

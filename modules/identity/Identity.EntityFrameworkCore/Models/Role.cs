@@ -1,9 +1,9 @@
 ﻿using Light.Domain.Entities.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace Light.Identity.EntityFrameworkCore.Models;
+namespace Light.Identity.Models;
 
-public class Role : IdentityRole, IEntity, IAuditableEntity
+public class Role : IdentityRole, IEntity, IAuditableEntity, ITenant
 {
     public Role() => Id = LightId.NewId();
 
@@ -17,9 +17,16 @@ public class Role : IdentityRole, IEntity, IAuditableEntity
 
     public string? LastModifiedBy { get; set; }
 
+    public string? TenantId { get; set; }
+
     public void Update(string? name, string? description)
     {
         Name = name;
         Description = description;
+    }
+
+    public void UpdateTenant(string? tenantId)
+    {
+        TenantId = tenantId;
     }
 }

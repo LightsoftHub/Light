@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Light.Identity.EntityFrameworkCore.Extensions;
+namespace Light.Identity.Extensions;
 
 public static class JwtHelper
 {

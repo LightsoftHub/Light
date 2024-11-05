@@ -1,4 +1,6 @@
-﻿namespace Light.Identity.EntityFrameworkCore.Services;
+﻿using Light.Identity.EntityFrameworkCore;
+
+namespace Light.Identity.Services;
 
 public class UserAttributeService(IIdentityDbContext context) : IUserAttributeService
 {
@@ -51,8 +53,6 @@ public class UserAttributeService(IIdentityDbContext context) : IUserAttributeSe
         await context.UserAttributes
             .Where(x => x.UserId == userId && x.Key == key)
             .ExecuteDeleteAsync();
-
-        await context.SaveChangesAsync();
 
         return Result.Success();
     }

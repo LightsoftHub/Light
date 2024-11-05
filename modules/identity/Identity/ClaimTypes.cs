@@ -3,7 +3,7 @@
 /// <summary>
 /// Default claim types
 /// </summary>
-public class ClaimTypes
+public abstract class ClaimTypes
 {
     public const string UserId = "uid";
 
@@ -28,4 +28,6 @@ public class ClaimTypes
     public const string Expiration = "exp";
 
     public const string AccessToken = "token";
+
+    public const string TenantId = "tenant_id";
 }

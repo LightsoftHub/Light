@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace Light.Identity.EntityFrameworkCore.Services;
+namespace Light.Identity.Services;
 
 public class RoleService(RoleManager<Role> roleManager) : IRoleService
 {
@@ -63,6 +63,7 @@ public class RoleService(RoleManager<Role> roleManager) : IRoleService
         {
             Name = request.Name,
             Description = request.Description,
+            TenantId = request.TenantId,
         };
 
         var result = await roleManager.CreateAsync(role);
@@ -78,6 +79,7 @@ public class RoleService(RoleManager<Role> roleManager) : IRoleService
             return Result.NotFound("Role", request.Id);
 
         role.Update(request.Name, request.Description);
+        role.UpdateTenant(request.TenantId);
 
         var result = await roleManager.UpdateAsync(role);
 
