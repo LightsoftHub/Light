@@ -53,7 +53,7 @@ namespace Light.Serilog
 
             // default settings
             var defaultPath = "logs"; // default save logs files to [current directory]/logs
-            var defaultTemplate = "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}";
+            var defaultTemplate = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{SourceContext}{NewLine}{Exception}";
 
             //var template = "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}";
             //var template = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} <s:{SourceContext}>{NewLine}{Exception}";
