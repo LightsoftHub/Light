@@ -38,7 +38,7 @@ namespace Light.MassTransit.RabbitMQ
                     message,
                     ex.Message);
 
-                if (ThrowWhenError)
+                if (ThrowIfError)
                 {
                     throw ex;
                 }
