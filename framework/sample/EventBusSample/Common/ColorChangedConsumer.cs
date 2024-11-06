@@ -5,14 +5,10 @@ namespace EventBusSample.Common;
 
 public class ColorChangedConsumer(
     ILogger<ColorChangedConsumer> logger) :
-    IConsumer<ColorChangedIntegrationEvent>
+    Consumer<ColorChangedIntegrationEvent>(logger)
 {
-    public async Task Consume(ConsumeContext<ColorChangedIntegrationEvent> context)
+    public override async Task Handle(ColorChangedIntegrationEvent message)
     {
-        var message = context.Message;
-
-        ArgumentNullException.ThrowIfNull(message, nameof(ColorChangedIntegrationEvent));
-
         await Task.Delay(2000);
 
         logger.LogInformation("Color changed from {oldColor} to {newColor} on {date} by {Id}",

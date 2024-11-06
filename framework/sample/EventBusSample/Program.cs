@@ -1,4 +1,5 @@
 using EventBusSample.Common;
+using Light.EventBus.Abstractions;
 using Light.Extensions.DependencyInjection;
 using MassTransit;
 using System.Reflection;
@@ -39,7 +40,7 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/", async (
     Color oldColor,
     Color newColor,
-    IPublishEndpoint publisher,
+    IEventBus eventBus,
     ILogger<ColorChangedIntegrationEvent> logger) =>
 {
     var colorUpdatedEvent = new ColorChangedIntegrationEvent
@@ -49,7 +50,7 @@ app.MapGet("/", async (
         ChangeOn = DateTime.Now,
     };
 
-    await publisher.Publish(colorUpdatedEvent);
+    await eventBus.Publish(colorUpdatedEvent);
 
     return;
 })

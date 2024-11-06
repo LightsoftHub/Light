@@ -25,10 +25,9 @@ namespace Light.MassTransit.RabbitMQ
         {
             await _publishEndpoint.Publish(message, cancellationToken);
 
-            _logger.LogInformation("[Event] {event} {id} created at {time} published",
-                typeof(T).Name,
+            _logger.LogInformation("event_bus {id} published with data: {@Data}",
                 message.Id,
-                message.CreationDate);
+                message);
         }
     }
 }
