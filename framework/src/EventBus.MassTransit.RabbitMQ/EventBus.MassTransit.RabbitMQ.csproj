@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package contains EventBus implementation.</Description>
 	<Summary>Package contains EventBus implementation.</Summary>
-	<Version>0.0.0.8</Version>
+	<Version>0.0.0.9</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
