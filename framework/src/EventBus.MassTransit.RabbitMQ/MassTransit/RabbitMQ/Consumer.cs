@@ -12,7 +12,7 @@ namespace Light.MassTransit.RabbitMQ
         private readonly ILogger _logger;
 
         // for inherit classes can config this;
-        public virtual bool ThrowIfError { get; } = false;
+        public virtual bool ThrowIfError => true;
 
         public Consumer(ILogger logger)
         {
