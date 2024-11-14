@@ -49,7 +49,7 @@ public class ActiveDirectoryService(IOptions<DomainOptions> domain) : IActiveDir
             {
                 result = Result<DomainUserDto>.Success(new DomainUserDto
                 {
-                    UserName = adUser.Name,
+                    UserName = adUser.UserPrincipalName,
                     FirstName = adUser.GivenName,
                     LastName = adUser.Surname,
                     PhoneNumber = adUser.VoiceTelephoneNumber,
