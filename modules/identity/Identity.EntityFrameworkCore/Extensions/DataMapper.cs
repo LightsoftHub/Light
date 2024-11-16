@@ -9,11 +9,11 @@ public static class DataMapper
         Expression<Func<User, UserDto>> selectExp = s => new UserDto
         {
             Id = s.Id,
-            UserName = s.UserName,
-            FirstName = s.FirstName,
-            LastName = s.LastName,
-            Email = s.Email,
-            PhoneNumber = s.PhoneNumber,
+            UserName = s.UserName ?? "",
+            FirstName = s.FirstName ?? "",
+            LastName = s.LastName ?? "",
+            Email = s.Email ?? "",
+            PhoneNumber = s.PhoneNumber ?? "",
             UseDomainPassword = s.UseDomainPassword,
             Status = s.Status.Value,
             IsDeleted = s.IsDeleted,
@@ -27,11 +27,11 @@ public static class DataMapper
         var dto = new UserDto
         {
             Id = user.Id,
-            UserName = user.UserName,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Email = user.Email,
-            PhoneNumber = user.PhoneNumber,
+            UserName = user.UserName ?? "",
+            FirstName = user.FirstName ?? "",
+            LastName = user.LastName ?? "",
+            Email = user.Email ?? "",
+            PhoneNumber = user.PhoneNumber ?? "",
             UseDomainPassword = user.UseDomainPassword,
             Status = user.Status.Value,
             IsDeleted = user.IsDeleted,
@@ -45,7 +45,7 @@ public static class DataMapper
         Expression<Func<Role, RoleDto>> selectExp = s => new RoleDto
         {
             Id = s.Id,
-            Name = s.Name,
+            Name = s.Name ?? "",
             Description = s.Description,
             //TenantId = s.TenantId,
         };
@@ -58,7 +58,7 @@ public static class DataMapper
         var dto = new RoleDto
         {
             Id = role.Id,
-            Name = role.Name,
+            Name = role.Name ?? "",
             Description = role.Description,
             //TenantId = role.TenantId,
         };
