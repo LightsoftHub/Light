@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFramework>net8.0</TargetFramework>
+	<TargetFramework>net9.0</TargetFramework>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light.AspNetCore.Swagger</RootNamespace>
@@ -23,8 +23,8 @@
 
   <ItemGroup>
 	<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.*" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.9.0" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.9.0" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.0.0" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>

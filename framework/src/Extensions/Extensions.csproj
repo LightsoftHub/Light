@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>A simple package to process data faster.</Description>
 	<Summary>A simple package to process data faster.</Summary>
-	<Version>0.0.0.5</Version>
+	<Version>0.0.0.6</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReleaseNotes></PackageReleaseNotes>
@@ -22,8 +22,8 @@
 
   <ItemGroup>
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageReference Include="System.Text.Json" Version="8.*" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.*" />
+    <PackageReference Include="System.Text.Json" Version="9.*" />
   </ItemGroup>
 
   <ItemGroup>

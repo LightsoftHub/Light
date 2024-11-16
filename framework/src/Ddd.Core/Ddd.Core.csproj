@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFramework>net8.0</TargetFramework>
+	<TargetFramework>net9.0</TargetFramework>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
 	<RootNamespace>Light</RootNamespace>
@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package containing useful base interfaces, classes, enums, value objects.</Description>
 	<Summary>Package containing useful base interfaces, classes, enums, value objects.</Summary>
-	<Version>0.0.0.6</Version>
+	<Version>0.0.0.7</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReleaseNotes></PackageReleaseNotes>
