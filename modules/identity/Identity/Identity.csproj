@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFramework>net8.0</TargetFramework>
+	<TargetFramework>net9.0</TargetFramework>
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<RootNamespace>Light.Identity</RootNamespace>
@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Identity module package.</Description>
 	<Summary>Identity module package.</Summary>
-	<Version>0.0.0.3</Version>
+	<Version>0.0.0.4</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
