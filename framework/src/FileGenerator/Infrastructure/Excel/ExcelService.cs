@@ -23,7 +23,7 @@ namespace Light.Infrastructure.Excel
             return wb.AsStream();
         }
 
-        public Stream Export<T>(IList<T> data, string? sheetName = null)
+        public Stream Export<T>(IEnumerable<T> data, string? sheetName = null)
         {
             using var wb = new XLWorkbook();
             wb.Worksheets.Add(sheetName ?? "data").FirstCell().InsertTable(data, true);

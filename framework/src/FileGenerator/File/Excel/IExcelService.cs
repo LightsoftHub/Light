@@ -14,7 +14,7 @@ namespace Light.File.Excel
         /// <summary>
         /// Export a list data to file
         /// </summary>
-        Stream Export<T>(IList<T> data, string? sheetName = null);
+        Stream Export<T>(IEnumerable<T> data, string? sheetName = null);
 
         /// <summary>
         /// Export multi list data to file
