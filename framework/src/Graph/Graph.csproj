@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package using Microsoft Graph.</Description>
 	<Summary>Package using Microsoft Graph.</Summary>
-	<Version>0.0.0.3</Version>
+	<Version>0.0.0.4</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -25,7 +25,6 @@
 	<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.*" />
 	<PackageReference Include="Microsoft.Graph" Version="5.*" />
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
-	<PackageReference Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
 
   <ItemGroup>
