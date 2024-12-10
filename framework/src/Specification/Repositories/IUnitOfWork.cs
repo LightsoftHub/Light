@@ -12,7 +12,7 @@ namespace Light.Repositories
         /// <summary>
         ///     Can be used to query, add, update, remove instances of T
         /// </summary>
-        IRepositoryBase<T> Repository<T>(bool useCustomRepository = false) where T : class;
+        IRepository<T> Set<T>(bool useCustomRepository = false) where T : class;
 
         /// <summary>
         ///     Asynchronously begin a new transaction.

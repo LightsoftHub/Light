@@ -4,12 +4,12 @@ using System.Reflection;
 
 namespace Light.AspNetCore.Builder;
 
-public static class ModuleApplicationBuilderExtensions
+public static class ModuleBuilderExtensions
 {
     /// <summary>
     /// Scan & configure module pipelines
     /// </summary>
-    public static IApplicationBuilder UseModules<T>(this IApplicationBuilder builder, Assembly[] assemblies)
+    public static IApplicationBuilder UseModules<T>(this WebApplication builder, Assembly[] assemblies)
         where T : ModulePipeline
     {
         if (assemblies == null || assemblies.Length == 0)
@@ -24,11 +24,12 @@ public static class ModuleApplicationBuilderExtensions
             .Where(x =>
                 typeof(T).IsAssignableFrom(x)
                 && x.IsClass && !x.IsAbstract && !x.IsGenericType)
-            .Select(s => Activator.CreateInstance(s) as IModuleApplicationBuilder);
+            .Select(s => Activator.CreateInstance(s) as IModuleBuilder);
 
         foreach (var instance in modulePipelines)
         {
             instance?.ConfigurePipelines(builder);
+            instance?.MapEndpoints(builder);
         }
 
         return builder;
@@ -37,7 +38,7 @@ public static class ModuleApplicationBuilderExtensions
     /// <summary>
     /// Scan & configure module pipelines
     /// </summary>
-    public static IApplicationBuilder UseModules(this IApplicationBuilder builder, Assembly[] assemblies)
+    public static IApplicationBuilder UseModules(this WebApplication builder, Assembly[] assemblies)
     {
         return builder.UseModules<ModulePipeline>(assemblies);
     }

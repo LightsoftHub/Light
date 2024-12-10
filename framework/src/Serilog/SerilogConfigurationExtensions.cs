@@ -33,7 +33,7 @@ namespace Light.Serilog
         {
             var elementName = "FileAsync";
 
-            var options = SerilogOptionsExtensions.GetWriteToOptions(configuration, elementName);
+            var options = SerilogOptionsExtensions.GetWriteTo(configuration, elementName);
 
             if (options == null)
             {
@@ -118,7 +118,7 @@ namespace Light.Serilog
         {
             var elementName = "ElasticsearchAsync";
 
-            var options = SerilogOptionsExtensions.GetWriteToOptions(configuration, elementName);
+            var options = SerilogOptionsExtensions.GetWriteTo(configuration, elementName);
 
             if (options != null && options.Args != null)
             {

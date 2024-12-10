@@ -46,11 +46,11 @@ namespace Light.Repositories
         /// <summary>
         ///     Asynchronous find a instance of T by key.
         /// </summary>
-        Task<T?> FindByKeyAsync<TKey>(TKey key, CancellationToken cancellationToken = default) where TKey : notnull;
+        Task<T?> FindAsync<TKey>(TKey key, CancellationToken cancellationToken = default) where TKey : notnull;
 
         /// <summary>
         ///     Asynchronous find a instance of T by object ids.
         /// </summary>
-        Task<T?> FindByKeyAsync(object?[] key, CancellationToken cancellationToken = default);
+        Task<T?> FindAsync(object?[] key, CancellationToken cancellationToken = default);
     }
 }

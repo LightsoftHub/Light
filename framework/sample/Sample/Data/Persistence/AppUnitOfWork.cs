@@ -3,7 +3,7 @@
 namespace Sample.Data.Persistence
 {
     public class AppUnitOfWork(AlphaDbContext context) :
-        UnitOfWorkBase(context),
+        UnitOfWork(context),
         IAppUnitOfWork
     {
     }

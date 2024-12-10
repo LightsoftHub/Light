@@ -23,7 +23,7 @@ namespace Sample.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
         {
-            var list = await _uow.Repository<RetailLocation>(true).ToListAsync(cancellationToken);
+            var list = await _uow.Set<RetailLocation>(true).ToListAsync(cancellationToken);
             //var list1 = await _locationRepo.GetAllAsync(cancellationToken);
             return Ok(list);
         }

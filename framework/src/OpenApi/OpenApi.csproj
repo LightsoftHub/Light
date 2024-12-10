@@ -4,14 +4,14 @@
 	<TargetFramework>net9.0</TargetFramework>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
-	<RootNamespace>Light.AspNetCore.Swagger</RootNamespace>
-	<AssemblyName>Lightsoft.AspNetCore.Swagger</AssemblyName>
-	<Title>Lightsoft.AspNetCore.Swagger</Title>
+	<RootNamespace>Light.AspNetCore.OpenApi</RootNamespace>
+	<AssemblyName>Lightsoft.AspNetCore.OpenApi</AssemblyName>
+	<Title>Lightsoft.AspNetCore.OpenApi</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
-	<Description>Swagger package.</Description>
-	<Summary>Swagger package.</Summary>
-	<Version>0.0.0.2</Version>
+	<Description>OpenApi package.</Description>
+	<Summary>OpenApi package.</Summary>
+	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -23,8 +23,7 @@
 
   <ItemGroup>
 	<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.*" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.1.0" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.1.0" />
+	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>

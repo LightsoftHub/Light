@@ -5,7 +5,7 @@ namespace Sample.Data.Persistence
 {
     public class AppRepository<TEntity>(
         AlphaDbContext context) :
-        RepositoryBase<TEntity>(context),
+        Repository<TEntity>(context),
         IAppRepository<TEntity>
         where TEntity : class, IEntity
     {

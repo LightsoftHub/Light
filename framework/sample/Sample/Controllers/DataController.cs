@@ -12,17 +12,43 @@ namespace Sample.Controllers
         IRepository<RetailLocation, AlphaDbContext> locationRepo,
         ILogger<DataController> logger) : ControllerBase
     {
+        [HttpGet("categories")]
+        public async Task<IActionResult> GetCategories()
+        {
+            var data = await unitOfWork.Set<RetailCategory>().ToListAsync();
+            return Ok(data);
+        }
+
+        [HttpGet("categories/{id}")]
+        public async Task<IActionResult> GetCategories(string id)
+        {
+            var data = await unitOfWork.Set<RetailCategory>().FindAsync(id);
+
+            return Ok(data);
+        }
+
+        [HttpPut("categories/{id}")]
+        public async Task<IActionResult> GetCategories(string id, string value)
+        {
+            var data = await unitOfWork.Set<RetailCategory>().FindAsync(id);
+            data!.Name = value;
+
+            await unitOfWork.SaveChangesAsync();
+
+            return Ok(data);
+        }
+
         [HttpGet("locations")]
         public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
         {
-            var data = await unitOfWork.Repository<RetailLocation>().ToListAsync(cancellationToken);
+            var data = await unitOfWork.Set<RetailLocation>().ToListAsync(cancellationToken);
             return Ok(data);
         }
 
         [HttpGet("locations/{id}")]
         public async Task<IActionResult> GetAsync(string id, CancellationToken cancellationToken)
         {
-            var data = await unitOfWork.Repository<RetailLocation>().FindByKeyAsync(id, cancellationToken);
+            var data = await unitOfWork.Set<RetailLocation>().FindAsync(id, cancellationToken);
 
             data.ThrowIfNull();
 

@@ -113,6 +113,8 @@ try
 
     app.MapHealthChecksEndpoint();
 
+    app.SeedData();
+
     app.Run();
 }
 catch (Exception ex) when (!ex.GetType().Name.Equals("StopTheHostException", StringComparison.Ordinal))

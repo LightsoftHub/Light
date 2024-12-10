@@ -24,7 +24,7 @@ public static class RepositoryServiceCollectionExtensions
     public static IServiceCollection AddUnitOfWork<TContext>(this IServiceCollection services)
         where TContext : DbContext
     {
-        services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork<TContext>));
+        services.AddScoped<IUnitOfWork, UnitOfWork<TContext>>();
 
         return services;
     }

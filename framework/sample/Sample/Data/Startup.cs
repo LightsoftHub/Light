@@ -38,4 +38,24 @@ public static class Startup
 
         return services;
     }
+
+    public static void SeedData(this IApplicationBuilder builder)
+    {
+        var scope = builder.ApplicationServices.CreateScope();
+
+        var context = scope.ServiceProvider.GetRequiredService<AlphaDbContext>();
+
+        var categories = new List<RetailCategory>();
+
+        for (int i = 1; i <= 20; i++)
+        {
+            categories.Add(new RetailCategory
+            {
+                Name = $"Category {i}"
+            });
+        }
+
+        context.RetailCategories.AddRange(categories);
+        context.SaveChanges();
+    }
 }

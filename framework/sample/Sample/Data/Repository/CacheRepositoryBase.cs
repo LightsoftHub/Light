@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Sample.Data.Repository;
 
-public abstract class CacheRepositoryBase<T> : RepositoryBase<T>, ICacheRepository<T>
+public abstract class CacheRepositoryBase<T> : Repository<T>, ICacheRepository<T>
     where T : class
 {
     private readonly ICacheService _cacheService;

@@ -11,7 +11,7 @@ namespace Light.Serilog
             return configuration.GetSection("Serilog:WriteTo").Get<IEnumerable<WriteToOptions>>();
         }
 
-        public static WriteToOptions? GetWriteToOptions(IConfiguration configuration, string firstElementName)
+        public static WriteToOptions? GetWriteTo(IConfiguration configuration, string firstElementName)
         {
             var options = GetWriteToOptions(configuration);
 
