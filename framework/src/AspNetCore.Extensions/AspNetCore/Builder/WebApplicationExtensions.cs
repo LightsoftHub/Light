@@ -4,12 +4,12 @@ using System.Reflection;
 
 namespace Light.AspNetCore.Builder;
 
-public static class ModuleBuilderExtensions
+public static class WebApplicationExtensions
 {
     /// <summary>
     /// Scan & configure module pipelines
     /// </summary>
-    public static IApplicationBuilder UseModules<T>(this WebApplication builder, Assembly[] assemblies)
+    public static WebApplication UseModules<T>(this WebApplication builder, Assembly[] assemblies)
         where T : ModulePipeline
     {
         if (assemblies == null || assemblies.Length == 0)
@@ -38,7 +38,7 @@ public static class ModuleBuilderExtensions
     /// <summary>
     /// Scan & configure module pipelines
     /// </summary>
-    public static IApplicationBuilder UseModules(this WebApplication builder, Assembly[] assemblies)
+    public static WebApplication UseModules(this WebApplication builder, Assembly[] assemblies)
     {
         return builder.UseModules<ModulePipeline>(assemblies);
     }
