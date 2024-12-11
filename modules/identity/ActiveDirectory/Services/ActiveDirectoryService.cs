@@ -23,9 +23,10 @@ public class ActiveDirectoryService(IOptions<DomainOptions> domain) : IActiveDir
 
             // find a user
             UserPrincipal user = UserPrincipal.FindByIdentity(adContext, userName);
+
+            //Check user is blocked
             if (user is not null && !user.IsAccountLockedOut())
             {
-                //Check user is blocked
                 var validate = adContext.ValidateCredentials(userName, password);
                 if (validate)
                 {
@@ -43,7 +44,7 @@ public class ActiveDirectoryService(IOptions<DomainOptions> domain) : IActiveDir
         {
             var adUser = UserPrincipal.FindByIdentity(adContext, userName);
 
-            IResult<DomainUserDto> result = Result<DomainUserDto>.NotFound("DomainUser", userName);
+            IResult<DomainUserDto> result = Result<DomainUserDto>.Error($"User {userName} not found on AD");
 
             if (adUser != null)
             {
