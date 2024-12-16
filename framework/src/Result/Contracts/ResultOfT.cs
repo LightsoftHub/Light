@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Light.Contracts
+﻿namespace Light.Contracts
 {
-    public class Result<T> : IResult<T>
+    public class Result<T> : Result, IResult<T>
     {
         public Result()
         {
@@ -31,35 +29,27 @@ namespace Light.Contracts
 
         public static implicit operator T(Result<T> result) => result.Data;
 
-        public string Code { get; set; }
-
-        public bool Succeeded { get; set; }
-
-        public string Message { get; set; } = "";
-
-        public string RequestId { get; set; } = Guid.NewGuid().ToString();
-
         public T Data { get; set; }
 
         public static Result<T> Success(T data, string message = "") =>
             new Result<T>(data, message);
 
-        public static Result<T> Forbidden(string message = "") =>
+        public static new Result<T> Forbidden(string message = "") =>
             new Result<T>(ResultCode.forbidden, message);
 
-        public static Result<T> Unauthorized(string message = "") =>
+        public static new Result<T> Unauthorized(string message = "") =>
             new Result<T>(ResultCode.unauthorized, message);
 
-        public static Result<T> NotFound(string objectName, object queryValue)
-        {
-            var message = $"Query object {objectName} by {queryValue} not found";
-            return new Result<T>(ResultCode.not_found, message);
-        }
+        public static new Result<T> NotFound(string message = "") =>
+            new Result<T>(ResultCode.not_found, message);
 
-        public static Result<T> NotFound<TObject>(object queryValue) =>
+        public static new Result<T> NotFound(string objectName, object queryValue) =>
+            new Result<T>(ResultCode.not_found, $"Query object {objectName} by {queryValue} not found");
+
+        public static new Result<T> NotFound<TObject>(object queryValue) =>
             NotFound(typeof(TObject).Name, queryValue);
 
-        public static Result<T> Error(string message = "") =>
+        public static new Result<T> Error(string message = "") =>
             new Result<T>(ResultCode.error, message);
     }
 }
