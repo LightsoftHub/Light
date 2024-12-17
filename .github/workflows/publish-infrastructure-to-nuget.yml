@@ -18,6 +18,7 @@ jobs:
           
     - name: Install dependencies
       run: |
+        dotnet restore framework/src/ActiveDirectory/ActiveDirectory.csproj
         dotnet restore framework/src/Serilog/Serilog.csproj
         dotnet restore framework/src/Swagger/Swagger.csproj
         dotnet restore framework/src/FileGenerator/FileGenerator.csproj
@@ -27,6 +28,7 @@ jobs:
         
     - name: Build
       run: |
+        dotnet build framework/src/ActiveDirectory/ActiveDirectory.csproj --configuration Release --no-restore
         dotnet build framework/src/Serilog/Serilog.csproj --configuration Release --no-restore
         dotnet build framework/src/Swagger/Swagger.csproj --configuration Release --no-restore
         dotnet build framework/src/FileGenerator/FileGenerator.csproj --configuration Release --no-restore
@@ -38,6 +40,7 @@ jobs:
       run: |
         rm -rf nuget/
 
+        dotnet pack --no-build framework/src/ActiveDirectory/ActiveDirectory.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/Serilog/Serilog.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/Swagger/Swagger.csproj --configuration Release --output nuget
         dotnet pack --no-build framework/src/FileGenerator/FileGenerator.csproj --configuration Release --output nuget
