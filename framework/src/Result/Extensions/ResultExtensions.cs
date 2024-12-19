@@ -37,5 +37,20 @@ namespace Light.Extensions
         {
             return list.ToPagedResult(page.Page, page.PageSize);
         }
+
+        public static Paged<T> ToPaged<T>(this IEnumerable<T> list, int page = 1, int pageSize = 10)
+        {
+            page = page < 1 ? 1 : page;
+            pageSize = pageSize < 1 ? 10 : pageSize;
+            var count = list.Count();
+            var data = list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            return new Paged<T>(data, page, pageSize, count);
+        }
+
+        public static Paged<T> ToPaged<T>(this IEnumerable<T> list, IPage page)
+        {
+            return list.ToPaged(page.Page, page.PageSize);
+        }
     }
 }

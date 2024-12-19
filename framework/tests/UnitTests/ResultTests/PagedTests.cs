@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace UnitTests.ResultTests
 {
     public class PagedTests
@@ -24,10 +26,10 @@ namespace UnitTests.ResultTests
         {
             var pagedResult = listValues.ToPagedResult(1, pageSize);
 
-            var pagedInfo = pagedResult.PagedInfo;
+            var pagedData = pagedResult.Data;
 
-            pagedInfo.PageSize.Should().Be(pageSize);
-            pagedInfo.TotalRecords.Should().Be(totalRecords);
+            pagedData.PageSize.Should().Be(pageSize);
+            pagedData.TotalRecords.Should().Be(totalRecords);
         }
 
         [Fact]
@@ -35,9 +37,22 @@ namespace UnitTests.ResultTests
         {
             var pagedResult = listValues.ToPagedResult(1, pageSize);
 
-            var recordsPerPage = pagedResult.Data.Count();
+            var recordsPerPage = pagedResult.Data.Records.Count();
 
             recordsPerPage.Should().Be(pageSize);
+        }
+
+        [Fact]
+        public void Should_Serialize_Correct_PagedData()
+        {
+            var pagedResult = listValues.ToPagedResult(1, pageSize);
+
+            var json = JsonSerializer.Serialize(pagedResult);
+
+            var deserializeData = JsonSerializer.Deserialize<PagedResult<int>>(json);
+
+            deserializeData!.Data.Page.Should().Be(1);
+            deserializeData!.Data.PageSize.Should().Be(pageSize);
         }
     }
 }

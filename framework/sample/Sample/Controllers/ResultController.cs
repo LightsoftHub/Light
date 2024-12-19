@@ -29,7 +29,7 @@ namespace Sample.Controllers
 
             var res = Result.Success();
 
-            return Ok(res);
+            return Ok(ResultService.GetResult());
         }
 
         [HttpGet("object")]
@@ -94,6 +94,15 @@ namespace Sample.Controllers
             var errorT = Result<string>.Error("Error1");
 
             return Ok(new { error, errorT });
+        }
+    }
+
+    public static class ResultService
+    {
+        public static Result GetResult()
+        {
+            //return Result<Guid>.Success(Guid.NewGuid());
+            return Result<Guid>.Error("Error when get ID");
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Text.Json.Serialization;
-
-namespace Light.Contracts
+﻿namespace Light.Contracts
 {
-    public class Result : IResult
+    public class Result : ResultBase
     {
         public Result() { }
 
@@ -17,18 +14,6 @@ namespace Light.Contracts
         {
             Message = message;
         }
-
-        [JsonPropertyOrder(-1)]
-        public string Code { get; set; }
-
-        [JsonPropertyOrder(-1)]
-        public bool Succeeded { get; set; }
-
-        [JsonPropertyOrder(-1)]
-        public string Message { get; set; } = "";
-
-        [JsonPropertyOrder(-1)]
-        public string RequestId { get; set; } = Guid.NewGuid().ToString();
 
         public static Result Success(string message = "") =>
             new Result(ResultCode.success, message);

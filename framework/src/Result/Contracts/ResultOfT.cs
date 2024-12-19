@@ -1,10 +1,8 @@
 ﻿namespace Light.Contracts
 {
-    public class Result<T> : Result, IResult<T>
+    public class Result<T> : ResultBase, IResult<T>
     {
-        public Result()
-        {
-        }
+        public Result() : base() { }
 
         protected internal Result(T data, string message)
         {
@@ -29,27 +27,34 @@
 
         public static implicit operator T(Result<T> result) => result.Data;
 
+        public static implicit operator Result(Result<T> result) => new Result
+        {
+            Code = result.Code,
+            Succeeded = result.Succeeded,
+            Message = result.Message
+        };
+
         public T Data { get; set; }
 
         public static Result<T> Success(T data, string message = "") =>
             new Result<T>(data, message);
 
-        public static new Result<T> Forbidden(string message = "") =>
+        public static Result<T> Forbidden(string message = "") =>
             new Result<T>(ResultCode.forbidden, message);
 
-        public static new Result<T> Unauthorized(string message = "") =>
+        public static Result<T> Unauthorized(string message = "") =>
             new Result<T>(ResultCode.unauthorized, message);
 
-        public static new Result<T> NotFound(string message = "") =>
+        public static Result<T> NotFound(string message = "") =>
             new Result<T>(ResultCode.not_found, message);
 
-        public static new Result<T> NotFound(string objectName, object queryValue) =>
+        public static Result<T> NotFound(string objectName, object queryValue) =>
             new Result<T>(ResultCode.not_found, $"Query object {objectName} by {queryValue} not found");
 
-        public static new Result<T> NotFound<TObject>(object queryValue) =>
+        public static Result<T> NotFound<TObject>(object queryValue) =>
             NotFound(typeof(TObject).Name, queryValue);
 
-        public static new Result<T> Error(string message = "") =>
+        public static Result<T> Error(string message = "") =>
             new Result<T>(ResultCode.error, message);
     }
 }

@@ -2,13 +2,13 @@
 {
     public interface IResult
     {
+        string RequestId { get; set; }
+
         string Code { get; }
 
         bool Succeeded { get; }
 
         string Message { get; }
-
-        string RequestId { get; set; }
     }
 
     public interface IResult<out T> : IResult

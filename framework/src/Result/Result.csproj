@@ -9,7 +9,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package contains common result models.</Description>
 	<Summary>Package contains common result models.</Summary>
-	<Version>0.0.0.5</Version>
+	<Version>0.0.0.6</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>

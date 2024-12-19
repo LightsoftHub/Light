@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Light.Contracts
 {
-    public class PagedInfo : IPagedInfo
+    public class Paged<T> : IPaged<T>
     {
-        public PagedInfo() { }
+        public Paged() { }
 
-        protected internal PagedInfo(int page, int pageSize, int count)
+        protected internal Paged(IEnumerable<T> data, int page, int pageSize, int count)
         {
             Page = page;
             PageSize = pageSize;
             TotalRecords = count;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            Records = data;
         }
 
         public int Page { get; set; }
@@ -25,5 +27,7 @@ namespace Light.Contracts
         public bool HasPreviousPage => Page > 1;
 
         public bool HasNextPage => Page < TotalPages;
+
+        public IEnumerable<T> Records { get; set; }
     }
 }
