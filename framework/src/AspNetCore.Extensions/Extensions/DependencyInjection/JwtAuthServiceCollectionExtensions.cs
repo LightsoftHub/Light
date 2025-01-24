@@ -12,7 +12,7 @@ public static class JwtAuthServiceCollectionExtensions
     /// <summary>
     /// Add JWT Authentication with validate Issuer & SecretKey
     /// </summary>
-    public static IServiceCollection AddJwtAuth(this IServiceCollection services, string issuer, string secretKey)
+    public static IServiceCollection AddJwtAuth(this IServiceCollection services, string issuer, string secretKey, JwtBearerEvents jwtBearerEvents)
     {
         var keyAsBytes = Encoding.ASCII.GetBytes(secretKey);
 
@@ -37,37 +37,44 @@ public static class JwtAuthServiceCollectionExtensions
                     ClockSkew = TimeSpan.Zero
                 };
 
-                bearer.Events = new JwtBearerEvents
-                {
-                    OnChallenge = context =>
-                    {
-                        context.HandleResponse();
-                        if (!context.Response.HasStarted)
-                        {
-                            throw new UnauthorizedException("Authentication Failed.");
-                        }
-
-                        return Task.CompletedTask;
-                    },
-                    OnForbidden = _ => throw new ForbiddenException("You are not authorized to access this resource."),
-                    OnMessageReceived = context =>
-                    {
-                        if (context.HttpContext.Request.Path.StartsWithSegments("/signalr-hub"))
-                        {
-                            var accessToken = context.Request.Query["access_token"];
-
-                            if (!string.IsNullOrEmpty(accessToken))
-                            {
-                                // Read the token out of the query string
-                                context.Token = accessToken;
-                            }
-                        }
-
-                        return Task.CompletedTask;
-                    }
-                };
+                bearer.Events = jwtBearerEvents;
             });
 
         return services;
+    }
+
+    public static IServiceCollection AddJwtAuth(this IServiceCollection services, string issuer, string secretKey, string signalRHub = "/signalr-hub")
+    {
+        var jwtBearerEvents = new JwtBearerEvents
+        {
+            OnChallenge = context =>
+            {
+                context.HandleResponse();
+                if (!context.Response.HasStarted)
+                {
+                    throw new UnauthorizedException("Authentication Failed.");
+                }
+
+                return Task.CompletedTask;
+            },
+            OnForbidden = _ => throw new ForbiddenException("You are not authorized to access this resource."),
+            OnMessageReceived = context =>
+            {
+                if (context.HttpContext.Request.Path.StartsWithSegments(signalRHub))
+                {
+                    var accessToken = context.Request.Query["access_token"];
+
+                    if (!string.IsNullOrEmpty(accessToken))
+                    {
+                        // Read the token out of the query string
+                        context.Token = accessToken;
+                    }
+                }
+
+                return Task.CompletedTask;
+            }
+        };
+
+        return services.AddJwtAuth(issuer, secretKey, jwtBearerEvents);
     }
 }

@@ -1,5 +1,6 @@
 global using Light.AspNetCore.Mvc;
 global using Light.Repositories;
+using Light.ActiveDirectory;
 using Light.AspNetCore.Builder;
 using Light.AspNetCore.Middlewares;
 using Light.AspNetCore.Swagger;
@@ -60,6 +61,7 @@ try
     var issuer = builder.Configuration.GetValue<string>("JWT:Issuer");
     var key = builder.Configuration.GetValue<string>("JWT:SecretKey");
     builder.Services.AddJwtAuth(issuer!, key!);
+    builder.Services.AddActiveDirectory(opt => opt.Name = "domain.local");
 
     //builder.Services.AddTelegram();
 
