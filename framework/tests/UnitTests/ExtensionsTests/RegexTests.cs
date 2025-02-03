@@ -10,7 +10,7 @@
 
             var textRemovedEmoji = textWithEmoji.RemoveEmoji();
 
-            Assert.Equal(text, textRemovedEmoji);
+            LightAssert.ShouldBe(text, textRemovedEmoji);
         }
     }
 }

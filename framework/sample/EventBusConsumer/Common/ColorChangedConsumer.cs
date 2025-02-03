@@ -1,7 +1,7 @@
 ﻿using Light.MassTransit.RabbitMQ;
 using MassTransit;
 
-namespace EventBusSample.Common;
+namespace EventBusConsumer.Common;
 
 public class ColorChangedConsumer(
     ILogger<ColorChangedConsumer> logger) :

@@ -10,8 +10,8 @@ namespace UnitTests.ResultTests
             var success = Result.Success();
             var error = Result.Error();
 
-            success.Succeeded.Should().BeTrue();
-            error.Succeeded.Should().BeFalse();
+            success.Succeeded.ShouldBeTrue();
+            error.Succeeded.ShouldBeFalse();
         }
 
         [Fact]
@@ -23,11 +23,11 @@ namespace UnitTests.ResultTests
             var notFound = Result.NotFound();
             var unknown = new Result { Code = "OtherCode" };
 
-            success.MapResultCode().Should().Be(ResultCode.success);
-            error.MapResultCode().Should().Be(ResultCode.error);
-            unauthorized.MapResultCode().Should().Be(ResultCode.unauthorized);
-            notFound.MapResultCode().Should().Be(ResultCode.not_found);
-            unknown.MapResultCode().Should().Be(ResultCode.unknown);
+            success.MapResultCode().ShouldBe(ResultCode.success);
+            error.MapResultCode().ShouldBe(ResultCode.error);
+            unauthorized.MapResultCode().ShouldBe(ResultCode.unauthorized);
+            notFound.MapResultCode().ShouldBe(ResultCode.not_found);
+            unknown.MapResultCode().ShouldBe(ResultCode.unknown);
         }
 
         [Theory]
@@ -46,9 +46,9 @@ namespace UnitTests.ResultTests
 
             var mappedResultCode = result.MapResultCode();
 
-            mappedResultCode.Should().Be(code);
+            mappedResultCode.ShouldBe(code);
 
-            result.Message.Should().Be(message);
+            result.Message.ShouldBe(message);
         }
 
         [Theory]
@@ -60,8 +60,8 @@ namespace UnitTests.ResultTests
             var intId = Result<int>.Success(id);
             var stringId = Result<string>.Success($"ID-{id}");
 
-            intId.Data.Should().Be(id);
-            stringId.Data.Should().Be($"ID-{id}");
+            intId.Data.ShouldBe(id);
+            stringId.Data.ShouldBe($"ID-{id}");
         }
 
         [Fact]
@@ -73,8 +73,8 @@ namespace UnitTests.ResultTests
             var success = JsonSerializer.Deserialize<Result>(successJson);
             var error = JsonSerializer.Deserialize<Result>(errorJson);
 
-            success.MapResultCode().Should().Be(ResultCode.success);
-            error.MapResultCode().Should().Be(ResultCode.error);
+            success.MapResultCode().ShouldBe(ResultCode.success);
+            error.MapResultCode().ShouldBe(ResultCode.error);
         }
     }
 }

@@ -1,7 +1,4 @@
 ﻿namespace IntegrationTests;
-
-using static Testing;
-
 [TestFixture]
 public abstract class BaseTestFixture
 {

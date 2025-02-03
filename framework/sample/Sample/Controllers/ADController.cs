@@ -1,7 +1,4 @@
 ﻿using Light.ActiveDirectory.Interfaces;
-using Light.Contracts;
-using Light.Exceptions;
-using Light.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Controllers

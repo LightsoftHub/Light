@@ -28,8 +28,8 @@ namespace UnitTests.ResultTests
 
             var pagedData = pagedResult.Data;
 
-            pagedData.PageSize.Should().Be(pageSize);
-            pagedData.TotalRecords.Should().Be(totalRecords);
+            pagedData.PageSize.ShouldBe(pageSize);
+            pagedData.TotalRecords.ShouldBe(totalRecords);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace UnitTests.ResultTests
 
             var recordsPerPage = pagedResult.Data.Records.Count();
 
-            recordsPerPage.Should().Be(pageSize);
+            recordsPerPage.ShouldBe(pageSize);
         }
 
         [Fact]
@@ -51,8 +51,8 @@ namespace UnitTests.ResultTests
 
             var deserializeData = JsonSerializer.Deserialize<PagedResult<int>>(json);
 
-            deserializeData!.Data.Page.Should().Be(1);
-            deserializeData!.Data.PageSize.Should().Be(pageSize);
+            deserializeData!.Data.Page.ShouldBe(1);
+            deserializeData!.Data.PageSize.ShouldBe(pageSize);
         }
     }
 }

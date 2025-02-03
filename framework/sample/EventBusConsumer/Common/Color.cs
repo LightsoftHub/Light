@@ -1,4 +1,4 @@
-﻿namespace EventBusSample.Common
+﻿namespace EventBusConsumer.Common
 {
     public enum Color
     {

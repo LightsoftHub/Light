@@ -1,5 +1,4 @@
-using EventBusSample.Common;
-using Light.EventBus.Abstractions;
+using EventBusConsumer.Common;
 using Light.Extensions.DependencyInjection;
 using MassTransit;
 using System.Reflection;

@@ -13,6 +13,6 @@ public class UriBuilderTests
 
         var uriQuery = UriQueryBuilder.ToQueryString(query);
 
-        uriQuery.Should().Be("id=1&name=Hello");
+        uriQuery.ShouldBe("id=1&name=Hello");
     }
 }

@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-
-namespace IntegrationTests;
+﻿namespace IntegrationTests;
 
 using static Testing;
 
@@ -15,24 +13,24 @@ public class DomainEntityTests : BaseTestFixture
         // Create
         await AddAsync(product);
 
-        product.CreatedBy.Should().Be(TestValues.CreateByUserId);
-        product.CreatedOn.Should().Be(TestValues.CreateAtTime);
+        product.CreatedBy.ShouldBe(TestValues.CreateByUserId);
+        product.CreatedOn.ShouldBe(TestValues.CreateAtTime);
 
-        product.TenantId.Should().Be(TestValues.TenandId);
-        product.TenantId.Should().Be(TestValues.TenandId);
+        product.TenantId.ShouldBe(TestValues.TenandId);
+        product.TenantId.ShouldBe(TestValues.TenandId);
 
         // Update
         product.Name = "Update Name";
         await SaveAsync();
 
-        product.LastModifiedBy.Should().Be(TestValues.UpdateByUserId);
-        product.LastModifiedOn.Should().Be(TestValues.UpdateAtTime);
+        product.LastModifiedBy.ShouldBe(TestValues.UpdateByUserId);
+        product.LastModifiedOn.ShouldBe(TestValues.UpdateAtTime);
 
         // Delete
         await RemoveAsync(product);
 
-        product.IsDeleted.Should().Be(true);
-        product.DeletedBy.Should().Be(TestValues.DeleteByUserId);
-        product.DeletedOn.Should().Be(TestValues.DeleteAtTime);
+        product.IsDeleted.ShouldBe(true);
+        product.DeletedBy.ShouldBe(TestValues.DeleteByUserId);
+        product.DeletedOn.ShouldBe(TestValues.DeleteAtTime);
     }
 }

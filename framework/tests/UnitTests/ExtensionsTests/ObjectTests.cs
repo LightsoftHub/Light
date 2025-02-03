@@ -8,11 +8,11 @@ namespace UnitTests.ExtensionsTests
             var list = new List<object>();
             var dictionary = new Dictionary<string, object>();
 
-            list.IsList().Should().BeTrue();
-            dictionary.IsList().Should().BeFalse();
+            list.IsList().ShouldBeTrue();
+            dictionary.IsList().ShouldBeFalse();
 
-            list.IsDictionary().Should().BeFalse();
-            dictionary.IsDictionary().Should().BeTrue();
+            list.IsDictionary().ShouldBeFalse();
+            dictionary.IsDictionary().ShouldBeTrue();
         }
     }
 }

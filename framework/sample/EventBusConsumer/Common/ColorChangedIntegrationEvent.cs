@@ -1,6 +1,6 @@
 ﻿using Light.EventBus.Events;
 
-namespace EventBusSample.Common
+namespace EventBusConsumer.Common
 {
     [BindingName("color-value-changed")]
     public record ColorChangedIntegrationEvent : EventBase

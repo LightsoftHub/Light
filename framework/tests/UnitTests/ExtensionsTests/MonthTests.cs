@@ -19,9 +19,9 @@
             var firstDayOfMonth = new DateTime(yearTest, monthTest, 01);
             var lastDayOfMonth = new DateTime(yearTest, monthTest, totalDaysOfMonthTest);
 
-            Assert.Equal(firstDayOfMonth, monthData.FirstDay);
-            Assert.Equal(lastDayOfMonth, monthData.LastDay.Date);
-            Assert.Equal(totalDaysOfMonthTest, monthData.TotalDays);
+            LightAssert.ShouldBe(firstDayOfMonth, monthData.FirstDay);
+            LightAssert.ShouldBe(lastDayOfMonth, monthData.LastDay.Date);
+            LightAssert.ShouldBe(totalDaysOfMonthTest, monthData.TotalDays);
         }
     }
 }

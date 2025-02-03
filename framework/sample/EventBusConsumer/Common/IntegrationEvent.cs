@@ -1,7 +1,7 @@
 ﻿using Light.Domain;
 using Light.EventBus.Events;
 
-namespace EventBusSample.Common;
+namespace EventBusConsumer.Common;
 
 public abstract record IntegrationEvent : IIntegrationEvent
 {

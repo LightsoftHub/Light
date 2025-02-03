@@ -32,8 +32,8 @@ namespace UnitTests.ExtensionsTests
 
             var result = JsonSerializer.Deserialize<JsonTimeModel>(json);
 
-            result!.SecondsAsTime.Should().Be(time.DateTime);
-            result.MilliSecondsAsTime.Should().Be(time.DateTime);
+            result!.SecondsAsTime.ShouldBe(time.DateTime);
+            result.MilliSecondsAsTime.ShouldBe(time.DateTime);
         }
     }
 }

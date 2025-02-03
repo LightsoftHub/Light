@@ -34,8 +34,8 @@ namespace UnitTests.SpecificationTests
 
             var single = _models.Where(spec).Single();
 
-            single.Id.Should().Be(id);
-            single.Name.Should().Be($"Name Of {id}");
+            single.Id.ShouldBe(id);
+            single.Name.ShouldBe($"Name Of {id}");
         }
     }
 }

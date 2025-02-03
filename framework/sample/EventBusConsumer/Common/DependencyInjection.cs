@@ -1,7 +1,7 @@
 ﻿using Light.AspNetCore.Modularity;
 using MassTransit;
 
-namespace EventBusSample.Common
+namespace EventBusConsumer.Common
 {
     public class SampleModuleConsumers : ModuleConsumer
     {

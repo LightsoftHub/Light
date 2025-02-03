@@ -12,20 +12,20 @@ namespace UnitTests.ExtensionsTests
         public void Should_Return_Array()
         {
             var intArray = _intValue.ToArray();
-            Assert.Equal(intArray, _intArray);
+            LightAssert.ShouldBe(intArray, _intArray);
 
             var strArray = _strValue.ToArray();
-            Assert.Equal(strArray, _strArray);
+            LightAssert.ShouldBe(strArray, _strArray);
         }
 
         [Fact]
         public void Should_Return_String()
         {
             var intValue = _intArray.JoinToString();
-            Assert.Equal(intValue, _intValue);
+            LightAssert.ShouldBe(intValue, _intValue);
 
             var strValue = _strArray.JoinToString();
-            Assert.Equal(strValue, _strValue);
+            LightAssert.ShouldBe(strValue, _strValue);
         }
 
         [Fact]
@@ -39,8 +39,8 @@ namespace UnitTests.ExtensionsTests
 
             var values = model.GetValues();
 
-            values["Id"].Should().Be(1);
-            values["Value"].Should().Be("Name Of Id 1");
+            values["Id"].ShouldBe(1);
+            values["Value"].ShouldBe("Name Of Id 1");
         }
 
 
@@ -48,10 +48,10 @@ namespace UnitTests.ExtensionsTests
         public void Check_Object_Is_A_List()
         {
             var single = new TestObject();
-            single.IsList().Should().BeFalse();
+            single.IsList().ShouldBe(false);
 
             var list = new List<TestObject>();
-            list.IsList().Should().BeTrue();
+            list.IsList().ShouldBe(true);
         }
     }
 }

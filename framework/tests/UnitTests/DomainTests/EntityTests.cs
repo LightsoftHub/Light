@@ -7,11 +7,11 @@ public class EntityTests
     {
         var entity = new DefaultEntity();
 
-        entity.Id.Should().NotBeNullOrEmpty();
+        entity.Id.ShouldNotBeNullOrEmpty();
 
         var auditableEntity = new DefaultAuditableEntity();
 
-        auditableEntity.Id.Should().NotBeNullOrEmpty();
+        auditableEntity.Id.ShouldNotBeNullOrEmpty();
     }
 
     [Theory]
@@ -25,14 +25,14 @@ public class EntityTests
             Id = id
         };
 
-        entity.Id.Should().Be(id);
+        entity.Id.ShouldBe(id);
 
         var auditableEntity = new CustomAuditableEntity()
         {
             Id = id
         };
 
-        auditableEntity.Id.Should().Be(id);
+        auditableEntity.Id.ShouldBe(id);
     }
 
     [Fact]
@@ -46,8 +46,8 @@ public class EntityTests
         entity.AddDomainEvent(domainEvent);
         auditableEntity.AddDomainEvent(domainEvent);
 
-        entity.DomainEvents.Should().Contain(domainEvent);
-        auditableEntity.DomainEvents.Should().Contain(domainEvent);
+        entity.DomainEvents.ShouldContains(domainEvent);
+        auditableEntity.DomainEvents.ShouldContains(domainEvent);
 
         var intEntity = new CustomEntity()
         {
@@ -62,7 +62,7 @@ public class EntityTests
         intEntity.AddDomainEvent(domainEvent);
         intAuditableEntity.AddDomainEvent(domainEvent);
 
-        intEntity.DomainEvents.Should().Contain(domainEvent);
-        intAuditableEntity.DomainEvents.Should().Contain(domainEvent);
+        intEntity.DomainEvents.ShouldContains(domainEvent);
+        intAuditableEntity.DomainEvents.ShouldContains(domainEvent);
     }
 }
