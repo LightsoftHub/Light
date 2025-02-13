@@ -1,58 +1,25 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace Light.AspNetCore.CORS;
+namespace Light.AspNetCore.Cors;
 
 public static class CorsExtensions
 {
-    const string CORS_POLICY_NAME = "CORS_Policy";
-
-    static CorsOptions? GetCorsOptions(this IConfiguration configuration) =>
-        configuration.GetSection("CORS").Get<CorsOptions>();
-
-    public static IServiceCollection AddCorsPolicies(this IServiceCollection services, IConfiguration configuration)
-    {
-        var settings = configuration.GetCorsOptions();
-
-        if (settings != null && settings.Enable)
+    public static void AllowOrigins(this CorsOptions options, string policyName, params string[] origins) =>
+        options.AddPolicy(policyName, policy =>
         {
-            var corsPolicyName = CORS_POLICY_NAME;
+            policy
+                .WithOrigins(origins)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+        });
 
-            if (settings.Origins is not null)
-            {
-                services.AddCors(opts =>
-                    opts.AddPolicy(corsPolicyName, AddPolicy =>
-                        AddPolicy
-                            .WithOrigins(settings.Origins)
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowCredentials()));
-            }
-            else
-            {
-                services.AddCors(opts =>
-                    opts.AddPolicy(corsPolicyName, builder =>
-                            builder
-                                .AllowAnyOrigin()
-                                .AllowAnyMethod()
-                                .AllowAnyHeader()));
-            }
-        }
-
-        return services;
-    }
-
-    public static IApplicationBuilder UseCorsPolicies(this IApplicationBuilder app)
-    {
-        var settings = app.ApplicationServices.GetRequiredService<IOptions<CorsOptions>>().Value;
-
-        if (settings?.Enable is true)
+    public static void AllowAnyOrigins(this CorsOptions options, string policyName, params string[] origins) =>
+        options.AddPolicy(policyName, policy =>
         {
-            app.UseCors(CORS_POLICY_NAME);
-        }
-
-        return app;
-    }
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
 }

@@ -4,7 +4,7 @@ using System.Text.Json.Serialization.Metadata;
 
 namespace Light.AspNetCore.Mvc;
 
-internal class LowercaseControllerNameConvention : IControllerModelConvention
+internal class LowercaseControllerNameConvention(string separate = "_") : IControllerModelConvention
 {
     public void Apply(ControllerModel controller)
     {
@@ -16,7 +16,7 @@ internal class LowercaseControllerNameConvention : IControllerModelConvention
         }
     }
 
-    private static string Convert(string input, string separate = "_")
+    private string Convert(string input)
     {
         string newValue = "";
 

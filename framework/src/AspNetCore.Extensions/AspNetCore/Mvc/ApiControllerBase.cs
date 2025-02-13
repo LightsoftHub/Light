@@ -36,11 +36,4 @@ public abstract class ApiControllerBase : ControllerBase
         result.RequestId = HttpContext.TraceIdentifier;
         return result.ToActionResult();
     }
-
-    [ApiExplorerSettings(IgnoreApi = true)]
-    public virtual IActionResult BadRequest(string message = "")
-    {
-        var result = Result.BadRequest(message);
-        return result.ToActionResult();
-    }
 }
