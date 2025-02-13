@@ -39,7 +39,7 @@ public static class ResultExtensions
         var entry = await queryable.FirstOrDefaultAsync(cancellationToken);
 
         if (entry == null)
-            return Result<T>.NotFound(objectName, queryValue);
+            return NotFound<T>(objectName, queryValue);
 
         return Result<T>.Success(entry);
     }
@@ -51,7 +51,7 @@ public static class ResultExtensions
         var entry = await queryable.LastOrDefaultAsync(cancellationToken);
 
         if (entry == null)
-            return Result<T>.NotFound(objectName, queryValue);
+            return NotFound<T>(objectName, queryValue);
 
         return Result<T>.Success(entry);
     }
@@ -63,8 +63,13 @@ public static class ResultExtensions
         var entry = await queryable.SingleOrDefaultAsync(cancellationToken);
 
         if (entry == null)
-            return Result<T>.NotFound(objectName, queryValue);
+            return NotFound<T>(objectName, queryValue);
 
         return Result<T>.Success(entry);
+    }
+
+    private static Result<T> NotFound<T>(string objectName, object queryValue)
+    {
+        return Result<T>.NotFound($"Query object {objectName} by {queryValue} not found");
     }
 }

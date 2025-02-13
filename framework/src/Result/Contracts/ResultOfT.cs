@@ -39,6 +39,9 @@
         public static Result<T> Success(T data, string message = "") =>
             new Result<T>(data, message);
 
+        public static Result<T> BadRequest(string message = "") =>
+            new Result<T>(ResultCode.bad_request, message);
+
         public static Result<T> Forbidden(string message = "") =>
             new Result<T>(ResultCode.forbidden, message);
 
@@ -47,12 +50,6 @@
 
         public static Result<T> NotFound(string message = "") =>
             new Result<T>(ResultCode.not_found, message);
-
-        public static Result<T> NotFound(string objectName, object queryValue) =>
-            new Result<T>(ResultCode.not_found, $"Query object {objectName} by {queryValue} not found");
-
-        public static Result<T> NotFound<TObject>(object queryValue) =>
-            NotFound(typeof(TObject).Name, queryValue);
 
         public static Result<T> Error(string message = "") =>
             new Result<T>(ResultCode.error, message);
