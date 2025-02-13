@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Identity module package.</Description>
 	<Summary>Identity module package.</Summary>
-	<Version>0.0.0.5</Version>
+	<Version>0.0.0.6</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
-    <PackageReference Include="Lightsoft.Result" Version="0.0.0.4" />
+    <PackageReference Include="Lightsoft.Result" Version="0.0.0.8" />
   </ItemGroup>
 
   <ItemGroup>

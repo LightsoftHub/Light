@@ -37,7 +37,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         var user = await userManager.FindByIdAsync(id);
 
         if (user == null)
-            return Result<UserDto>.NotFound("User", id);
+            return Result<UserDto>.NotFound(id);
 
         var dto = user.MapToDto();
         dto.Roles = await userManager.GetRolesAsync(user);
@@ -50,7 +50,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         var user = await userManager.FindByNameAsync(userName);
 
         if (user == null)
-            return Result<UserDto>.NotFound("User", userName);
+            return Result<UserDto>.NotFound(userName);
 
         var dto = user.MapToDto();
         dto.Roles = await userManager.GetRolesAsync(user);
@@ -63,7 +63,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         var user = await userManager.FindByNameAsync(id);
 
         if (user == null)
-            return Result.NotFound("User", id);
+            return Result.NotFound(id);
 
         return await CheckPasswordAsync(user, password);
     }
@@ -73,7 +73,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         var user = await userManager.FindByNameAsync(userName);
 
         if (user == null)
-            return Result.NotFound("User", userName);
+            return Result.NotFound(userName);
 
         return await CheckPasswordAsync(user, password);
     }
@@ -113,7 +113,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         var user = await userManager.FindByIdAsync(updateUser.Id);
 
         if (user == null)
-            return Result.NotFound("User", updateUser.Id);
+            return Result.NotFound(updateUser.Id);
 
         // update base info
         user.UpdateInfo(
@@ -160,7 +160,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         var user = await userManager.FindByIdAsync(id);
 
         if (user == null)
-            return Result.NotFound("User", id);
+            return Result.NotFound(id);
 
         user.Delete();
 
@@ -174,7 +174,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         var user = await userManager.FindByIdAsync(id);
 
         if (user == null)
-            return Result.NotFound("User", id);
+            return Result.NotFound(id);
 
         var token = await userManager.GeneratePasswordResetTokenAsync(user);
 

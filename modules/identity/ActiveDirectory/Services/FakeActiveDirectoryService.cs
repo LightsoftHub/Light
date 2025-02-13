@@ -16,7 +16,7 @@ public class FakeActiveDirectoryService : IActiveDirectoryService
 
     public Task<IResult<DomainUserDto>> GetByUserNameAsync(string userName)
     {
-        IResult<DomainUserDto> result = Result<DomainUserDto>.NotFound("DomainUser", userName);
+        IResult<DomainUserDto> result = Result<DomainUserDto>.NotFound(userName);
 
         return Task.FromResult(result);
     }

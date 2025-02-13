@@ -32,7 +32,7 @@ public class TenantService(IIdentityDbContext context) : ITenantService
 
         if (tenant == null)
         {
-            return Result.NotFound<Tenant>(id);
+            return Result.NotFound(id);
         }
 
         tenant.Name = request.Name;
@@ -50,7 +50,7 @@ public class TenantService(IIdentityDbContext context) : ITenantService
 
         if (tenant == null)
         {
-            return Result.NotFound<Tenant>(id);
+            return Result.NotFound(id);
         }
 
         context.Tenants.Remove(tenant);

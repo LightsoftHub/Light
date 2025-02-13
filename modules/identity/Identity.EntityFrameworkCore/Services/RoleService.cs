@@ -22,7 +22,7 @@ public class RoleService(RoleManager<Role> roleManager) : IRoleService
         var role = await roleManager.FindByIdAsync(id);
 
         if (role == null)
-            return Result<RoleDto>.NotFound("Role", id);
+            return Result<RoleDto>.NotFound(id);
 
         var result = role.MapToDto();
 
@@ -42,7 +42,7 @@ public class RoleService(RoleManager<Role> roleManager) : IRoleService
         var role = await roleManager.FindByNameAsync(name);
 
         if (role == null)
-            return Result<RoleDto>.NotFound("Role", name);
+            return Result<RoleDto>.NotFound(name);
 
         var result = role.MapToDto();
 
@@ -76,7 +76,7 @@ public class RoleService(RoleManager<Role> roleManager) : IRoleService
         var role = await roleManager.FindByIdAsync(request.Id);
 
         if (role == null)
-            return Result.NotFound("Role", request.Id);
+            return Result.NotFound(request.Id);
 
         role.Update(request.Name, request.Description);
         role.UpdateTenant(request.TenantId);
@@ -118,7 +118,7 @@ public class RoleService(RoleManager<Role> roleManager) : IRoleService
         var role = await roleManager.FindByIdAsync(id);
 
         if (role == null)
-            return Result.NotFound("Role", id);
+            return Result.NotFound(id);
 
         //Check claim exist for role
         var claimsByRole = await roleManager.GetClaimsAsync(role);
