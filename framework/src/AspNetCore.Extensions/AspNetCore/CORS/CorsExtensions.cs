@@ -14,7 +14,7 @@ public static class CorsExtensions
                 .AllowCredentials();
         });
 
-    public static void AllowAnyOrigins(this CorsOptions options, string policyName, params string[] origins) =>
+    public static void AllowAnyOrigins(this CorsOptions options, string policyName) =>
         options.AddPolicy(policyName, policy =>
         {
             policy
