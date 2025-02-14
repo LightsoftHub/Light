@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Identity.Controllers;
 
-[AllowAnonymous]
-[Route("api/oauth")]
-public class TokenController(ITokenService tokenService) : VersionedApiController
+[Route("[controller]")]
+[ApiController]
+public class TokenController(ITokenService tokenService) : ControllerBase
 {
     [HttpPost("token")]
     public async Task<IActionResult> GetTokenAsync(string userName)

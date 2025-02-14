@@ -18,22 +18,22 @@ jobs:
 
     - name: Install dependencies
       run: |
-        dotnet restore framework/src/Ddd.Core/Ddd.Core.csproj
-        dotnet restore framework/src/AspNetCore/AspNetCore.csproj
-        dotnet restore framework/src/AspNetCore.Extensions/AspNetCore.Extensions.csproj
+        dotnet restore src/Ddd.Core/Ddd.Core.csproj
+        dotnet restore src/AspNetCore/AspNetCore.csproj
+        dotnet restore src/AspNetCore.Extensions/AspNetCore.Extensions.csproj
 
     - name: Build
       run: |
-        dotnet build framework/src/Ddd.Core/Ddd.Core.csproj --configuration Release --no-restore
-        dotnet build framework/src/AspNetCore/AspNetCore.csproj --configuration Release --no-restore
-        dotnet build framework/src/AspNetCore.Extensions/AspNetCore.Extensions.csproj --configuration Release --no-restore
+        dotnet build src/Ddd.Core/Ddd.Core.csproj --configuration Release --no-restore
+        dotnet build src/AspNetCore/AspNetCore.csproj --configuration Release --no-restore
+        dotnet build src/AspNetCore.Extensions/AspNetCore.Extensions.csproj --configuration Release --no-restore
 
     - name: Publish to Nuget.org
       run: |
         rm -rf nuget/
 
-        dotnet pack --no-build framework/src/Ddd.Core/Ddd.Core.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/AspNetCore/AspNetCore.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/AspNetCore.Extensions/AspNetCore.Extensions.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/Ddd.Core/Ddd.Core.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/AspNetCore/AspNetCore.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/AspNetCore.Extensions/AspNetCore.Extensions.csproj --configuration Release --output nuget
 
         dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json

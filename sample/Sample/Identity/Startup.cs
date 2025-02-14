@@ -32,6 +32,8 @@ public static class Startup
             options.User.RequireUniqueEmail = false;
         });
 
+        services.AddJwtTokenProvider();
+
         return services;
     }
 }

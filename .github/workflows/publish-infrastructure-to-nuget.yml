@@ -18,34 +18,34 @@ jobs:
           
     - name: Install dependencies
       run: |
-        dotnet restore framework/src/ActiveDirectory/ActiveDirectory.csproj
-        dotnet restore framework/src/Serilog/Serilog.csproj
-        dotnet restore framework/src/Swagger/Swagger.csproj
-        dotnet restore framework/src/FileGenerator/FileGenerator.csproj
-        dotnet restore framework/src/Mail.Contracts/Mail.Contracts.csproj
-        dotnet restore framework/src/SmtpMail/SmtpMail.csproj
-        dotnet restore framework/src/Graph/Graph.csproj
+        dotnet restore src/ActiveDirectory/ActiveDirectory.csproj
+        dotnet restore src/Serilog/Serilog.csproj
+        dotnet restore src/Swagger/Swagger.csproj
+        dotnet restore src/FileGenerator/FileGenerator.csproj
+        dotnet restore src/Mail.Contracts/Mail.Contracts.csproj
+        dotnet restore src/SmtpMail/SmtpMail.csproj
+        dotnet restore src/Graph/Graph.csproj
         
     - name: Build
       run: |
-        dotnet build framework/src/ActiveDirectory/ActiveDirectory.csproj --configuration Release --no-restore
-        dotnet build framework/src/Serilog/Serilog.csproj --configuration Release --no-restore
-        dotnet build framework/src/Swagger/Swagger.csproj --configuration Release --no-restore
-        dotnet build framework/src/FileGenerator/FileGenerator.csproj --configuration Release --no-restore
-        dotnet build framework/src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --no-restore
-        dotnet build framework/src/SmtpMail/SmtpMail.csproj --configuration Release --no-restore
-        dotnet build framework/src/Graph/Graph.csproj --configuration Release --no-restore
+        dotnet build src/ActiveDirectory/ActiveDirectory.csproj --configuration Release --no-restore
+        dotnet build src/Serilog/Serilog.csproj --configuration Release --no-restore
+        dotnet build src/Swagger/Swagger.csproj --configuration Release --no-restore
+        dotnet build src/FileGenerator/FileGenerator.csproj --configuration Release --no-restore
+        dotnet build src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --no-restore
+        dotnet build src/SmtpMail/SmtpMail.csproj --configuration Release --no-restore
+        dotnet build src/Graph/Graph.csproj --configuration Release --no-restore
         
     - name: Publish to Nuget.org
       run: |
         rm -rf nuget/
 
-        dotnet pack --no-build framework/src/ActiveDirectory/ActiveDirectory.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/Serilog/Serilog.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/Swagger/Swagger.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/FileGenerator/FileGenerator.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/SmtpMail/SmtpMail.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/Graph/Graph.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/ActiveDirectory/ActiveDirectory.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/Serilog/Serilog.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/Swagger/Swagger.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/FileGenerator/FileGenerator.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/SmtpMail/SmtpMail.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/Graph/Graph.csproj --configuration Release --output nuget
         
         dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json

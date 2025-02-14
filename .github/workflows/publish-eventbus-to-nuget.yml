@@ -18,19 +18,19 @@ jobs:
 
     - name: Install dependencies
       run: |
-        dotnet restore framework/src/EventBus/EventBus.csproj
-        dotnet restore framework/src/EventBus.MassTransit.RabbitMQ/EventBus.MassTransit.RabbitMQ.csproj
+        dotnet restore src/EventBus/EventBus.csproj
+        dotnet restore src/EventBus.MassTransit.RabbitMQ/EventBus.MassTransit.RabbitMQ.csproj
 
     - name: Build
       run: |
-        dotnet build framework/src/EventBus/EventBus.csproj --configuration Release --no-restore
-        dotnet build framework/src/EventBus.MassTransit.RabbitMQ/EventBus.MassTransit.RabbitMQ.csproj --configuration Release --no-restore
+        dotnet build src/EventBus/EventBus.csproj --configuration Release --no-restore
+        dotnet build src/EventBus.MassTransit.RabbitMQ/EventBus.MassTransit.RabbitMQ.csproj --configuration Release --no-restore
 
     - name: Publish to Nuget.org
       run: |
         rm -rf nuget/
 
-        dotnet pack --no-build framework/src/EventBus/EventBus.csproj --configuration Release --output nuget
-        dotnet pack --no-build framework/src/EventBus.MassTransit.RabbitMQ/EventBus.MassTransit.RabbitMQ.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/EventBus/EventBus.csproj --configuration Release --output nuget
+        dotnet pack --no-build src/EventBus.MassTransit.RabbitMQ/EventBus.MassTransit.RabbitMQ.csproj --configuration Release --output nuget
 
         dotnet nuget push nuget/*.nupkg -k '${{ secrets.NUGET_API_KEY }}' --skip-duplicate -s https://api.nuget.org/v3/index.json

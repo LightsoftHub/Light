@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Identity.Controllers;
 
-public class RoleController(IRoleService _roleService) : VersionedApiController
+[Route("[controller]")]
+[ApiController]
+public class RoleController(IRoleService _roleService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)

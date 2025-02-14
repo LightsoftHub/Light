@@ -82,7 +82,7 @@ try
     builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
     builder.Services.AutoAddDependencies();
 
-    //builder.Services.AddInfrastructureIdentity(builder.Configuration);
+    builder.Services.AddInfrastructureIdentity(builder.Configuration);
 
     builder.Services.AddModules(builder.Configuration, [executingAssembly]);
 
