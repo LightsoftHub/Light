@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package using Microsoft Graph.</Description>
 	<Summary>Package using Microsoft Graph.</Summary>
-	<Version>0.0.0.4</Version>
+	<Version>0.0.0.5</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>

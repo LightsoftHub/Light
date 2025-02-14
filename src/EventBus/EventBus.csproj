@@ -9,7 +9,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Contracts package for EventBus.</Description>
 	<Summary>Contracts package for EventBus.</Summary>
-	<Version>0.0.0.3</Version>
+	<Version>0.0.0.4</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>

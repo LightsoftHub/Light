@@ -1,6 +1,4 @@
-﻿using Light.ActiveDirectory.Interfaces;
-using Light.Identity;
-using Microsoft.AspNetCore.Authorization;
+﻿using Light.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Identity.Controllers;

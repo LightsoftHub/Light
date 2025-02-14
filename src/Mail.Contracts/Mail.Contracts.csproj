@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package containing application common models, abstractions, etc.</Description>
 	<Summary>Package containing application common models, abstractions, etc.</Summary>
-	<Version>0.0.0.2</Version>
+	<Version>0.0.0.3</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReleaseNotes></PackageReleaseNotes>

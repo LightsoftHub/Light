@@ -33,7 +33,8 @@ public class ActiveDirectoryService(IOptions<DomainOptions> domain) : IActiveDir
             }
 
             return Task.FromResult(false);
-        };
+        }
+        ;
     }
 
     public async Task<DomainUserDto?> GetByUserNameAsync(string userName)
