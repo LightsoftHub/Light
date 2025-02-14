@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>netstandard2.1</TargetFramework>
+	<Nullable>enable</Nullable>
+	<RootNamespace>Light</RootNamespace>
+	<AssemblyName>Lightsoft.AspNetCore</AssemblyName>
+	<Title>Lightsoft.AspNetCore</Title>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<Authors>minhvu</Authors>
+	<Description>AspNetCore base package.</Description>
+	<Summary>AspNetCore base package.</Summary>
+	<Version>0.0.0.13</Version>
+	<PackageTags>light;framework</PackageTags>
+	<PackageIcon>icon.png</PackageIcon>
+	<PackageReleaseNotes></PackageReleaseNotes>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.*" />
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.*" />
+	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

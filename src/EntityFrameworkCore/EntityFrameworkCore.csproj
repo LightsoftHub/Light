@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+	<RootNamespace>Light</RootNamespace>
+	<AssemblyName>Lightsoft.EntityFrameworkCore</AssemblyName>
+	<Title>Lightsoft.EntityFrameworkCore</Title>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<Authors>minhvu</Authors>
+	<Description>EF Core plugin package containing EF Core evaluator.</Description>
+	<Summary>EF Core plugin package containing EF Core evaluator.</Summary>
+	<Version>0.0.0.9</Version>
+	<PackageTags>light;framework</PackageTags>
+	<PackageIcon>icon.png</PackageIcon>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Dapper" Version="2.*" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.*" />
+	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Using Include="Microsoft.EntityFrameworkCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Result\Result.csproj" />
+    <ProjectReference Include="..\Specification\Specification.csproj" />
+  </ItemGroup>
+
+</Project>
