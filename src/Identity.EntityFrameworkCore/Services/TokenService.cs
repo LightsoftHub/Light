@@ -174,16 +174,19 @@ public class TokenService(
 
         // get userID from UserPrincipal
         var userId = userPrincipal.FindFirstValue(claimType.UserId);
+
         if (string.IsNullOrEmpty(userId))
             return Result<TokenDto>.Unauthorized("Error when read info from token.");
 
         // check refresh token is exist and not out of lifetime
         var isTokenValid = await CheckRefreshTokenAsync(userId, refreshToken);
+
         if (isTokenValid is false)
             return Result<TokenDto>.Unauthorized("Invalid refresh token.");
 
         var user = await userManager.FindByIdAsync(userId);
-        if (user == null || user.Status.IsActive is false)
+
+        if (user == null || user.Status.IsActive is false || user.IsDeleted)
             return Result<TokenDto>.Unauthorized("User not found or inactive.");
 
         var token = await IssueTokenForUserAsync(user);

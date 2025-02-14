@@ -52,7 +52,7 @@ try
         opt.RedisPassword = settings.RedisPassword;
     });
 
-    builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SMTPMail"));
+    builder.Services.Configure<SmtpConnection>(builder.Configuration.GetSection("SMTPMail"));
 
     builder.Services.AddFileGenerator();
 
@@ -74,8 +74,6 @@ try
 
     builder.Services.AddApiVersion(1);
     builder.Services.AddSwagger(builder.Configuration);
-    builder.Services.TryAddEnumerable(
-        ServiceDescriptor.Transient<IApiDescriptionProvider, SubgroupDescriptionProvider>());
 
     //builder.Services.AddGlobalExceptionHandler();
 

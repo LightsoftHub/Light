@@ -10,13 +10,13 @@ namespace Light.AspNetCore.Swagger;
 
 public static class Startup
 {
-    private const string _sectionName = "Swagger";
-
     public static IServiceCollection AddSwagger(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<SwaggerSettings>(configuration.GetSection(_sectionName));
+        var sectionName = "Swagger";
 
-        var settings = configuration.GetSection(_sectionName).Get<SwaggerSettings>();
+        services.Configure<SwaggerSettings>(configuration.GetSection(sectionName));
+
+        var settings = configuration.GetSection(sectionName).Get<SwaggerSettings>();
 
         ArgumentNullException.ThrowIfNull(settings, nameof(SwaggerSettings));
 
@@ -24,7 +24,7 @@ public static class Startup
         {
             if (settings.VersionDefinition)
             {
-                services.AddTransient<IConfigureOptions<SwaggerGenOptions>, CustomSwaggerOptions>();
+                services.AddTransient<IConfigureOptions<SwaggerGenOptions>, VersionDefinitionSwaggerOptions>();
             }
 
             services.AddSwaggerGen(opt =>
@@ -44,9 +44,7 @@ public static class Startup
 
                 opt.CustomSchemaIds(x => x.FullName); // fix Swagger when contain multi model, dto has same name
 
-                opt.DocumentFilter<TitleFilter>();
-
-                //opt.DocInclusionPredicate((name, api) => true);
+                //opt.DocumentFilter<TitleFilter>();
             });
 
             services.AddTransient<IConfigureOptions<SwaggerUIOptions>, CustomSwaggerUIOptions>();
@@ -72,9 +70,7 @@ public static class Startup
                     // build a swagger endpoint for each discovered API version
                     foreach (var description in provider.ApiVersionDescriptions)
                     {
-                        options
-                            .SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
-                                description.GroupName.ToUpperInvariant());
+                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName);
                     }
                 });
             }

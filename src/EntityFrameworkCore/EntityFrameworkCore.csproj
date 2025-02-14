@@ -27,16 +27,16 @@
   </ItemGroup>
 
   <ItemGroup>
+	<ProjectReference Include="..\Result\Result.csproj" />
+	<ProjectReference Include="..\Specification\Specification.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
 	<Using Include="Microsoft.EntityFrameworkCore" />
   </ItemGroup>
 
   <ItemGroup>
 	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Result\Result.csproj" />
-    <ProjectReference Include="..\Specification\Specification.csproj" />
   </ItemGroup>
 
 </Project>

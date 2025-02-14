@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Sample.Controllers
 {
     [ApiController]
-    [ApiVersion("2.0")]
     [Route("[controller]")]
     public class CacheController : ControllerBase
     {

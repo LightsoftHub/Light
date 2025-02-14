@@ -1,4 +1,4 @@
-﻿namespace Light.Mail.Contracts
+﻿namespace Light.Mail
 {
     public class MailAttachment
     {

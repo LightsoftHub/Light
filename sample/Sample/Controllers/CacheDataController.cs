@@ -6,8 +6,6 @@ using Sample.Data.Repository;
 namespace Sample.Controllers
 {
     [ApiController]
-    [ApiVersion("2.0")]
-    [ApiExplorerSettings(GroupName = "Group1")]
     [Route("[controller]")]
     public class CacheDataController(
         ICacheRepository<RetailLocation, AlphaDbContext> cacheRepository) : ControllerBase

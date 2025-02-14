@@ -1,9 +1,18 @@
 ﻿using System.Collections.Generic;
 
-namespace Light.Mail.Contracts
+namespace Light.Mail
 {
     public class MailMessage
     {
+        public class FromInfo
+        {
+            public string Address { get; set; } = null!;
+
+            public string? DisplayName { get; set; }
+        }
+
+        public FromInfo From { get; set; } = null!;
+        
         public List<string> Recipients { get; set; } = null!;
 
         public string Subject { get; set; } = default!;

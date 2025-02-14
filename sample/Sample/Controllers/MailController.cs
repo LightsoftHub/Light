@@ -9,10 +9,10 @@ namespace Sample.Controllers
     [ApiController]
     public class MailController : ControllerBase
     {
-        private readonly SmtpSettings _settings;
+        private readonly SmtpConnection _settings;
         private readonly ILogger<MailController> _logger;
 
-        public MailController(IOptions<SmtpSettings> settings,
+        public MailController(IOptions<SmtpConnection> settings,
             ILogger<MailController> logger)
         {
             _settings = settings.Value;

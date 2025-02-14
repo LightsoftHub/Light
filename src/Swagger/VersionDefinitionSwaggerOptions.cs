@@ -6,26 +6,17 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Light.AspNetCore.Swagger
 {
-    public class CustomSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+    public class VersionDefinitionSwaggerOptions(IApiVersionDescriptionProvider provider) : IConfigureOptions<SwaggerGenOptions>
     {
-        private readonly IApiVersionDescriptionProvider _provider;
-        private readonly SwaggerSettings _settings;
-
-        public CustomSwaggerOptions(IApiVersionDescriptionProvider provider,
-            IOptions<SwaggerSettings> options)
-            => (_provider, _settings) = (provider, options.Value);
-
         public void Configure(SwaggerGenOptions options)
         {
-            var title = _settings.Title;
-
             // add a swagger document for each discovered API version
             // note: you might choose to skip or document deprecated API versions differently
-            foreach (var description in _provider.ApiVersionDescriptions)
+            foreach (var description in provider.ApiVersionDescriptions)
             {
                 var info = new OpenApiInfo()
                 {
-                    Title = title ?? "API",
+                    Title = description.GroupName,
                     Version = description.ApiVersion.ToString(),
                 };
 

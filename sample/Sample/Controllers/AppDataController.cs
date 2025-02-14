@@ -5,7 +5,6 @@ using Sample.Data;
 namespace Sample.Controllers
 {
     [ApiController]
-    [ApiVersion("1.1")]
     [Route("[controller]")]
     public class AppDataController : ControllerBase
     {

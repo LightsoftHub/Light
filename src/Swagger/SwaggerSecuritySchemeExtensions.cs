@@ -4,7 +4,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Light.AspNetCore.Swagger
 {
-    internal static class SwaggerGenOptionsExtensions
+    internal static class SwaggerSecuritySchemeExtensions
     {
         internal static SwaggerGenOptions AddJwtSecurityScheme(this SwaggerGenOptions swaggerGenOptions)
         {

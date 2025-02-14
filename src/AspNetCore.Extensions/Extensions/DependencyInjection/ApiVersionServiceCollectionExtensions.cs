@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Light.Extensions.DependencyInjection;
 
@@ -20,5 +21,6 @@ public static class ApiVersionServiceCollectionExtensions
         {
             o.GroupNameFormat = "'v'VVV";
             o.SubstituteApiVersionInUrl = true;
+            o.FormatGroupName = (groupName, apiVersion) => $"{groupName}_{apiVersion}";
         });
 }

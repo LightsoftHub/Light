@@ -1,4 +1,5 @@
-﻿using Light.Extensions;
+﻿using Asp.Versioning;
+using Light.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Sample.Data;
 
@@ -6,7 +7,6 @@ namespace Sample.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    //[ApiExplorerSettings(GroupName = "Group1")]
     public class DataController(
         IUnitOfWork<AlphaDbContext> unitOfWork,
         IRepository<RetailLocation, AlphaDbContext> locationRepo,

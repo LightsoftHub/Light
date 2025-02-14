@@ -1,4 +1,4 @@
-﻿using Light.Mail.Contracts;
+﻿using Light.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,9 +6,6 @@ namespace Light.Graph
 {
     public interface IGraphMailService
     {
-        Task SendAsync(
-            Sender sender,
-            Mail.Contracts.MailMessage mail,
-            CancellationToken cancellationToken = default);
+        Task SendAsync(MailMessage mail, CancellationToken cancellationToken = default);
     }
 }

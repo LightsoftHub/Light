@@ -1,16 +1,15 @@
-﻿using Light.Mail.Contracts;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Light.SmtpMail
 {
     public class SmtpMail
     {
-        public async Task SendAsync(Sender sender, Mail.Contracts.MailMessage mail, SmtpSettings settings)
+        public async Task SendAsync(Mail.MailMessage mail, ISmtp smtp)
         {
-            var message = new System.Net.Mail.MailMessage
+            var message = new MailMessage
             {
-                From = new MailAddress(sender.Address, sender.DisplayName),
+                From = new MailAddress(mail.From.Address, mail.From.DisplayName),
                 Subject = mail.Subject,
                 IsBodyHtml = true,
                 Body = mail.Content,
@@ -40,14 +39,14 @@ namespace Light.SmtpMail
                 }
             }
 
-            using var smtp = new SmtpClient(settings.Host, settings.Port)
+            using var smtpClient = new SmtpClient(smtp.Host, smtp.Port)
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                EnableSsl = settings.UseSsl
+                EnableSsl = smtp.UseSsl
             };
 
-            await smtp.SendMailAsync(message);
-            smtp.Dispose();
+            await smtpClient.SendMailAsync(message);
+            smtpClient.Dispose();
         }
     }
 }
