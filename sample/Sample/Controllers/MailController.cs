@@ -1,4 +1,4 @@
-using Light.Mail.Contracts;
+using Light.Mail;
 using Light.SmtpMail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -27,6 +27,7 @@ namespace Sample.Controllers
 
             var message = new MailMessage
             {
+                From = new("zord.contactus@gmail.com", "ZORD - Contact Us"),
                 Subject = "Test...." + DateTime.Now,
                 Content = "Hello,.......... this test mail",
             };
@@ -43,10 +44,8 @@ namespace Sample.Controllers
             //    FileToBytes = byteArray
             //});
 
-            var sender = new Sender("zord.contactus@gmail.com", "ZORD - Contact Us");
-
             var smtp = new SmtpMailKit();
-            await smtp.SendAsync(sender, message, _settings);
+            await smtp.SendAsync(message, _settings);
 
             return Ok();
         }

@@ -6,6 +6,17 @@ namespace Light.Mail
     {
         public class FromInfo
         {
+            public FromInfo(string address)
+            {
+                Address = address;
+            }
+
+            public FromInfo(string address, string? displayName)
+            {
+                Address = address;
+                DisplayName = displayName;
+            }
+
             public string Address { get; set; } = null!;
 
             public string? DisplayName { get; set; }

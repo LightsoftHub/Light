@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Mail package services using STMP, MailKit.</Description>
 	<Summary>Mail package services using STMP, MailKit.</Summary>
-	<Version>0.0.0.6</Version>
+	<Version>0.0.0.7</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
