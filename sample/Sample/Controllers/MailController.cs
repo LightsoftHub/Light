@@ -25,9 +25,10 @@ namespace Sample.Controllers
             string filePath = @$"D:\\backups\\pexels-pixabay-268533.jpg";
             byte[] byteArray = System.IO.File.ReadAllBytes(filePath);
 
+            var from = new MailFrom("zord.contactus@gmail.com", "ZORD - Contact Us");
+
             var message = new MailMessage
             {
-                From = new("zord.contactus@gmail.com", "ZORD - Contact Us"),
                 Subject = "Test...." + DateTime.Now,
                 Content = "Hello,.......... this test mail",
             };
@@ -45,7 +46,7 @@ namespace Sample.Controllers
             //});
 
             var smtp = new SmtpMailKit();
-            await smtp.SendAsync(message, _settings);
+            await smtp.SendAsync(from, message, _settings);
 
             return Ok();
         }

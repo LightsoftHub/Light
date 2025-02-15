@@ -8,11 +8,11 @@ namespace Light.SmtpMail
 {
     public class SmtpMailKit
     {
-        public async Task SendAsync(MailMessage mail, IMailkitSmtp smtp, CancellationToken cancellationToken = default)
+        public async Task SendAsync(MailFrom from, MailMessage mail, IMailkitSmtp smtp, CancellationToken cancellationToken = default)
         {
             var email = new MimeMessage
             {
-                Sender = new MailboxAddress(mail.From.DisplayName, mail.From.Address),
+                Sender = new MailboxAddress(from.DisplayName, from.Address),
                 Subject = mail.Subject,
             };
 

@@ -18,7 +18,7 @@ namespace Light.Graph.Infrastructure
             _graphServiceClient = graphServiceClient;
         }
 
-        public async Task SendAsync(MailMessage mail, CancellationToken cancellationToken = default)
+        public async Task SendAsync(MailFrom from, MailMessage mail, CancellationToken cancellationToken = default)
         {
             // Define a simple e-mail message.
             var message = new Message
@@ -57,7 +57,7 @@ namespace Light.Graph.Infrastructure
             };
 
             // Send mail as the given user. 
-            await _graphServiceClient.Users[mail.From.Address].SendMail.PostAsync(request, cancellationToken: cancellationToken);
+            await _graphServiceClient.Users[from.Address].SendMail.PostAsync(request, cancellationToken: cancellationToken);
         }
 
         private List<Recipient> RecipientBuilder(List<string> addresses)

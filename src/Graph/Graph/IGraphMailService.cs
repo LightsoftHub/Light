@@ -6,6 +6,6 @@ namespace Light.Graph
 {
     public interface IGraphMailService
     {
-        Task SendAsync(MailMessage mail, CancellationToken cancellationToken = default);
+        Task SendAsync(MailFrom from, MailMessage mail, CancellationToken cancellationToken = default);
     }
 }

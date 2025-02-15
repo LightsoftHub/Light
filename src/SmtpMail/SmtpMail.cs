@@ -1,15 +1,16 @@
-﻿using System.Net.Mail;
+﻿using Light.Mail;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Light.SmtpMail
 {
     public class SmtpMail
     {
-        public async Task SendAsync(Mail.MailMessage mail, ISmtp smtp)
+        public async Task SendAsync(MailFrom from, Mail.MailMessage mail, ISmtp smtp)
         {
-            var message = new MailMessage
+            var message = new System.Net.Mail.MailMessage
             {
-                From = new MailAddress(mail.From.Address, mail.From.DisplayName),
+                From = new MailAddress(from.Address, from.DisplayName),
                 Subject = mail.Subject,
                 IsBodyHtml = true,
                 Body = mail.Content,
