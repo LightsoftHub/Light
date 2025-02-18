@@ -4,9 +4,9 @@ namespace Light.Identity.Services;
 
 public class UserAttributeService(IIdentityContext context) : IUserAttributeService
 {
-    public async Task<IResult<IEnumerable<UserAttributeDto>>> GetUserAttributesAsync(string userId)
+    public async Task<IEnumerable<UserAttributeDto>> GetByAsync(string userId)
     {
-        var userAttributes = await context.UserAttributes
+        return await context.UserAttributes
             .Where(x => x.UserId == userId)
             .AsNoTracking()
             .Select(s => new UserAttributeDto
@@ -17,11 +17,9 @@ public class UserAttributeService(IIdentityContext context) : IUserAttributeServ
                 Value = s.Value
             })
             .ToListAsync();
-
-        return Result<IEnumerable<UserAttributeDto>>.Success(userAttributes);
     }
 
-    public async Task<IResult> AddAsync(string userId, string key, string value)
+    public async Task AddAsync(string userId, string key, string value)
     {
         var userAttribute = await context.UserAttributes
             .Where(x => x.UserId == userId && x.Key == key)
@@ -44,16 +42,12 @@ public class UserAttributeService(IIdentityContext context) : IUserAttributeServ
         }
 
         await context.SaveChangesAsync();
-
-        return Result.Success();
     }
 
-    public async Task<IResult> DeleteAsync(string userId, string key)
+    public Task DeleteAsync(string userId, string key)
     {
-        await context.UserAttributes
+        return context.UserAttributes
             .Where(x => x.UserId == userId && x.Key == key)
             .ExecuteDeleteAsync();
-
-        return Result.Success();
     }
 }

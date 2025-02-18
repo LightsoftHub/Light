@@ -2,9 +2,9 @@
 
 public interface IUserAttributeService
 {
-    Task<IResult<IEnumerable<UserAttributeDto>>> GetUserAttributesAsync(string userId);
+    Task<IEnumerable<UserAttributeDto>> GetByAsync(string userId);
 
-    Task<IResult> AddAsync(string userId, string key, string value);
+    Task AddAsync(string userId, string key, string value);
 
-    Task<IResult> DeleteAsync(string userId, string key);
+    Task DeleteAsync(string userId, string key);
 }

@@ -35,7 +35,7 @@ public class UserController(
     [HttpGet("{id}/attribute")]
     public async Task<IActionResult> GetAttributeAsync([FromRoute] string id)
     {
-        var res = await userAttributeService.GetUserAttributesAsync(id);
+        var res = await userAttributeService.GetByAsync(id);
         return Ok(res);
     }
 

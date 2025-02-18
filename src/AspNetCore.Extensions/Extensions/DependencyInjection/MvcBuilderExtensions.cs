@@ -1,6 +1,7 @@
 ﻿using Light.AspNetCore.Mvc;
 using Light.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Mime;
@@ -12,13 +13,27 @@ namespace Light.Extensions.DependencyInjection;
 public static class MvcBuilderExtensions
 {
     /// <summary>
-    /// Add controlers with lowercase name
+    /// Add controllers with lowercase name
     /// </summary>
     public static IMvcBuilder AddLowercaseControllers(this IServiceCollection services)
     {
         return services.AddControllers(options =>
         {
             options.Conventions.Add(new LowercaseControllerNameConvention());
+        });
+    }
+
+    /// <summary>
+    /// Add controllers with custom conventions
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="controllerModelConvention"></param>
+    /// <returns></returns>
+    public static IMvcBuilder AddLowercaseControllers(this IServiceCollection services, IControllerModelConvention controllerModelConvention)
+    {
+        return services.AddControllers(options =>
+        {
+            options.Conventions.Add(controllerModelConvention);
         });
     }
 
