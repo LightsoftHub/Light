@@ -12,18 +12,8 @@ public static class ModuleJobBuilderExtensions
     public static IApplicationBuilder UseModuleJobs<T>(this IApplicationBuilder builder, Assembly[] assemblies)
         where T : ModuleJob
     {
-        if (assemblies == null || assemblies.Length == 0)
-        {
-            // get from all assembly if not define assemblies to scan
-            assemblies ??= AppDomain.CurrentDomain.GetAssemblies();
-        }
-
-        // get all classes inherit from interface
-        var modulePipelines = assemblies
-            .SelectMany(s => s.GetTypes())
-            .Where(x =>
-                typeof(T).IsAssignableFrom(x)
-                && x.IsClass && !x.IsAbstract && !x.IsGenericType)
+        // get all classes inherit from
+        var modulePipelines = AsemblyTypeExtensions.GetAssignableFrom<ModuleJob>(assemblies)
             .Select(s => Activator.CreateInstance(s) as ModuleJob);
 
         foreach (var instance in modulePipelines)
@@ -35,10 +25,8 @@ public static class ModuleJobBuilderExtensions
     }
 
     /// <summary>
-    /// Scan & configure module jobs pipelines
+    /// Scan & configure module jobs pipelines by default
     /// </summary>
-    public static IApplicationBuilder UseModuleJobs(this IApplicationBuilder builder, Assembly[] assemblies)
-    {
-        return builder.UseModuleJobs<ModuleJob>(assemblies);
-    }
+    public static IApplicationBuilder UseModuleJobs(this IApplicationBuilder builder, Assembly[] assemblies) =>
+        builder.UseModuleJobs<ModuleJob>(assemblies);
 }

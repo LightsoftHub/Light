@@ -1,6 +1,5 @@
 ﻿using Asp.Versioning;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace Light.Extensions.DependencyInjection;
 
