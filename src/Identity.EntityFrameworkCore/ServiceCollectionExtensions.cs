@@ -63,7 +63,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddJwtTokenProvider(this IServiceCollection services, Action<JwtOptions>? action = null)
     {
-        services.AddSingleton<IClaimType, ClaimTypeProvider>();
+        services.AddSingleton<IClaimType, DefaultClaimType>();
 
         if (action != null)
         {

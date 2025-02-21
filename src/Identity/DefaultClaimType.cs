@@ -3,29 +3,29 @@
 /// <summary>
 /// Default claim types
 /// </summary>
-public abstract class DefaultClaimType
+public class DefaultClaimType : IClaimType
 {
-    public const string UserId = "uid";
+    public virtual string UserId => "uid";
 
-    public const string UserName = "un";
+    public virtual string UserName => "un";
 
-    public const string FirstName = "first_name";
+    public virtual string FirstName => "first_name";
 
-    public const string LastName = "last_name";
+    public virtual string LastName => "last_name";
 
-    public const string FullName = "full_name";
+    public virtual string FullName => "full_name";
 
-    public const string PhoneNumber = "phone_number";
+    public virtual string PhoneNumber => "phone_number";
 
-    public const string Email = "email";
+    public virtual string Email => "email";
 
-    public const string Role = "role";
+    public virtual string Role => "role";
 
-    public const string Permission = "permission";
+    public virtual string Permission => "permission";
 
-    public const string ImageUrl = "image_url";
+    public virtual string ImageUrl => "image_url";
 
-    public const string Expiration = "exp";
+    public virtual string Expiration => "exp";
 
-    public const string AccessToken = "token";
+    public virtual string AccessToken => "token";
 }
