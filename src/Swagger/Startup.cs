@@ -45,6 +45,8 @@ public static class Startup
                 opt.CustomSchemaIds(x => x.FullName); // fix Swagger when contain multi model, dto has same name
 
                 //opt.DocumentFilter<TitleFilter>();
+
+                opt.UseInlineDefinitionsForEnums();
             });
 
             services.AddTransient<IConfigureOptions<SwaggerUIOptions>, CustomSwaggerUIOptions>();
