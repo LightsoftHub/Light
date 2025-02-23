@@ -3,12 +3,17 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Light.AspNetCore.Modularity;
 
-internal interface IModuleBuilder
+public interface IModuleBuilder
 {
     /// <summary>
     /// Configure Module Application Builder
     /// </summary>
     void ConfigurePipelines(IApplicationBuilder builder);
+
+    /// <summary>
+    /// Configure Hub Endpoint Route Builder
+    /// </summary>
+    void MapHub(IEndpointRouteBuilder builder);
 
     /// <summary>
     /// Configure Endpoint Route Builder

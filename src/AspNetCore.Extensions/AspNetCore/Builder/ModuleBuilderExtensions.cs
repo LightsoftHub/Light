@@ -11,7 +11,7 @@ public static class ModuleBuilderExtensions
     /// Scan & configure module pipelines
     /// </summary>
     public static IApplicationBuilder UseModules<T>(this IApplicationBuilder builder, Assembly[] assemblies)
-        where T : ModulePipeline
+        where T : IModuleBuilder
     {
         // get all classes inherit from interface
         var modulePipelines = AsemblyTypeExtensions.GetAssignableFrom<IModuleBuilder>(assemblies)
@@ -35,8 +35,32 @@ public static class ModuleBuilderExtensions
     /// <summary>
     /// Scan & map module endpoints
     /// </summary>
+    public static IEndpointRouteBuilder MapHubs<T>(this IEndpointRouteBuilder builder, Assembly[] assemblies)
+        where T : IModuleBuilder
+    {
+        // get all classes inherit from interface
+        var modulePipelines = AsemblyTypeExtensions.GetAssignableFrom<IModuleBuilder>(assemblies)
+            .Select(s => Activator.CreateInstance(s) as IModuleBuilder);
+
+        foreach (var instance in modulePipelines)
+        {
+            instance?.MapHub(builder);
+        }
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Scan & map module endpoints by default
+    /// </summary>
+    public static IEndpointRouteBuilder MapHubs(this IEndpointRouteBuilder builder, Assembly[] assemblies) =>
+        builder.MapHubs<ModulePipeline>(assemblies);
+
+    /// <summary>
+    /// Scan & map module endpoints
+    /// </summary>
     public static IEndpointRouteBuilder MapModuleEndpoints<T>(this IEndpointRouteBuilder builder, Assembly[] assemblies)
-        where T : ModulePipeline
+        where T : IModuleBuilder
     {
         // get all classes inherit from interface
         var modulePipelines = AsemblyTypeExtensions.GetAssignableFrom<IModuleBuilder>(assemblies)

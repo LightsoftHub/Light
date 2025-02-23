@@ -8,6 +8,9 @@ public abstract class ModulePipeline : IModuleBuilder
     public virtual void ConfigurePipelines(IApplicationBuilder builder)
     { }
 
+    public virtual void MapHub(IEndpointRouteBuilder builder)
+    { }
+
     public virtual void MapEndpoints(IEndpointRouteBuilder builder)
     { }
 }
