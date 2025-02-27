@@ -13,7 +13,7 @@ public class OrderServices : Light.AspNetCore.Modularity.Module
 
 public class OrderPipelines : Light.AspNetCore.Modularity.ModulePipeline
 {
-    public override void ConfigurePipelines(IApplicationBuilder builder)
+    public override void Configure(IApplicationBuilder builder)
     {
         builder.UseMiddleware<OrderMiddleware>();
 
@@ -34,7 +34,7 @@ public class ProductServices : Light.AspNetCore.Modularity.Module
 
 public class ProductPipelines : Light.AspNetCore.Modularity.ModulePipeline
 {
-    public override void ConfigurePipelines(IApplicationBuilder builder)
+    public override void Configure(IApplicationBuilder builder)
     {
         builder
             .UseMiddleware<ProductMiddleware>();

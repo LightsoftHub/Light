@@ -8,15 +8,20 @@ public interface IModuleBuilder
     /// <summary>
     /// Configure Module Application Builder
     /// </summary>
-    void ConfigurePipelines(IApplicationBuilder builder);
+    void Configure(IApplicationBuilder builder);
 
     /// <summary>
-    /// Configure Hub Endpoint Route Builder
+    /// Configure Module Hub Endpoint Route Builder
     /// </summary>
     void MapHub(IEndpointRouteBuilder builder);
 
     /// <summary>
-    /// Configure Endpoint Route Builder
+    /// Configure Module Endpoint Route Builder
     /// </summary>
     void MapEndpoints(IEndpointRouteBuilder builder);
+
+    /// <summary>
+    /// Configure Module WebApplication
+    /// </summary>
+    void Configure(WebApplication app);
 }

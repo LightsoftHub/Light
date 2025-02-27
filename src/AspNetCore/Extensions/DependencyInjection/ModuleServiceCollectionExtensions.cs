@@ -33,8 +33,8 @@ namespace Light.Extensions.DependencyInjection
 
             foreach (var instance in moduleServices)
             {
-                instance?.ConfigureServices(services);
-                instance?.ConfigureServices(services, configuration);
+                instance?.Configure(services);
+                instance?.Configure(services, configuration);
             }
 
             return services;

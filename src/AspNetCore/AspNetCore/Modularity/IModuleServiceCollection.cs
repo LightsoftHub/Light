@@ -8,11 +8,11 @@ namespace Light.AspNetCore.Modularity
         /// <summary>
         /// Module Service Collection
         /// </summary>
-        void ConfigureServices(IServiceCollection services);
+        void Configure(IServiceCollection services);
 
         /// <summary>
         /// Module Service Collection with IConfiguration
         /// </summary>
-        void ConfigureServices(IServiceCollection services, IConfiguration configuration);
+        void Configure(IServiceCollection services, IConfiguration configuration);
     }
 }

@@ -19,7 +19,7 @@ public static class ModuleBuilderExtensions
 
         foreach (var instance in modulePipelines)
         {
-            instance?.ConfigurePipelines(builder);
+            instance?.Configure(builder);
         }
 
         return builder;
@@ -79,4 +79,29 @@ public static class ModuleBuilderExtensions
     /// </summary>
     public static IEndpointRouteBuilder MapModuleEndpoints(this IEndpointRouteBuilder builder, Assembly[] assemblies) =>
         builder.MapModuleEndpoints<ModulePipeline>(assemblies);
+
+    /// <summary>
+    /// Scan & configure module pipelines
+    /// </summary>
+    public static IApplicationBuilder UseModules<T>(this WebApplication app, Assembly[] assemblies)
+        where T : IModuleBuilder
+    {
+        // get all classes inherit from interface
+        var modulePipelines = AsemblyTypeExtensions.GetAssignableFrom<IModuleBuilder>(assemblies)
+            .Select(s => Activator.CreateInstance(s) as IModuleBuilder);
+
+        foreach (var instance in modulePipelines)
+        {
+            instance?.Configure(app);
+        }
+
+        return app;
+    }
+
+    /// <summary>
+    /// Scan & configure module pipelines by default
+    /// </summary>
+    /// <returns></returns>
+    public static IApplicationBuilder UseModules(this WebApplication app, Assembly[] assemblies) =>
+        app.UseModules<ModulePipeline>(assemblies);
 }
