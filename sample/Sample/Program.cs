@@ -70,7 +70,8 @@ try
 
     builder.Services
         .AddControllers()
-        .AddInvalidModelStateHandler();
+        .AddInvalidModelStateHandler()
+        .AddDefaultJsonOptions();
 
     builder.Services.AddApiVersion(1);
     builder.Services.AddSwagger(builder.Configuration);

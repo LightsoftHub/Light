@@ -5,7 +5,7 @@ namespace Light.EntityFrameworkCore.Extensions;
 
 public static class ResultExtensions
 {
-    public static async Task<PagedResult<T>> ToPagedResultAsync<T>(this IQueryable<T> queryable,
+    public static async Task<Paged<T>> ToPagedAsync<T>(this IQueryable<T> queryable,
         int pageNumber,
         int pageSize,
         CancellationToken cancellationToken = default)
@@ -15,15 +15,23 @@ public static class ResultExtensions
         var count = await queryable.CountAsync(cancellationToken);
         var items = await queryable.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
 
-        return new PagedResult<T>(items, pageNumber, pageSize, count);
+        return new Paged<T>(items, pageNumber, pageSize, count);
+    }
+
+    public static async Task<PagedResult<T>> ToPagedResultAsync<T>(this IQueryable<T> queryable,
+        int pageNumber,
+        int pageSize,
+        CancellationToken cancellationToken = default)
+    {
+        var paged = await queryable.ToPagedAsync(pageNumber, pageSize, cancellationToken);
+
+        return new PagedResult<T>(paged);
     }
 
     public static Task<PagedResult<T>> ToPagedResultAsync<T>(this IQueryable<T> queryable,
         IPage page,
-        CancellationToken cancellationToken = default)
-    {
-        return queryable.ToPagedResultAsync(page.Page, page.PageSize, cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        queryable.ToPagedResultAsync(page.Page, page.PageSize, cancellationToken);
 
     public static async Task<Result<IEnumerable<T>>> ToListResultAsync<T>(this IQueryable<T> queryable,
         CancellationToken cancellationToken = default)

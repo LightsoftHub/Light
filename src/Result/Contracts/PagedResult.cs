@@ -6,12 +6,15 @@ namespace Light.Contracts
     {
         public PagedResult() { }
 
-        public PagedResult(IEnumerable<T> data, int page, int pageSize, int count)
+        public PagedResult(Paged<T> data)
         {
             Code = ResultCode.success.ToString();
             Succeeded = true;
-            Data = new Paged<T>(data, page, pageSize, count);
+            Data = data;
         }
+
+        public PagedResult(IEnumerable<T> data, int page, int pageSize, int count) : this(new Paged<T>(data, page, pageSize, count))
+        { }
 
         public Paged<T> Data { get; set; }
     }

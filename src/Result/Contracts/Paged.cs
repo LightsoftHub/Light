@@ -29,7 +29,7 @@ namespace Light.Contracts
     {
         public Paged() { }
 
-        protected internal Paged(IEnumerable<T> data, int page, int pageSize, int count)
+        public Paged(IEnumerable<T> data, int page, int pageSize, int count)
         {
             Page = page;
             PageSize = pageSize;
