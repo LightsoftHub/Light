@@ -18,6 +18,9 @@ public static class ResultExtensions
         return new Paged<T>(items, pageNumber, pageSize, count);
     }
 
+    public static Task<Paged<T>> ToPagedAsync<T>(this IQueryable<T> queryable, IPage page, CancellationToken cancellationToken = default) =>
+        queryable.ToPagedAsync(page.Page, page.PageSize, cancellationToken);
+
     public static async Task<PagedResult<T>> ToPagedResultAsync<T>(this IQueryable<T> queryable,
         int pageNumber,
         int pageSize,
