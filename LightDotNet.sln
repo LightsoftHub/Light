@@ -71,6 +71,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.OpenApi", "src\A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Swagger", "src\AspNetCore.Swagger\AspNetCore.Swagger.csproj", "{1932F8E3-A502-E262-D71E-F33538CC9070}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Modularity", "src\AspNetCore.Modularity\AspNetCore.Modularity.csproj", "{56B496E7-8637-8F0F-6CC5-E0B05C847680}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -185,6 +187,10 @@ Global
 		{1932F8E3-A502-E262-D71E-F33538CC9070}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1932F8E3-A502-E262-D71E-F33538CC9070}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1932F8E3-A502-E262-D71E-F33538CC9070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56B496E7-8637-8F0F-6CC5-E0B05C847680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56B496E7-8637-8F0F-6CC5-E0B05C847680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56B496E7-8637-8F0F-6CC5-E0B05C847680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56B496E7-8637-8F0F-6CC5-E0B05C847680}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -221,6 +227,7 @@ Global
 		{5F2DA040-A50E-42CD-B5A8-C016EE869893} = {C59D243D-C6D8-4C7B-93D0-410F15E18EC4}
 		{3B8CB9F4-0188-068A-5020-7C29CF4C73D3} = {C59D243D-C6D8-4C7B-93D0-410F15E18EC4}
 		{1932F8E3-A502-E262-D71E-F33538CC9070} = {C59D243D-C6D8-4C7B-93D0-410F15E18EC4}
+		{56B496E7-8637-8F0F-6CC5-E0B05C847680} = {C59D243D-C6D8-4C7B-93D0-410F15E18EC4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE586576-EBFD-4D0A-B9E5-E05BA750058E}

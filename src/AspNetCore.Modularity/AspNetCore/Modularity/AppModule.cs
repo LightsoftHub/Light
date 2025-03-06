@@ -1,26 +1,21 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Light.AspNetCore.Modularity;
 
-public class ModuleJob
+public abstract class AppModule : IModuleServiceCollection, IModuleBuilder, IModuleEndpoint
 {
-    /// <summary>
-    /// For separate job services
-    /// </summary>
     public virtual void Add(IServiceCollection services)
     { }
 
-    /// <summary>
-    /// For separate job services with IConfiguration
-    /// </summary>
     public virtual void Add(IServiceCollection services, IConfiguration configuration)
     { }
 
-    /// <summary>
-    /// For separate job pipelines
-    /// </summary>
-    public virtual void Initialize(IApplicationBuilder builder)
+    public virtual void Use(IApplicationBuilder app)
+    { }
+
+    public virtual void Map(IEndpointRouteBuilder endpoints)
     { }
 }

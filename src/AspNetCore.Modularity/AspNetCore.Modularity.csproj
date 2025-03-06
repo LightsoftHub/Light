@@ -1,15 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFramework>netstandard2.0</TargetFramework>
+	<TargetFramework>net9.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
 	<RootNamespace>Light</RootNamespace>
-	<AssemblyName>Lightsoft.Result</AssemblyName>
-	<Title>Lightsoft.Result</Title>
+	<AssemblyName>Lightsoft.AspNetCore.Modularity</AssemblyName>
+	<Title>Lightsoft.AspNetCore.Modularity</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
-	<Description>Package contains common result models.</Description>
-	<Summary>Package contains common result models.</Summary>
-	<Version>0.0.0.11</Version>
+	<Description>AspNetCore Modularity package.</Description>
+	<Summary>AspNetCore Modularity package.</Summary>
+	<Version>0.0.0.1-beta1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -19,12 +21,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
-	<PackageReference Include="System.Text.Json" Version="9.*" />
+	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
+	<FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>

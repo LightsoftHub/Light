@@ -20,8 +20,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\ActiveDirectory\ActiveDirectory.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore.Extensions\AspNetCore.Extensions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.Modularity\AspNetCore.Modularity.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore.Swagger\AspNetCore.Swagger.csproj" />
-    <ProjectReference Include="..\..\src\AspNetCore\AspNetCore.csproj" />
     <ProjectReference Include="..\..\src\Caching\Caching.csproj" />
     <ProjectReference Include="..\..\src\Ddd.Core\Ddd.Core.csproj" />
     <ProjectReference Include="..\..\src\EntityFrameworkCore\EntityFrameworkCore.csproj" />

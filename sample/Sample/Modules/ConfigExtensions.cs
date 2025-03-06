@@ -1,19 +1,16 @@
 ﻿namespace Sample.Modules;
 
-public class OrderServices : Light.AspNetCore.Modularity.Module
+public class OrderModule : Light.AspNetCore.Modularity.AppModule
 {
-    public override void Configure(IServiceCollection services, IConfiguration configuration)
+    public override void Add(IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<OrderMiddleware>();
         services.AddSingleton<OrderModuleService>();
 
         //Serilog.Log.Warning("Module {name} injected", GetType().FullName);
     }
-}
 
-public class OrderPipelines : Light.AspNetCore.Modularity.ModulePipeline
-{
-    public override void Configure(IApplicationBuilder builder)
+    public override void Use(IApplicationBuilder builder)
     {
         builder.UseMiddleware<OrderMiddleware>();
 
@@ -21,23 +18,19 @@ public class OrderPipelines : Light.AspNetCore.Modularity.ModulePipeline
     }
 }
 
-public class ProductServices : Light.AspNetCore.Modularity.Module
+public class ProductModule : Light.AspNetCore.Modularity.AppModule
 {
-    public override void Configure(IServiceCollection services)
+    public override void Add(IServiceCollection services)
     {
         services.AddSingleton<ProductMiddleware>();
         services.AddTransient<ProductModuleService>();
 
         //Serilog.Log.Warning("Module Product service injected");
     }
-}
 
-public class ProductPipelines : Light.AspNetCore.Modularity.ModulePipeline
-{
-    public override void Configure(IApplicationBuilder builder)
+    public override void Use(IApplicationBuilder builder)
     {
-        builder
-            .UseMiddleware<ProductMiddleware>();
+        builder.UseMiddleware<ProductMiddleware>();
     }
 }
 

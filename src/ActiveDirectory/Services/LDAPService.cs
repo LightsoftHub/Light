@@ -16,25 +16,25 @@ public class LDAPService(IOptions<LdapOptions> options) : IActiveDirectoryServic
     public bool IsConfigured() => true;
 
     [SupportedOSPlatform("windows")]
-    public Task<bool> CheckPasswordSignInAsync(string userName, string password)
+    public async Task<bool> CheckPasswordSignInAsync(string userName, string password)
     {
         if (string.IsNullOrEmpty(password.Trim()))
         {
-            return Task.FromResult(false);
+            return false;
         }
         // create LDAP connection
         var ldapConn = new LdapConnection() { SecureSocketLayer = false };
 
         // create socket connect to server
-        ldapConn.Connect(_options.Address, _options.Port);
+        await ldapConn.ConnectAsync(_options.Address, _options.Port);
 
         // bind domain user with domain name (username@domain.com) & password
-        ldapConn.Bind(userName + "@" + _options.Name, password);
+        await ldapConn.BindAsync(userName + "@" + _options.Name, password);
 
-        return Task.FromResult(true);
+        return true;
     }
 
-    public bool ChangePasswordAsync(string userName, string oldPassword, string newPassword)
+    public bool ChangePasswordAsync(string userName, string newPassword)
     {
         var sPath = _options.Connection; // This is if your domain was my.domain.com
         var de = new DirectoryEntry(sPath, _options.UserName, _options.Password, AuthenticationTypes.Secure);
