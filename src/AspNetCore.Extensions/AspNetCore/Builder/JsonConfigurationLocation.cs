@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace Light.AspNetCore.Builder;
 
@@ -8,29 +8,22 @@ public static class JsonConfigurationLocation
     /// <summary>
     /// Add configuration files *.json from folder
     /// </summary>
-    public static WebApplicationBuilder LoadJsonConfigurations(this WebApplicationBuilder builder, string[]? paths = null)
+    public static IHostApplicationBuilder LoadConfigurationFrom(this IHostApplicationBuilder host, string? path)
     {
-        var configuration = builder.Configuration;
-
-        // If not configure paths
-        //      get default configuration paths in "JsonConfigurationPaths" section
-        paths ??= builder.Configuration.GetSection("JsonConfigurationPaths").Get<string[]>();
-
-        if (paths is null)
+        if (string.IsNullOrEmpty(path))
         {
-            return builder; // use default config
+            return host; // use default config
         }
 
-        var env = builder.Environment.EnvironmentName;
+        var env = host.Environment.EnvironmentName;
 
-        // combine paths to string
-        var path = Path.Combine(paths);
+        var configuration = host.Configuration;
 
         // get directory info
         var dInfo = new DirectoryInfo(path);
         if (dInfo.Exists)
         {
-            var files = dInfo.GetFiles("*.json").Where(x => !x.Name.Contains("appsettings"));
+            var files = dInfo.GetFiles("*.json").Where(x => !x.Name.StartsWith("appsettings"));
 
             foreach (var file in files)
             {
@@ -46,6 +39,19 @@ public static class JsonConfigurationLocation
 
         configuration.AddEnvironmentVariables();
 
-        return builder;
+        return host;
+    }
+
+    public static IHostApplicationBuilder LoadConfigurationFrom(this IHostApplicationBuilder host, string[]? paths)
+    {
+        if (paths is null || paths.Length == 0)
+        {
+            return host; // use default config
+        }
+
+        // combine paths to string
+        var path = Path.Combine(paths);
+
+        return host.LoadConfigurationFrom(path);
     }
 }

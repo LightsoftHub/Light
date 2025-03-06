@@ -25,7 +25,7 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.LoadJsonConfigurations(["configurations"]);
+    builder.LoadConfigurationFrom(["configurations"]);
     //builder.AddConfigurations(["D:", "configurations"]);
     //builder.AddJsonFiles();
     builder.Host.ConfigureSerilog();
