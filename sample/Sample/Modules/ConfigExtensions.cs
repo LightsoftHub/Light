@@ -2,7 +2,7 @@
 
 public class OrderServices : Light.AspNetCore.Modularity.Module
 {
-    public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+    public override void Configure(IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<OrderMiddleware>();
         services.AddSingleton<OrderModuleService>();
@@ -23,7 +23,7 @@ public class OrderPipelines : Light.AspNetCore.Modularity.ModulePipeline
 
 public class ProductServices : Light.AspNetCore.Modularity.Module
 {
-    public override void ConfigureServices(IServiceCollection services)
+    public override void Configure(IServiceCollection services)
     {
         services.AddSingleton<ProductMiddleware>();
         services.AddTransient<ProductModuleService>();

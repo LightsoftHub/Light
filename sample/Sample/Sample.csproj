@@ -12,14 +12,15 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
-	<PackageReference Include="SoapCore" Version="1.1.0.51" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
+	<PackageReference Include="SoapCore" Version="1.2.0" />
 	<PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ActiveDirectory\ActiveDirectory.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore.Extensions\AspNetCore.Extensions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.Swagger\AspNetCore.Swagger.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore\AspNetCore.csproj" />
     <ProjectReference Include="..\..\src\Caching\Caching.csproj" />
     <ProjectReference Include="..\..\src\Ddd.Core\Ddd.Core.csproj" />
@@ -31,7 +32,6 @@
     <ProjectReference Include="..\..\src\Result\Result.csproj" />
     <ProjectReference Include="..\..\src\Serilog\Serilog.csproj" />
     <ProjectReference Include="..\..\src\SmtpMail\SmtpMail.csproj" />
-    <ProjectReference Include="..\..\src\Swagger\Swagger.csproj" />
   </ItemGroup>
 
 </Project>

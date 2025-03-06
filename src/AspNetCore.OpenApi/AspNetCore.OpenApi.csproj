@@ -9,8 +9,8 @@
 	<Title>Lightsoft.AspNetCore.OpenApi</Title>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Authors>minhvu</Authors>
-	<Description>OpenApi package.</Description>
-	<Summary>OpenApi package.</Summary>
+	<Description>AspNetCore OpenApi package.</Description>
+	<Summary>AspNetCore OpenApi package.</Summary>
 	<Version>0.0.0.1</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
@@ -23,7 +23,7 @@
 
   <ItemGroup>
 	<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.*" />
-	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
+	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.*" />
   </ItemGroup>
 
   <ItemGroup>

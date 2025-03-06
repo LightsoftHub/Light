@@ -20,7 +20,6 @@ jobs:
       run: |
         dotnet restore src/ActiveDirectory/ActiveDirectory.csproj
         dotnet restore src/Serilog/Serilog.csproj
-        dotnet restore src/Swagger/Swagger.csproj
         dotnet restore src/FileGenerator/FileGenerator.csproj
         dotnet restore src/Mail.Contracts/Mail.Contracts.csproj
         dotnet restore src/SmtpMail/SmtpMail.csproj
@@ -30,7 +29,6 @@ jobs:
       run: |
         dotnet build src/ActiveDirectory/ActiveDirectory.csproj --configuration Release --no-restore
         dotnet build src/Serilog/Serilog.csproj --configuration Release --no-restore
-        dotnet build src/Swagger/Swagger.csproj --configuration Release --no-restore
         dotnet build src/FileGenerator/FileGenerator.csproj --configuration Release --no-restore
         dotnet build src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --no-restore
         dotnet build src/SmtpMail/SmtpMail.csproj --configuration Release --no-restore
@@ -42,7 +40,6 @@ jobs:
 
         dotnet pack --no-build src/ActiveDirectory/ActiveDirectory.csproj --configuration Release --output nuget
         dotnet pack --no-build src/Serilog/Serilog.csproj --configuration Release --output nuget
-        dotnet pack --no-build src/Swagger/Swagger.csproj --configuration Release --output nuget
         dotnet pack --no-build src/FileGenerator/FileGenerator.csproj --configuration Release --output nuget
         dotnet pack --no-build src/Mail.Contracts/Mail.Contracts.csproj --configuration Release --output nuget
         dotnet pack --no-build src/SmtpMail/SmtpMail.csproj --configuration Release --output nuget
