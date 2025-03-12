@@ -52,8 +52,6 @@ try
         opt.RedisPassword = settings.RedisPassword;
     });
 
-    builder.Services.Configure<SmtpConnection>(builder.Configuration.GetSection("SMTPMail"));
-
     builder.Services.AddFileGenerator();
 
     builder.Services.AddTestOptions(builder.Configuration);
@@ -92,10 +90,7 @@ try
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-    }
+    app.UseSwagger();
 
     app.UseUlidTraceId();
     //app.UseMiddlewares(builder.Configuration);

@@ -2,6 +2,7 @@ using Light.Mail;
 using Light.SmtpMail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Sample.Models;
 
 namespace Sample.Controllers
 {
@@ -9,23 +10,20 @@ namespace Sample.Controllers
     [ApiController]
     public class MailController : ControllerBase
     {
-        private readonly SmtpConnection _settings;
         private readonly ILogger<MailController> _logger;
 
-        public MailController(IOptions<SmtpConnection> settings,
-            ILogger<MailController> logger)
+        public MailController(ILogger<MailController> logger)
         {
-            _settings = settings.Value;
             _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            string filePath = @$"D:\\backups\\pexels-pixabay-268533.jpg";
-            byte[] byteArray = System.IO.File.ReadAllBytes(filePath);
+            //string filePath = @$"D:\\backups\\pexels-pixabay-268533.jpg";
+            //byte[] byteArray = System.IO.File.ReadAllBytes(filePath);
 
-            var from = new MailFrom("zord.contactus@gmail.com", "ZORD - Contact Us");
+            var from = new MailFrom("leslie.bailey@ethereal.email");
 
             var message = new MailMessage
             {
@@ -33,7 +31,7 @@ namespace Sample.Controllers
                 Content = "Hello,.......... this test mail",
             };
 
-            message.Recipients.Add("test@yopmail.com");
+            message.Recipients = ["test@yopmail.com"];
 
             //message.CcRecipients.Add("test1@yopmail.com");
 
@@ -45,8 +43,18 @@ namespace Sample.Controllers
             //    FileToBytes = byteArray
             //});
 
-            var smtp = new SmtpMailKit();
-            await smtp.SendAsync(from, message, _settings);
+            var smtp = new SmtpSettings
+            {
+                Host = "smtp.ethereal.email",
+                Port = 587,
+                UseSsl = false,
+                UserName = "leslie.bailey@ethereal.email",
+                Password = "nrfdZH5KfTaHp6DWRF"
+            };
+
+
+            var smtpClient = new SmtpMailKit(smtp);
+            await smtpClient.SendAsync(from, message);
 
             return Ok();
         }

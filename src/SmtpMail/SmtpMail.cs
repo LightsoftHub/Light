@@ -6,7 +6,14 @@ namespace Light.SmtpMail
 {
     public class SmtpMail
     {
-        public async Task SendAsync(MailFrom from, Mail.MailMessage mail, ISmtp smtp)
+        private readonly ISmtp _smtp;
+
+        public SmtpMail(ISmtp smtp)
+        {
+            _smtp = smtp;
+        }
+
+        public async Task SendAsync(MailFrom from, Mail.MailMessage mail)
         {
             var message = new System.Net.Mail.MailMessage
             {
@@ -40,10 +47,10 @@ namespace Light.SmtpMail
                 }
             }
 
-            using var smtpClient = new SmtpClient(smtp.Host, smtp.Port)
+            using var smtpClient = new SmtpClient(_smtp.Host, _smtp.Port)
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                EnableSsl = smtp.UseSsl
+                EnableSsl = _smtp.UseSsl
             };
 
             await smtpClient.SendMailAsync(message);

@@ -2,8 +2,8 @@
 {
     public interface IMailkitSmtp : ISmtp
     {
-        string? Password { get; }
+        string Password { get; }
 
-        string? UserName { get; }
+        string UserName { get; }
     }
 }

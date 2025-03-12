@@ -8,7 +8,14 @@ namespace Light.SmtpMail
 {
     public class SmtpMailKit
     {
-        public async Task SendAsync(MailFrom from, MailMessage mail, IMailkitSmtp smtp, CancellationToken cancellationToken = default)
+        private readonly IMailkitSmtp _smtp;
+
+        public SmtpMailKit(IMailkitSmtp smtp)
+        {
+            _smtp = smtp;
+        }
+
+        public async Task SendAsync(MailFrom from, MailMessage mail, CancellationToken cancellationToken = default)
         {
             var email = new MimeMessage
             {
@@ -55,8 +62,8 @@ namespace Light.SmtpMail
             email.Body = bodyBuilder.ToMessageBody();
 
             using var smtpClient = new SmtpClient();
-            await smtpClient.ConnectAsync(smtp.Host, smtp.Port, smtp.UseSsl, cancellationToken);
-            await smtpClient.AuthenticateAsync(smtp.UserName, smtp.Password, cancellationToken);
+            await smtpClient.ConnectAsync(_smtp.Host, _smtp.Port, _smtp.UseSsl, cancellationToken);
+            await smtpClient.AuthenticateAsync(_smtp.UserName, _smtp.Password, cancellationToken);
             await smtpClient.SendAsync(email, cancellationToken);
             await smtpClient.DisconnectAsync(true, cancellationToken);
             smtpClient.Dispose();
