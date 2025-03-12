@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>AspNetCore Modularity package.</Description>
 	<Summary>AspNetCore Modularity package.</Summary>
-	<Version>0.0.0.1</Version>
+	<Version>0.0.0.2</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -19,6 +19,10 @@
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
+  </ItemGroup>
 
   <ItemGroup>
 	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
