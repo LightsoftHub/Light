@@ -14,11 +14,11 @@ public static class Startup
     {
         var sectionName = "Swagger";
 
-        services.Configure<SwaggerSettings>(configuration.GetSection(sectionName));
+        services.Configure<SwaggerOptions>(configuration.GetSection(sectionName));
 
-        var settings = configuration.GetSection(sectionName).Get<SwaggerSettings>();
+        var settings = configuration.GetSection(sectionName).Get<SwaggerOptions>();
 
-        ArgumentNullException.ThrowIfNull(settings, nameof(SwaggerSettings));
+        ArgumentNullException.ThrowIfNull(settings, nameof(SwaggerOptions));
 
         if (settings.Enable)
         {
@@ -29,17 +29,17 @@ public static class Startup
 
             services.AddSwaggerGen(opt =>
             {
-                switch (settings.AuthMode)
+                if (!string.IsNullOrEmpty(settings.SecurityScheme))
                 {
-                    case "JWT":
+                    if (settings.SecurityScheme.Contains("jwt"))
+                    {
                         opt.AddJwtSecurityScheme();
-                        break;
-                    case "basic":
+                    }
+
+                    if (settings.SecurityScheme.Contains("basic"))
+                    {
                         opt.AddBasicSecurityScheme();
-                        break;
-                    default:
-                        // code block
-                        break;
+                    }
                 }
 
                 opt.CustomSchemaIds(x => x.FullName); // fix Swagger when contain multi model, dto has same name
@@ -57,7 +57,7 @@ public static class Startup
 
     public static IApplicationBuilder UseSwagger(this IApplicationBuilder app)
     {
-        var settings = app.ApplicationServices.GetRequiredService<IOptions<SwaggerSettings>>().Value;
+        var settings = app.ApplicationServices.GetRequiredService<IOptions<SwaggerOptions>>().Value;
 
         if (settings.Enable)
         {

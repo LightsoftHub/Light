@@ -3,9 +3,9 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Light.AspNetCore.Swagger;
 
-public class CustomSwaggerUIOptions(IOptions<SwaggerSettings> options) : IConfigureOptions<SwaggerUIOptions>
+public class CustomSwaggerUIOptions(IOptions<SwaggerOptions> options) : IConfigureOptions<SwaggerUIOptions>
 {
-    private readonly SwaggerSettings _settings = options.Value;
+    private readonly SwaggerOptions _settings = options.Value;
 
     public void Configure(SwaggerUIOptions options)
     {

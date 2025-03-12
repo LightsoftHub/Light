@@ -4,9 +4,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Light.AspNetCore.Swagger;
 
-public class TitleFilter(IOptions<SwaggerSettings> options) : IDocumentFilter
+public class TitleFilter(IOptions<SwaggerOptions> options) : IDocumentFilter
 {
-    private readonly SwaggerSettings _settings = options.Value;
+    private readonly SwaggerOptions _settings = options.Value;
 
     public void Apply(OpenApiDocument doc, DocumentFilterContext context)
     {
