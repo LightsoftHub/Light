@@ -16,6 +16,8 @@ namespace Sample.Controllers
     {
         private readonly string _cacheKey = "Key";
 
+        private readonly DateTimeOffset _now = DateTimeOffset.UtcNow;
+
         [HttpGet("mem")]
         public async Task<IActionResult> GetAsync()
         {
@@ -33,7 +35,7 @@ namespace Sample.Controllers
         [HttpGet("dis")]
         public IActionResult GetDisAsync()
         {
-            return Ok();
+            return Ok(_now);
         }
 
         [HttpGet("throw")]

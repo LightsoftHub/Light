@@ -13,7 +13,7 @@ var executingAssembly = Assembly.GetExecutingAssembly();
 builder.Services.AddMassTransit(x =>
 {
     //x.AddConsumer<ColorChangedConsumer, ColorChangedConsumerDefinition>();
-    x.AddConsumers(executingAssembly);
+    //x.AddConsumers(executingAssembly);
     x.ConfigRabbitMQ(mq =>
     {
         mq.Host = "10.114.32.16";

@@ -1,6 +1,4 @@
-﻿using Light.Identity.EntityFrameworkCore;
-
-namespace Light.Identity.Services;
+﻿namespace Light.Identity.EntityFrameworkCore;
 
 public class UserAttributeService(IIdentityContext context) : IUserAttributeService
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace Light.Identity.Services;
+namespace Light.Identity.EntityFrameworkCore;
 
 public class RoleService(RoleManager<Role> roleManager) : IRoleService
 {

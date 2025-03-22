@@ -1,5 +1,4 @@
-﻿using Light.Identity.EntityFrameworkCore;
-using Light.Identity.Options;
+﻿using Light.Identity.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -7,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Light.Identity.Services;
+namespace Light.Identity.EntityFrameworkCore;
 
 public class TokenService(
     UserManager<User> userManager,
@@ -18,10 +17,23 @@ public class TokenService(
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
-    /// <summary>
-    /// Get all claims of User
-    /// </summary>
-    public virtual async Task<IEnumerable<Claim>> GetClaimsAsync(User user)
+    private readonly DateTimeOffset _now = DateTimeOffset.UtcNow;
+
+    public async Task<IResult<TokenDto>> GenerateTokenByIdAsync(string userId)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+
+        return await GetTokenAsync(user);
+    }
+
+    public async Task<IResult<TokenDto>> GenerateTokenByUserNameAsync(string userName)
+    {
+        var user = await userManager.FindByNameAsync(userName);
+
+        return await GetTokenAsync(user);
+    }
+
+    public virtual async Task<IEnumerable<Claim>> GetUserClaimsAsync(User user)
     {
         var userClaims = await userManager.GetClaimsAsync(user);
         var userRoles = await userManager.GetRolesAsync(user);
@@ -58,13 +70,13 @@ public class TokenService(
         return claims;
     }
 
-    private async Task<string> GenerateJwtAsync(User user)
+    private async Task<TokenDto> GenerateTokenAsync(User user)
     {
         var secret = Encoding.UTF8.GetBytes(_jwtOptions.SecretKey);
 
         var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha256);
 
-        var claims = await GetClaimsAsync(user);
+        var claims = await GetUserClaimsAsync(user);
 
         var token = new JwtSecurityToken(
             issuer: _jwtOptions.Issuer,
@@ -75,66 +87,11 @@ public class TokenService(
         var tokenHandler = new JwtSecurityTokenHandler();
 
         var encryptedToken = tokenHandler.WriteToken(token);
-
-        return encryptedToken;
-    }
-
-    private async Task<TokenDto> IssueTokenForUserAsync(User user)
-    {
-        var token = await GenerateJwtAsync(user);
         var tokenExpiryTime = _jwtOptions.ExpiresIn;
         var refreshToken = JwtHelper.GenerateRefreshToken();
         var refreshTokenExpiryTime = _jwtOptions.RefreshTokenExpiresIn;
 
-        // update user login info
-        await SaveTokenAsync(user.Id, refreshToken, DateTime.Now.AddSeconds(refreshTokenExpiryTime));
-
-        return new TokenDto
-        {
-            AccessToken = token,
-            ExpiresIn = tokenExpiryTime,
-            RefreshToken = refreshToken,
-            RefreshTokenExpiresIn = refreshTokenExpiryTime,
-        };
-    }
-
-    /// <summary>
-    /// Save token info to DB
-    /// </summary>
-    private async Task SaveTokenAsync(string userId, string refreshToken, DateTime refreshTokenExpiryTime)
-    {
-        var entry = await context.JwtTokens.FindAsync(userId);
-
-        if (entry is not null)
-        {
-            entry.RefreshToken = refreshToken;
-            entry.RefreshTokenExpiryTime = refreshTokenExpiryTime;
-
-            await context.SaveChangesAsync();
-        }
-        else
-        {
-            var entity = new JwtToken
-            {
-                UserId = userId,
-                RefreshToken = refreshToken,
-                RefreshTokenExpiryTime = refreshTokenExpiryTime,
-            };
-
-            await context.JwtTokens.AddAsync(entity);
-            await context.SaveChangesAsync();
-        }
-    }
-
-    /// <summary>
-    /// Check refresh token is valid & not expired
-    /// </summary>
-    private async Task<bool> CheckRefreshTokenAsync(string userId, string refreshToken)
-    {
-        return await context.JwtTokens.AnyAsync(x =>
-            x.UserId == userId
-            && x.RefreshToken == refreshToken
-            && x.RefreshTokenExpiryTime >= DateTime.Now);
+        return new TokenDto(encryptedToken, tokenExpiryTime, refreshToken, refreshTokenExpiryTime);
     }
 
     public virtual async Task<IResult<TokenDto>> GetTokenAsync(User? user)
@@ -144,23 +101,21 @@ public class TokenService(
             || user.IsDeleted)
             return Result<TokenDto>.Error("Invalid credentials.");
 
-        var token = await IssueTokenForUserAsync(user);
+        var token = await GenerateTokenAsync(user);
+
+        var entity = new JwtToken
+        {
+            UserId = user.Id,
+            Token = token.AccessToken,
+            TokenExpiry = _now.AddSeconds(token.ExpiresIn),
+            RefreshToken = token.RefreshToken,
+            RefreshExpiry = _now.AddSeconds(token.RefreshTokenExpiresIn),
+        };
+
+        await context.JwtTokens.AddAsync(entity);
+        await context.SaveChangesAsync();
 
         return Result<TokenDto>.Success(token);
-    }
-
-    public async Task<IResult<TokenDto>> GetTokenByIdAsync(string userId)
-    {
-        var user = await userManager.FindByIdAsync(userId);
-
-        return await GetTokenAsync(user);
-    }
-
-    public async Task<IResult<TokenDto>> GetTokenByUserNameAsync(string userName)
-    {
-        var user = await userManager.FindByNameAsync(userName);
-
-        return await GetTokenAsync(user);
     }
 
     public virtual async Task<IResult<TokenDto>> RefreshTokenAsync(string accessToken, string refreshToken)
@@ -179,9 +134,9 @@ public class TokenService(
             return Result<TokenDto>.Unauthorized("Error when read info from token.");
 
         // check refresh token is exist and not out of lifetime
-        var isTokenValid = await CheckRefreshTokenAsync(userId, refreshToken);
+        var userToken = await GetValidTokenAsync(userId, refreshToken);
 
-        if (isTokenValid is false)
+        if (userToken is null)
             return Result<TokenDto>.Unauthorized("Invalid refresh token.");
 
         var user = await userManager.FindByIdAsync(userId);
@@ -189,8 +144,57 @@ public class TokenService(
         if (user == null || user.Status.IsActive is false || user.IsDeleted)
             return Result<TokenDto>.Unauthorized("User not found or inactive.");
 
-        var token = await IssueTokenForUserAsync(user);
+        var token = await GenerateTokenAsync(user);
+
+        // save token data
+        userToken.Token = token.AccessToken;
+        userToken.TokenExpiry = _now.AddSeconds(token.ExpiresIn);
+        userToken.RefreshToken = token.RefreshToken;
+        userToken.RefreshExpiry = _now.AddSeconds(token.RefreshTokenExpiresIn);
+
+        await context.SaveChangesAsync();
 
         return Result<TokenDto>.Success(token);
+    }
+
+    private Task<JwtToken?> GetValidTokenAsync(string userId, string refreshToken)
+    {
+        return context.JwtTokens
+            .Where(x =>
+                x.UserId == userId
+                && x.RefreshToken == refreshToken
+                && x.RefreshExpiry >= _now
+                && x.Revoked == false)
+            .FirstOrDefaultAsync();
+    }
+
+    public Task RevokedAsync(string tokenId)
+    {
+        return context.JwtTokens
+            .Where(x => x.Id == tokenId)
+            .ExecuteUpdateAsync(e => e.SetProperty(p => p.Revoked, true));
+    }
+
+    public async Task<IEnumerable<UserTokenDto>> GetUserTokensAsync(string userId)
+    {
+        var list = await context.JwtTokens
+            .Where(x =>
+                x.UserId == userId
+                &&
+                    (x.TokenExpiry >= _now
+                    || (x.RefreshExpiry.HasValue && x.RefreshExpiry >= _now))
+                && x.Revoked == false)
+            .AsNoTracking()
+            .Select(s => new UserTokenDto
+            {
+                Id = s.Id,
+                ExpireOn = s.TokenExpiry,
+                RefreshTokenExpireOn = s.RefreshExpiry,
+                DeviceId = s.DeviceId,
+                DeviceName = s.DeviceName,
+            })
+            .ToListAsync();
+
+        return list;
     }
 }

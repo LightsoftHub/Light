@@ -1,8 +1,10 @@
 ﻿using Light.EventBus.Events;
+using MassTransit;
 
 namespace EventBusConsumer.Common
 {
     [BindingName("color-value-changed")]
+    //[MessageUrn("color-value-changed")]
     public record ColorChangedIntegrationEvent : EventBase
     {
         public string OldColor { get; set; } = null!;

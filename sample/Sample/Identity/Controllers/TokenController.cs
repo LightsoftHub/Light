@@ -10,7 +10,7 @@ public class TokenController(ITokenService tokenService) : ControllerBase
     [HttpPost("token")]
     public async Task<IActionResult> GetTokenAsync(string userName)
     {
-        var token = await tokenService.GetTokenByUserNameAsync(userName);
+        var token = await tokenService.GenerateTokenByUserNameAsync(userName);
 
         return Ok(token);
     }
@@ -21,5 +21,19 @@ public class TokenController(ITokenService tokenService) : ControllerBase
         var token = await tokenService.RefreshTokenAsync(accessToken, refreshToken);
 
         return Ok(token);
+    }
+
+    [HttpPost("token/revoke")]
+    public async Task<IActionResult> RevokeAsync(string tokenId)
+    {
+        await tokenService.RevokedAsync(tokenId);
+        return Ok();
+    }
+
+    [HttpGet("token/list/{userId}")]
+    public async Task<IActionResult> GetListAsync(string userId)
+    {
+        var res = await tokenService.GetUserTokensAsync(userId);
+        return Ok(res);
     }
 }

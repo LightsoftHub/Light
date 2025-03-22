@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Light.Identity.Services;
+namespace Light.Identity.EntityFrameworkCore;
 
 public class UserService(UserManager<User> userManager) : IUserService
 {

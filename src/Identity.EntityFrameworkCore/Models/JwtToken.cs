@@ -1,14 +1,24 @@
-﻿namespace Light.Identity.Models;
+﻿using Light.Domain.Entities;
 
-public class JwtToken
+namespace Light.Identity.Models;
+
+public class JwtToken : BaseEntity<string>
 {
+    public JwtToken() => Id = LightId.NewId();
+
     public string UserId { get; set; } = null!;
 
-    public string? Token { get; set; }
+    public string Token { get; set; } = null!;
 
-    public DateTime? TokenExpiryTime { get; set; }
+    public DateTimeOffset TokenExpiry { get; set; }
 
     public string? RefreshToken { get; set; }
 
-    public DateTime? RefreshTokenExpiryTime { get; set; }
+    public DateTimeOffset? RefreshExpiry { get; set; }
+
+    public bool Revoked { get; set; }
+
+    public string? DeviceId { get; set; }
+
+    public string? DeviceName { get; set; }
 }

@@ -29,6 +29,7 @@ namespace Light.Extensions.DependencyInjection
             rabbitMqBusFactoryConfigurator.MessageTopology.SetEntityNameFormatter(nameFormatter);
 
             rabbitMqBusFactoryConfigurator.Publish<IIntegrationEvent>(p => p.Exclude = true);
+
             foreach (var excludeType in configurator.ExcludeTypes)
             {
                 // exclude IntegrationEvent auto create to topic/exchange
@@ -37,18 +38,6 @@ namespace Light.Extensions.DependencyInjection
 
             return rabbitMqBusFactoryConfigurator;
         }
-        /*
-        private static IRabbitMqBusFactoryConfigurator UseRabbitMQ(
-            this IRabbitMqBusFactoryConfigurator rabbitMqBusFactoryConfigurator,
-            IBusRegistrationContext busRegistrationContext,
-            Action<RabbitMQConfigurator> action)
-        {
-            var rabbitMQConfigurator = new RabbitMQConfigurator();
-            action(rabbitMQConfigurator); // bind action to Configurator
-
-            return rabbitMqBusFactoryConfigurator.UseRabbitMQ(busRegistrationContext, rabbitMQConfigurator);
-        }
-        */
 
         private static IBusRegistrationConfigurator AddModuleConsumers(
             this IBusRegistrationConfigurator configurator,
