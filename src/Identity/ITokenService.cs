@@ -18,12 +18,12 @@ public interface ITokenService
     Task<IResult<TokenDto>> RefreshTokenAsync(string accessToken, string refreshToken);
 
     /// <summary>
-    /// Revoke token
-    /// </summary>
-    Task RevokedAsync(string tokenId);
-
-    /// <summary>
     /// Get user tokens list
     /// </summary>
     Task<IEnumerable<UserTokenDto>> GetUserTokensAsync(string userId);
+
+    /// <summary>
+    /// Revoke token
+    /// </summary>
+    Task RevokedAsync(string userId, string tokenId);
 }

@@ -168,13 +168,6 @@ public class TokenService(
             .FirstOrDefaultAsync();
     }
 
-    public Task RevokedAsync(string tokenId)
-    {
-        return context.JwtTokens
-            .Where(x => x.Id == tokenId)
-            .ExecuteUpdateAsync(e => e.SetProperty(p => p.Revoked, true));
-    }
-
     public async Task<IEnumerable<UserTokenDto>> GetUserTokensAsync(string userId)
     {
         var list = await context.JwtTokens
@@ -196,5 +189,12 @@ public class TokenService(
             .ToListAsync();
 
         return list;
+    }
+
+    public Task RevokedAsync(string userId, string tokenId)
+    {
+        return context.JwtTokens
+            .Where(x => x.Id == tokenId && x.UserId == userId)
+            .ExecuteUpdateAsync(e => e.SetProperty(p => p.Revoked, true));
     }
 }
