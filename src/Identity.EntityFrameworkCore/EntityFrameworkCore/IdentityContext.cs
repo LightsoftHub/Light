@@ -41,7 +41,7 @@ public abstract class IdentityContext(DbContextOptions options) :
         {
             e.ToTable(name: Tables.JwtTokens, Schemas.Identity);
 
-            e.HasIndex(i => new { i.Token, i.RefreshToken }).IsUnique();
+            e.HasIndex(i => i.UserId);
         });
     }
 }
