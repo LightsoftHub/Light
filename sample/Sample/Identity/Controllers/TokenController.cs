@@ -24,9 +24,9 @@ public class TokenController(ITokenService tokenService) : ControllerBase
     }
 
     [HttpPost("token/revoke")]
-    public async Task<IActionResult> RevokeAsync(string tokenId)
+    public async Task<IActionResult> RevokeAsync(string userId, string tokenId)
     {
-        await tokenService.RevokedAsync(tokenId);
+        await tokenService.RevokedAsync(userId, tokenId);
         return Ok();
     }
 

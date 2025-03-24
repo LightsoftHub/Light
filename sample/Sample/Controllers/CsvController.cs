@@ -11,8 +11,18 @@ namespace Sample.Controllers
     [ApiController]
     public class CsvController(ICsvService csvService) : ControllerBase
     {
-        private readonly string _path = Path.Combine(@"D:\\", "Files", "Adobe_aswDM49568_20250221173721.csv");   
-        
+        private readonly string _path = Path.Combine(@"D:\\", "Files", "Adobe_aswDM50210_20250311182339.csv");
+
+        [HttpGet("headers")]
+        public IActionResult Headers()
+        {
+            var stream = new StreamReader(_path);
+
+            var dt = csvService.ReadHeaders(stream);
+
+            return Ok(dt);
+        }
+
         [HttpGet("read")]
         public IActionResult Read()
         {

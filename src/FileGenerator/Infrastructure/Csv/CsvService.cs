@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using DocumentFormat.OpenXml.VariantTypes;
 using Light.File.Csv;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,6 +10,20 @@ namespace Light.Infrastructure.Csv
 {
     public class CsvService : ICsvService
     {
+        public string[]? ReadHeaders(StreamReader streamReader)
+        {
+            using var csv = new CsvReader(streamReader, CultureInfo.InvariantCulture);
+            csv.Read();
+            csv.ReadHeader();
+            return csv.HeaderRecord;
+        }
+
+        public string[]? ReadHeaders(Stream stream)
+        {
+            using var reader = new StreamReader(stream);
+            return ReadHeaders(reader);
+        }
+
         public IEnumerable<T> ReadAs<T>(StreamReader streamReader)
         {
             using var csv = new CsvReader(streamReader, CultureInfo.InvariantCulture);
@@ -19,9 +34,9 @@ namespace Light.Infrastructure.Csv
             }
         }
 
-        public IEnumerable<T> ReadAs<T>(Stream streamData)
+        public IEnumerable<T> ReadAs<T>(Stream stream)
         {
-            using var reader = new StreamReader(streamData);
+            using var reader = new StreamReader(stream);
             return ReadAs<T>(reader);
         }
 
