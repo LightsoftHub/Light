@@ -1,9 +1,6 @@
 using CsvHelper.Configuration.Attributes;
-using Light.Extensions;
 using Light.File.Csv;
-using Light.File.Excel;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace Sample.Controllers
 {
@@ -11,20 +8,20 @@ namespace Sample.Controllers
     [ApiController]
     public class CsvController(ICsvService csvService) : ControllerBase
     {
-        private readonly string _path = Path.Combine(@"D:\\", "Files", "Adobe_aswDM50210_20250311182339.csv");
+        private readonly string _path = Path.Combine(@"D:\\", "Files", "Adobe_aswDM49568_20250221173721.csv");
 
-        [HttpGet("headers")]
-        public IActionResult Headers()
+        [HttpGet]
+        public IActionResult Get()
         {
             var stream = new StreamReader(_path);
 
-            var dt = csvService.ReadHeaders(stream);
+            var dt = csvService.ReadAsDictionary(stream);
 
             return Ok(dt);
         }
 
         [HttpGet("read")]
-        public IActionResult Read()
+        public IActionResult ReadAs()
         {
             var stream = new StreamReader(_path);
 
