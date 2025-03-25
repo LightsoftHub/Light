@@ -37,6 +37,8 @@ namespace Light.Infrastructure.Csv
         {
             using var csv = new CsvReader(streamReader, _config);
 
+            csv.Context.TypeConverterCache.AddConverter<object>(new ObjectConverter());
+
             foreach (var csvRecord in csv.GetRecords<T>())
             {
                 yield return csvRecord;
@@ -52,6 +54,8 @@ namespace Light.Infrastructure.Csv
         public CsvData<T> Read<T>(StreamReader streamReader)
         {
             using var csv = new CsvReader(streamReader, _config);
+
+            csv.Context.TypeConverterCache.AddConverter<object>(new ObjectConverter());
 
             var records = csv.GetRecords<T>().ToList();
             var headers = csv.HeaderRecord;

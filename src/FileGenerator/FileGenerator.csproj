@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package for generate document files.</Description>
 	<Summary>Package for generate document files.</Summary>
-	<Version>0.0.0.12</Version>
+	<Version>0.0.0.13</Version>
 	<PackageTags>light;framework</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
