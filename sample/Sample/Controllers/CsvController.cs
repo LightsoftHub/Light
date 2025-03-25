@@ -58,6 +58,9 @@ namespace Sample.Controllers
 
         [Name("Member_Point_Balance (1)")]
         public int Member_Point_Balance { get; set; }
+
+        [Index(10)]
+        public object Test { get; set; } = null!;
     }
 }
 

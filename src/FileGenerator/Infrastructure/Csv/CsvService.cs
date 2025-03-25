@@ -1,22 +1,29 @@
 ﻿using CsvHelper;
+using CsvHelper.Configuration;
 using Light.File.Csv;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace Light.Infrastructure.Csv
 {
     public class CsvService : ICsvService
     {
+        private readonly CsvConfiguration _config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            HasHeaderRecord = true,
+            MissingFieldFound = null,
+        };
+
         public string[]? ReadHeaders(StreamReader streamReader)
         {
-            using var csv = new CsvReader(streamReader, CultureInfo.InvariantCulture);
+            using var csv = new CsvReader(streamReader, _config);
+
             csv.Read();
             csv.ReadHeader();
+
             return csv.HeaderRecord;
         }
 
@@ -28,7 +35,7 @@ namespace Light.Infrastructure.Csv
 
         public IEnumerable<T> ReadAs<T>(StreamReader streamReader)
         {
-            using var csv = new CsvReader(streamReader, CultureInfo.InvariantCulture);
+            using var csv = new CsvReader(streamReader, _config);
 
             foreach (var csvRecord in csv.GetRecords<T>())
             {
@@ -44,7 +51,7 @@ namespace Light.Infrastructure.Csv
 
         public CsvData<T> Read<T>(StreamReader streamReader)
         {
-            using var csv = new CsvReader(streamReader, CultureInfo.InvariantCulture);
+            using var csv = new CsvReader(streamReader, _config);
 
             var records = csv.GetRecords<T>().ToList();
             var headers = csv.HeaderRecord;
@@ -64,7 +71,8 @@ namespace Light.Infrastructure.Csv
 
         public IList<IDictionary<string, object?>> ReadAsDictionary(StreamReader streamReader)
         {
-            using var csv = new CsvReader(streamReader, CultureInfo.InvariantCulture);
+            using var csv = new CsvReader(streamReader, _config);
+
             csv.Read();          // Read first row
             csv.ReadHeader();    // Read headers
 
