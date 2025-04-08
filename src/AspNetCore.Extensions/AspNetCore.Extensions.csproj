@@ -11,8 +11,8 @@
 	<Authors>minhvu</Authors>
 	<Description>Package containing useful AspNetCore extensions.</Description>
 	<Summary>Package containing useful AspNetCore extensions.</Summary>
-	<Version>0.0.0.46</Version>
-	<PackageTags>light;framework</PackageTags>
+	<Version>0.0.0.47</Version>
+	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>

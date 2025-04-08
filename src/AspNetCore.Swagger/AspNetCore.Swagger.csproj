@@ -11,8 +11,8 @@
 	<Authors>minhvu</Authors>
 	<Description>AspNetCore Swagger package.</Description>
 	<Summary>AspNetCore Swagger package.</Summary>
-	<Version>0.0.0.10</Version>
-	<PackageTags>light;framework</PackageTags>
+	<Version>0.0.0.11</Version>
+	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<PackageReleaseNotes></PackageReleaseNotes>
@@ -24,8 +24,8 @@
   <ItemGroup>
 	<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.*" />
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.*" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.*" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.0" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.0" />
   </ItemGroup>
 
   <ItemGroup>

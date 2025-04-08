@@ -12,7 +12,7 @@
 	<Description>AspNetCore OpenApi package.</Description>
 	<Summary>AspNetCore OpenApi package.</Summary>
 	<Version>0.0.0.1</Version>
-	<PackageTags>light;framework</PackageTags>
+	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<PackageReleaseNotes></PackageReleaseNotes>
@@ -24,8 +24,8 @@
   <ItemGroup>
 	<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.*" />
 	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.0.0" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.0.0" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.0" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.0" />
   </ItemGroup>
 
   <ItemGroup>
