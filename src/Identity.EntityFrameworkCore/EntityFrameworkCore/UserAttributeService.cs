@@ -17,6 +17,26 @@ public class UserAttributeService(IIdentityContext context) : IUserAttributeServ
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<UserDto>> GetUsersAsync(string key, string value)
+    {
+        var activeUserQuery = context.Users
+            .Where(x =>
+                x.Status.Value == IdentityStatus.active
+                && x.IsDeleted == false);
+
+        var userAttributeQuery = context.UserAttributes
+            .Where(x => x.Key == key && x.Value == value);
+
+        return await userAttributeQuery
+            .Join(activeUserQuery,
+                userAttribute => userAttribute.UserId,
+                user => user.Id,
+                (userAttribute, user) => user)
+            .AsNoTracking()
+            .Select(s => s.MapToDto())
+            .ToListAsync();
+    }
+
     public async Task AddAsync(string userId, string key, string value)
     {
         var userAttribute = await context.UserAttributes

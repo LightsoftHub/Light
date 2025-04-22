@@ -2,6 +2,8 @@
 
 public interface IIdentityContext
 {
+    DbSet<User> Users { get; }
+
     DbSet<UserRole> UserRoles { get; }
 
     DbSet<UserAttribute> UserAttributes { get; }

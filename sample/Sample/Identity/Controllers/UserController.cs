@@ -72,4 +72,11 @@ public class UserController(
         var res = await activeDirectoryService.GetByUserNameAsync(userName);
         return Ok(res);
     }
+
+    [HttpGet("attribute/{key}/{value}")]
+    public async Task<IActionResult> GetDomainUserAsync(string key, string value)
+    {
+        var res = await userAttributeService.GetUsersAsync(key, value);
+        return Ok(res);
+    }
 }
