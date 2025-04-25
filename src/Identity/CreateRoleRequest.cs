@@ -1,6 +1,6 @@
 ﻿namespace Light.Identity;
 
-public class CreateRoleRequest
+public record CreateRoleRequest
 {
     public string Name { get; set; } = null!;
 

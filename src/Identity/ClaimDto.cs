@@ -1,6 +1,6 @@
 ﻿namespace Light.Identity;
 
-public class ClaimDto
+public record ClaimDto
 {
     public string Type { get; set; } = null!;
 

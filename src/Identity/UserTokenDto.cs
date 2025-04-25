@@ -1,12 +1,12 @@
 ﻿namespace Light.Identity;
 
-public class UserTokenDto
+public record UserTokenDto
 {
     public string Id { get; set; } = null!;
 
-    public DateTimeOffset? ExpireOn { get; set; }
+    public DateTimeOffset? ExpiresAt { get; set; }
 
-    public DateTimeOffset? RefreshTokenExpireOn { get; set; }
+    public DateTimeOffset? RefreshTokenExpiresAt { get; set; }
 
     public string? DeviceId { get; set; }
 

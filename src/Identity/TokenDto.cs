@@ -1,3 +1,3 @@
 ﻿namespace Light.Identity;
 
-public record TokenDto(string AccessToken, int ExpiresIn, string RefreshToken, int RefreshTokenExpiresIn);
+public record TokenDto(string AccessToken, int ExpiresIn, string RefreshToken);

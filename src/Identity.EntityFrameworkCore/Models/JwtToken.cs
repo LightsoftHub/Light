@@ -10,11 +10,11 @@ public class JwtToken : BaseEntity<string>
 
     public string Token { get; set; } = null!;
 
-    public DateTimeOffset TokenExpiry { get; set; }
+    public DateTimeOffset TokenExpiresAt { get; set; }
 
     public string? RefreshToken { get; set; }
 
-    public DateTimeOffset? RefreshExpiry { get; set; }
+    public DateTimeOffset? RefreshTokenExpiresAt { get; set; }
 
     public bool Revoked { get; set; }
 

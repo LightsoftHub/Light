@@ -1,6 +1,6 @@
 ﻿namespace Light.Identity;
 
-public class UserDto
+public record UserDto
 {
     public string Id { get; set; } = null!;
 

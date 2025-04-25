@@ -17,7 +17,7 @@ public class TokenService(
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
-    private readonly DateTimeOffset _now = DateTimeOffset.UtcNow;
+    private static DateTimeOffset Now => DateTimeOffset.UtcNow;
 
     public async Task<IResult<TokenDto>> GenerateTokenByIdAsync(string userId)
     {
@@ -78,24 +78,27 @@ public class TokenService(
 
         var claims = await GetUserClaimsAsync(user);
 
+        var expiresInSeconds = _jwtOptions.AccessTokenExpirationSeconds;
+        var expiresOn = DateTime.Now.AddSeconds(expiresInSeconds);
+
         var token = new JwtSecurityToken(
             issuer: _jwtOptions.Issuer,
             claims: claims,
-            expires: DateTime.Now.AddSeconds(_jwtOptions.ExpiresIn),
+            expires: expiresOn,
             signingCredentials: signingCredentials);
 
         var tokenHandler = new JwtSecurityTokenHandler();
 
         var encryptedToken = tokenHandler.WriteToken(token);
-        var tokenExpiryTime = _jwtOptions.ExpiresIn;
         var refreshToken = JwtHelper.GenerateRefreshToken();
-        var refreshTokenExpiryTime = _jwtOptions.RefreshTokenExpiresIn;
 
-        return new TokenDto(encryptedToken, tokenExpiryTime, refreshToken, refreshTokenExpiryTime);
+        return new TokenDto(encryptedToken, expiresInSeconds, refreshToken);
     }
 
     public virtual async Task<IResult<TokenDto>> GetTokenAsync(User? user)
     {
+        var now = Now;
+
         if (user == null
             || user.Status.IsActive is false
             || user.IsDeleted)
@@ -103,13 +106,16 @@ public class TokenService(
 
         var token = await GenerateTokenAsync(user);
 
+        var tokenExpiresAt = now.AddSeconds(token.ExpiresIn);
+        var refreshTokenExpiresAt = now.AddDays(_jwtOptions.RefreshTokenExpirationDays);
+
         var entity = new JwtToken
         {
             UserId = user.Id,
             Token = token.AccessToken,
-            TokenExpiry = _now.AddSeconds(token.ExpiresIn),
+            TokenExpiresAt = tokenExpiresAt,
             RefreshToken = token.RefreshToken,
-            RefreshExpiry = _now.AddSeconds(token.RefreshTokenExpiresIn),
+            RefreshTokenExpiresAt = refreshTokenExpiresAt,
         };
 
         await context.JwtTokens.AddAsync(entity);
@@ -120,6 +126,8 @@ public class TokenService(
 
     public virtual async Task<IResult<TokenDto>> RefreshTokenAsync(string accessToken, string refreshToken)
     {
+        var now = Now;
+
         // get UserPrincipal from expired token
         var userPrincipal = JwtHelper.GetPrincipalFromExpiredToken(
             accessToken,
@@ -146,11 +154,14 @@ public class TokenService(
 
         var token = await GenerateTokenAsync(user);
 
+        var tokenExpiresAt = now.AddSeconds(token.ExpiresIn);
+        var refreshTokenExpiresAt = now.AddDays(_jwtOptions.RefreshTokenExpirationDays);
+
         // save token data
         userToken.Token = token.AccessToken;
-        userToken.TokenExpiry = _now.AddSeconds(token.ExpiresIn);
+        userToken.TokenExpiresAt = tokenExpiresAt;
         userToken.RefreshToken = token.RefreshToken;
-        userToken.RefreshExpiry = _now.AddSeconds(token.RefreshTokenExpiresIn);
+        userToken.RefreshTokenExpiresAt = refreshTokenExpiresAt;
 
         await context.SaveChangesAsync();
 
@@ -159,30 +170,34 @@ public class TokenService(
 
     private Task<JwtToken?> GetValidTokenAsync(string userId, string refreshToken)
     {
+        var now = Now;
+
         return context.JwtTokens
             .Where(x =>
                 x.UserId == userId
                 && x.RefreshToken == refreshToken
-                && x.RefreshExpiry >= _now
+                && x.RefreshTokenExpiresAt >= now
                 && x.Revoked == false)
             .FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<UserTokenDto>> GetUserTokensAsync(string userId)
     {
+        var now = DateTimeOffset.UtcNow;
+
         var list = await context.JwtTokens
             .Where(x =>
                 x.UserId == userId
                 &&
-                    (x.TokenExpiry >= _now
-                    || (x.RefreshExpiry.HasValue && x.RefreshExpiry >= _now))
+                    (x.TokenExpiresAt >= now
+                    || (x.RefreshTokenExpiresAt.HasValue && x.RefreshTokenExpiresAt >= now))
                 && x.Revoked == false)
             .AsNoTracking()
             .Select(s => new UserTokenDto
             {
                 Id = s.Id,
-                ExpireOn = s.TokenExpiry,
-                RefreshTokenExpireOn = s.RefreshExpiry,
+                ExpiresAt = s.TokenExpiresAt,
+                RefreshTokenExpiresAt = s.RefreshTokenExpiresAt,
                 DeviceId = s.DeviceId,
                 DeviceName = s.DeviceName,
             })

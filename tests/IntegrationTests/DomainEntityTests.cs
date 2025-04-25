@@ -14,7 +14,7 @@ public class DomainEntityTests : BaseTestFixture
         await AddAsync(product);
 
         product.CreatedBy.ShouldBe(TestValues.CreateByUserId);
-        product.CreatedOn.ShouldBe(TestValues.CreateAtTime);
+        product.Created.ShouldBe(TestValues.CreateAtTime);
 
         product.TenantId.ShouldBe(TestValues.TenandId);
         product.TenantId.ShouldBe(TestValues.TenandId);
@@ -24,7 +24,7 @@ public class DomainEntityTests : BaseTestFixture
         await SaveAsync();
 
         product.LastModifiedBy.ShouldBe(TestValues.UpdateByUserId);
-        product.LastModifiedOn.ShouldBe(TestValues.UpdateAtTime);
+        product.LastModified.ShouldBe(TestValues.UpdateAtTime);
 
         // Delete
         await RemoveAsync(product);

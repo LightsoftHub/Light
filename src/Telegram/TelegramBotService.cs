@@ -17,7 +17,7 @@ namespace Telegram
             var chatId = -1001969080979;
             //var chatId = "@wtcvn";
 
-            await _telegramBotClient.SendTextMessageAsync(chatId, message);
+            await _telegramBotClient.SendMessage(chatId, message);
         }
     }
 }

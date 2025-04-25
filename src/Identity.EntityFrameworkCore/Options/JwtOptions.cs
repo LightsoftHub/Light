@@ -6,7 +6,7 @@ public class JwtOptions
 
     public string SecretKey { get; set; } = "3CC79718-C525-4F1A-AFCF-E9F3722C6008"; // must length > 18
 
-    public int ExpiresIn { get; set; } = 86400; // 1 days
+    public int AccessTokenExpirationSeconds { get; set; } = 86400; // 1 days
 
-    public int RefreshTokenExpiresIn { get; set; } = 604800; //7 days
+    public int RefreshTokenExpirationDays { get; set; } = 7; // 7 days
 }

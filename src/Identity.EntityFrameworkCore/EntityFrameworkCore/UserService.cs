@@ -10,7 +10,7 @@ public class UserService(UserManager<User> userManager) : IUserService
     {
         return await userManager.Users
             .AsNoTracking()
-            .OrderByDescending(x => x.CreatedOn)
+            .OrderByDescending(x => x.Created)
             .ThenBy(x => x.UserName)
             .MapToDto()
             .ToListAsync(cancellationToken);

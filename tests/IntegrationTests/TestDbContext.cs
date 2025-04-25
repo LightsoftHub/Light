@@ -36,12 +36,12 @@ public class TestDbContext(DbContextOptions<TestDbContext> options) : DbContext(
                 switch (e.State)
                 {
                     case EntityState.Added:
-                        e.Entity.CreatedOn = TestValues.CreateAtTime;
+                        e.Entity.Created = TestValues.CreateAtTime;
                         e.Entity.CreatedBy = TestValues.CreateByUserId;
                         break;
 
                     case EntityState.Modified:
-                        e.Entity.LastModifiedOn = TestValues.UpdateAtTime;
+                        e.Entity.LastModified = TestValues.UpdateAtTime;
                         e.Entity.LastModifiedBy = TestValues.UpdateByUserId;
                         break;
 

@@ -42,12 +42,12 @@ public class AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options
                 switch (e.State)
                 {
                     case EntityState.Added:
-                        e.Entity.CreatedOn = auditTime;
+                        e.Entity.Created = auditTime;
                         e.Entity.CreatedBy = userId;
                         break;
 
                     case EntityState.Modified:
-                        e.Entity.LastModifiedOn = auditTime;
+                        e.Entity.LastModified = auditTime;
                         e.Entity.LastModifiedBy = userId;
                         break;
 
