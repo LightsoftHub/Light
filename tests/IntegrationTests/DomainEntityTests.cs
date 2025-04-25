@@ -31,6 +31,6 @@ public class DomainEntityTests : BaseTestFixture
 
         product.IsDeleted.ShouldBe(true);
         product.DeletedBy.ShouldBe(TestValues.DeleteByUserId);
-        product.DeletedOn.ShouldBe(TestValues.DeleteAtTime);
+        product.Deleted.ShouldBe(TestValues.DeleteAtTime);
     }
 }

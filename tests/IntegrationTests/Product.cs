@@ -9,7 +9,7 @@ public class Product : AuditableEntity, ISoftDelete, ITenant
 
     public bool IsDeleted { get; set; }
 
-    public DateTimeOffset? DeletedOn { get; set; }
+    public DateTimeOffset? Deleted { get; set; }
 
     public string? DeletedBy { get; set; }
 

@@ -54,8 +54,7 @@ public class AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options
                     case EntityState.Deleted:
                         if (e.Entity is ISoftDelete softDelete && enableSoftDelete)
                         {
-                            softDelete.IsDeleted = true;
-                            softDelete.DeletedOn = auditTime;
+                            softDelete.Deleted = auditTime;
                             softDelete.DeletedBy = userId;
                             e.State = EntityState.Modified;
                         }

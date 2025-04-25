@@ -25,7 +25,7 @@ public partial class AlphaDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // QueryFilters need to be applied before base.OnModelCreating
-        modelBuilder.AppendGlobalQueryFilter<ISoftDelete>(s => s.IsDeleted == false);
+        modelBuilder.AppendGlobalQueryFilter<ISoftDelete>(s => s.Deleted == null);
 
         modelBuilder.Entity<RetailLocation>(entity =>
         {

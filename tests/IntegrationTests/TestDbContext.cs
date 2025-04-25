@@ -48,8 +48,7 @@ public class TestDbContext(DbContextOptions<TestDbContext> options) : DbContext(
                     case EntityState.Deleted:
                         if (e.Entity is ISoftDelete softDelete)
                         {
-                            softDelete.IsDeleted = true;
-                            softDelete.DeletedOn = TestValues.DeleteAtTime;
+                            softDelete.Deleted = TestValues.DeleteAtTime;
                             softDelete.DeletedBy = TestValues.DeleteByUserId;
                             e.State = EntityState.Modified;
                         }
