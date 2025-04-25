@@ -22,7 +22,7 @@ public class UserAttributeService(IIdentityContext context) : IUserAttributeServ
         var activeUserQuery = context.Users
             .Where(x =>
                 x.Status.Value == IdentityStatus.active
-                && x.IsDeleted == false);
+                && x.Deleted == null);
 
         var userAttributeQuery = context.UserAttributes
             .Where(x => x.Key == key && x.Value == value);

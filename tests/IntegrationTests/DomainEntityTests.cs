@@ -29,7 +29,6 @@ public class DomainEntityTests : BaseTestFixture
         // Delete
         await RemoveAsync(product);
 
-        product.IsDeleted.ShouldBe(true);
         product.DeletedBy.ShouldBe(TestValues.DeleteByUserId);
         product.Deleted.ShouldBe(TestValues.DeleteAtTime);
     }

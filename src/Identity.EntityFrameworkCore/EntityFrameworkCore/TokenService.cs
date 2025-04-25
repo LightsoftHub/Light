@@ -101,7 +101,7 @@ public class TokenService(
 
         if (user == null
             || user.Status.IsActive is false
-            || user.IsDeleted)
+            || user.Deleted == null)
             return Result<TokenDto>.Error("Invalid credentials.");
 
         var token = await GenerateTokenAsync(user);
@@ -149,7 +149,7 @@ public class TokenService(
 
         var user = await userManager.FindByIdAsync(userId);
 
-        if (user == null || user.Status.IsActive is false || user.IsDeleted)
+        if (user == null || user.Status.IsActive is false || user.Deleted == null)
             return Result<TokenDto>.Unauthorized("User not found or inactive.");
 
         var token = await GenerateTokenAsync(user);

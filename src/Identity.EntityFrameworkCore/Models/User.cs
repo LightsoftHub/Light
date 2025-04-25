@@ -23,8 +23,6 @@ public class User : IdentityUser, IEntity, IAuditableEntity, ISoftDelete
 
     public string? LastModifiedBy { get; set; }
 
-    public bool IsDeleted { get; set; }
-
     public DateTimeOffset? Deleted { get; set; }
 
     public string? DeletedBy { get; set; }

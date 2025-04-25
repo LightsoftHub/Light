@@ -16,7 +16,7 @@ public static class DataMapper
             PhoneNumber = s.PhoneNumber ?? "",
             UseDomainPassword = s.UseDomainPassword,
             Status = s.Status.Value,
-            IsDeleted = s.IsDeleted,
+            IsDeleted = s.Deleted != null,
         };
 
         return query.Select(selectExp);
@@ -34,7 +34,7 @@ public static class DataMapper
             PhoneNumber = user.PhoneNumber ?? "",
             UseDomainPassword = user.UseDomainPassword,
             Status = user.Status.Value,
-            IsDeleted = user.IsDeleted,
+            IsDeleted = user.Deleted != null,
         };
 
         return dto;
