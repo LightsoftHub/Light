@@ -99,9 +99,7 @@ public class TokenService(
     {
         var now = Now;
 
-        if (user == null
-            || user.Status.IsActive is false
-            || user.Deleted == null)
+        if (user == null || await CheckInvalidUser(user))
             return Result<TokenDto>.Error("Invalid credentials.");
 
         var token = await GenerateTokenAsync(user);
@@ -149,8 +147,8 @@ public class TokenService(
 
         var user = await userManager.FindByIdAsync(userId);
 
-        if (user == null || user.Status.IsActive is false || user.Deleted == null)
-            return Result<TokenDto>.Unauthorized("User not found or inactive.");
+        if (user is null || await CheckInvalidUser(user))
+            return Result<TokenDto>.Unauthorized("Invalid credentials.");
 
         var token = await GenerateTokenAsync(user);
 
@@ -166,6 +164,14 @@ public class TokenService(
         await context.SaveChangesAsync();
 
         return Result<TokenDto>.Success(token);
+    }
+
+    public virtual Task<bool> CheckInvalidUser(User user)
+    {
+        var isInvalid = user.Status.IsActive is false // use is not active
+            || user.Deleted != null; // user is deleted
+
+        return Task.FromResult(isInvalid);
     }
 
     private Task<JwtToken?> GetValidTokenAsync(string userId, string refreshToken)
