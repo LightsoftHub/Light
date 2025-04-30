@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Identity.Controllers;
 
-[Route("[controller]")]
-[ApiController]
-public class TokenController(ITokenService tokenService) : ControllerBase
+public class TokenController(ITokenService tokenService) : VersionedApiController
 {
     [HttpPost("token")]
     public async Task<IActionResult> GetTokenAsync(string userName)

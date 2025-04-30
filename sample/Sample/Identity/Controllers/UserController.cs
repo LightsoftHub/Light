@@ -4,12 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Identity.Controllers;
 
-[Route("[controller]")]
-[ApiController]
 public class UserController(
     IUserService userService,
     IUserAttributeService userAttributeService,
-    IActiveDirectoryService activeDirectoryService) : ControllerBase
+    IActiveDirectoryService activeDirectoryService) : VersionedApiController
 {
     [HttpGet]
     public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
