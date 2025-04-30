@@ -1,5 +1,6 @@
 ﻿using Light.AspNetCore.Mvc;
 using Light.Contracts;
+using Light.Extensions.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Configuration;
@@ -48,6 +49,7 @@ public static class MvcBuilderExtensions
             options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            options.JsonSerializerOptions.Converters.Add(new BaseFirstOrderedConverterFactory());
         });
     }
 

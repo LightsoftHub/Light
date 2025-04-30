@@ -9,7 +9,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package contains common result models.</Description>
 	<Summary>Package contains common result models.</Summary>
-	<Version>0.0.0.12</Version>
+	<Version>0.0.0.13</Version>
 	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -20,7 +20,6 @@
 
   <ItemGroup>
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
-	<PackageReference Include="System.Text.Json" Version="9.*" />
   </ItemGroup>
 
   <ItemGroup>

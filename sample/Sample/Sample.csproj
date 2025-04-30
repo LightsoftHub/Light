@@ -13,7 +13,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
-	<PackageReference Include="SoapCore" Version="1.2.1.6" />
+	<PackageReference Include="SoapCore" Version="1.2.1.8" />
 	<PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.4" />
   </ItemGroup>
 

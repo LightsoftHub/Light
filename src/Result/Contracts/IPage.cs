@@ -2,8 +2,8 @@
 {
     public interface IPage
     {
-        int Page { get; }
+        int Page { get; set; }
 
-        int PageSize { get; }
+        int PageSize { get; set; }
     }
 }
