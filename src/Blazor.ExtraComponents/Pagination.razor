@@ -1,0 +1,129 @@
+﻿@if (totalPages > 0)
+{
+    int previousPage = currentPage > 1 ? currentPage - 1 : 1;
+
+    int nextPage = currentPage == totalPages ? totalPages : currentPage + 1;
+
+    // get first page before ...
+    var fromPage = Math.Max(1, currentPage - pagesOnLeft);
+
+    // get last page after ...
+    var toPage = Math.Min(totalPages, currentPage + pagesOnRight);
+    toPage = totalPages - toPage == 1 ? totalPages : toPage;
+
+    <div class="row mt-3">
+        <div class="col-sm-4">
+            <div>
+                Page <input id="page-input" @onchange=GoToPage value="@currentPage" /> of <b>@totalPages</b>
+            </div>
+            <small>Total <b>@totalRecords.ToFNumber()</b> records</small>
+        </div>
+        <div class="col-sm-8">
+
+            <ul class="pagination pagination-sm justify-content-end">
+
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" @onclick="() => GoToPage(previousPage)">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
+
+                @if (fromPage > 1)
+                {
+                    // view First page
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)" @onclick="() => GoToPage(1)">1</a>
+                    </li>
+                    if (fromPage > 2)
+                    {
+                        // view first ...
+                        // calculate number page for link ..., it's middle between first page and fromPage
+                        <li class="page-item">
+                            <a class="page-link">...</a>
+                        </li>
+                    }
+                }
+
+                @for (int pageIndex = fromPage; pageIndex <= toPage; pageIndex++)
+                {
+                    // must capture page index for fix override pageIndex in next loop
+                    var capturedIndex = pageIndex;
+
+                    // view paginator between currentPage
+                    <li class="page-item @(currentPage == capturedIndex ? "active" : "")">
+                        <a class="page-link" href="javascript:void(0)" @onclick="() => GoToPage(capturedIndex)">@capturedIndex</a>
+                    </li>
+                }
+
+                @if (toPage < totalPages)
+                {
+                    // view second ...
+                    <li class="page-item">
+                        <a class="page-link">...</a>
+                    </li>
+
+                    // view last page
+                    if (toPage < totalPages - 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:void(0)" @onclick="() => GoToPage(totalPages)">@totalPages</a>
+                        </li>
+                    }
+                }
+
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" @onclick="() => GoToPage(nextPage)">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Paged? Paged { get; set; }
+
+    [Parameter]
+    public EventCallback<Paged> PagedChanged { get; set; }
+
+    //int write { get; set; } = 0;
+
+    // How many pages views left & right from currentPage
+    const int pagesOnLeft = 3;
+    const int pagesOnRight = 3;
+
+    // paged info
+    int currentPage => Paged?.Page ?? 0;
+    int totalPages => Paged?.TotalPages ?? 0;
+    int totalRecords => Paged?.TotalRecords ?? 0;
+
+    private async Task GoToPage(int page)
+    {
+        if (page == currentPage || page < 1 || page > totalPages)
+            return;
+
+        Paged!.Page = page;
+
+        await PagedChanged.InvokeAsync(Paged);
+    }
+
+    private async Task GoToPage(ChangeEventArgs e)
+    {
+        var tryGetPage = int.TryParse(e.Value?.ToString(), out var page);
+
+        if (tryGetPage is false)
+        {
+            return;
+        }
+
+        if (page < 1) page = 1;
+        else if (page > totalPages) page = totalPages;
+
+        await GoToPage(page);
+    }
+}

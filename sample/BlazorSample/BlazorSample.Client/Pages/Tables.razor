@@ -1,0 +1,16 @@
+﻿@page "/tables"
+
+@inject ProductService ProductService
+
+<h3>Tables</h3>
+
+<Pagination Paged=paged />
+
+@code {
+    private Paged? paged;
+
+    protected override void OnInitialized()
+    {
+        paged = ProductService.GetPagedProduct(new ProductSearch());
+    }
+}

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<RootNamespace>LightBlazor</RootNamespace>
+	<AssemblyName>Lightsoft.Blazor.ExtraComponents</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<Content Include="Styles\LightBlazor.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Result\Result.csproj" />
+  </ItemGroup>
+
+</Project>
