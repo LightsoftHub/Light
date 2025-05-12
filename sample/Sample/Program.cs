@@ -32,14 +32,12 @@ try
 
     // Add services to the container.
 
-    /*
-    builder.Services.AddGraphMail(opt =>
+    builder.Services.AddMicrosoftGraph(opt =>
     {
         opt.ClientSecret = "";
         opt.ClientId = "";
         opt.TenantId = "";
     });
-    */
 
     var executingAssembly = Assembly.GetExecutingAssembly();
 
