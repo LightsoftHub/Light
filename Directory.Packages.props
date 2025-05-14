@@ -10,6 +10,7 @@
 	<PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="$(AspnetVersion)" />
 	<PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="$(AspnetVersion)" />
 	<PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="$(AspnetVersion)" />
+	<PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="$(AspnetVersion)" />
 	<PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(AspnetVersion)" />
 	<PackageVersion Include="Microsoft.Extensions.Options" Version="$(AspnetVersion)" />
 	<PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(AspnetVersion)" />
