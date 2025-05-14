@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>A simple package with a base Specification class.</Description>
 	<Summary>A simple package with a base Specification class.</Summary>
-	<Version>0.0.0.4</Version>
+	<Version>0.0.0.5</Version>
 	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
+	<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
