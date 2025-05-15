@@ -31,14 +31,14 @@ try
     builder.Host.ConfigureSerilog();
 
     // Add services to the container.
-
+    /*
     builder.Services.AddMicrosoftGraph(opt =>
     {
         opt.ClientSecret = "";
         opt.ClientId = "";
         opt.TenantId = "";
     });
-
+    */
     var executingAssembly = Assembly.GetExecutingAssembly();
 
     builder.Services.AddData(builder.Configuration);

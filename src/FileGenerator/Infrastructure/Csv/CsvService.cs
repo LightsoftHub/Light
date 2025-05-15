@@ -14,7 +14,8 @@ namespace Light.Infrastructure.Csv
         private readonly CsvConfiguration _config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             HasHeaderRecord = true,
-            MissingFieldFound = null,
+            HeaderValidated = null,   // Skips missing headers during mapping
+            MissingFieldFound = null, // Skips missing *fields* in rows
         };
 
         public string[]? ReadHeaders(StreamReader streamReader)
@@ -51,7 +52,7 @@ namespace Light.Infrastructure.Csv
             return ReadAs<T>(reader);
         }
 
-        public CsvData<T> Read<T>(StreamReader streamReader)
+        public CsvData<T>? Read<T>(StreamReader streamReader)
         {
             using var csv = new CsvReader(streamReader, _config);
 
@@ -60,6 +61,11 @@ namespace Light.Infrastructure.Csv
             var records = csv.GetRecords<T>().ToList();
             var headers = csv.HeaderRecord;
 
+            if (headers is null)
+            {
+                return null;
+            }
+
             return new CsvData<T>
             {
                 Headers = headers,
@@ -67,45 +73,53 @@ namespace Light.Infrastructure.Csv
             };
         }
 
-        public CsvData<T> Read<T>(Stream stream)
+        public CsvData<T>? Read<T>(Stream stream)
         {
             using var reader = new StreamReader(stream);
             return Read<T>(reader);
         }
 
-        public IList<IDictionary<string, object?>> ReadAsDictionary(StreamReader streamReader)
+        public DictionaryData? Read(StreamReader streamReader)
         {
             using var csv = new CsvReader(streamReader, _config);
 
-            csv.Read();          // Read first row
-            csv.ReadHeader();    // Read headers
+            csv.Context.TypeConverterCache.AddConverter<object>(new ObjectConverter());
 
-            var rows = new List<IDictionary<string, object?>>();
+            csv.Read();         // Read the first row to get the headers
+            csv.ReadHeader();   // Read headers
 
             var headers = csv.HeaderRecord; // Get header names
 
-            if (headers != null)
+            if (headers is null)
             {
-                while (csv.Read()) // Read each row
-                {
-                    var row = new Dictionary<string, object?>();
-
-                    foreach (var header in headers)
-                    {
-                        row[header] = csv.GetField(header); // Get value by column name
-                    }
-
-                    rows.Add(row);
-                }
+                return null;
             }
 
-            return rows;
+            var rows = new List<IDictionary<string, object?>>();
+
+            while (csv.Read()) // Read each row
+            {
+                var row = new Dictionary<string, object?>();
+
+                foreach (var header in headers)
+                {
+                    row[header] = csv.GetField(header); // Get value by column name
+                }
+
+                rows.Add(row);
+            }
+
+            return new DictionaryData
+            {
+                Headers = headers,
+                Rows = rows
+            };
         }
 
-        public IList<IDictionary<string, object?>> ReadAsDictionary(Stream stream)
+        public DictionaryData? Read(Stream stream)
         {
             using var reader = new StreamReader(stream);
-            return ReadAsDictionary(reader);
+            return Read(reader);
         }
 
         public Stream Write<T>(IEnumerable<T> records)
