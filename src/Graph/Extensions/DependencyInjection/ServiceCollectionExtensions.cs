@@ -27,6 +27,8 @@ namespace Light.Extensions.DependencyInjection
 
             services.AddScoped<IGraphMailService, GraphMailService>();
 
+            services.AddTransient<IGraphTeams, GraphTeamsService>();
+
             return services;
         }
     }

@@ -13,13 +13,13 @@ namespace Light.File.Csv
 
         IEnumerable<T> ReadAs<T>(Stream stream);
 
-        CsvData<T> Read<T>(StreamReader streamReader);
+        CsvData<T>? Read<T>(StreamReader streamReader);
 
-        CsvData<T> Read<T>(Stream stream);
+        CsvData<T>? Read<T>(Stream stream);
 
-        IList<IDictionary<string, object?>> ReadAsDictionary(StreamReader streamReader);
+        DictionaryData? Read(StreamReader streamReader);
 
-        IList<IDictionary<string, object?>> ReadAsDictionary(Stream stream);
+        DictionaryData? Read(Stream stream);
 
         Stream Write<T>(IEnumerable<T> records);
     }

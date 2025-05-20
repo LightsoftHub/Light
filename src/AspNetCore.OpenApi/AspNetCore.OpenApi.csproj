@@ -22,10 +22,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.*" />
-	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.1" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.1" />
+	<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
+	<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
   </ItemGroup>
 
   <ItemGroup>
