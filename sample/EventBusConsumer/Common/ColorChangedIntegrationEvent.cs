@@ -1,5 +1,4 @@
 ﻿using Light.EventBus.Events;
-using MassTransit;
 
 namespace EventBusConsumer.Common
 {

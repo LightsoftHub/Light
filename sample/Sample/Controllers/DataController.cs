@@ -1,5 +1,4 @@
-﻿using Asp.Versioning;
-using Light.Extensions;
+﻿using Light.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Sample.Data;
 

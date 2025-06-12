@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>AspNetCore OpenApi package.</Description>
 	<Summary>AspNetCore OpenApi package.</Summary>
-	<Version>0.0.0.1</Version>
+	<Version>9.0.6.1</Version>
 	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -26,10 +26,6 @@
 	<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
 	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
 	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
 </Project>

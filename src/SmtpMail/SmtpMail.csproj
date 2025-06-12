@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Mail package services using STMP, MailKit.</Description>
 	<Summary>Mail package services using STMP, MailKit.</Summary>
-	<Version>0.0.0.14</Version>
+	<Version>0.0.0.15</Version>
 	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -22,12 +22,7 @@
 
   <ItemGroup>
 	<PackageReference Include="MailKit" />
-	<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
 	<PackageReference Include="MimeKit" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>

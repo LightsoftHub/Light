@@ -1,5 +1,4 @@
-﻿using Asp.Versioning;
-using Light.Extensions.Caching;
+﻿using Light.Extensions.Caching;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Controllers

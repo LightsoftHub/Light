@@ -1,7 +1,6 @@
 using Light.Mail;
 using Light.SmtpMail;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Sample.Models;
 
 namespace Sample.Controllers

@@ -142,7 +142,7 @@ namespace Light.Serilog
                     logger.WriteTo.Async(w => w.Elasticsearch(endpoints, opts =>
                     {
                         opts.DataStream = new DataStreamName(indexFormat);
-                        opts.TextFormatting = new EcsTextFormatterConfiguration();
+                        opts.TextFormatting = new EcsTextFormatterConfiguration<LogEventEcsDocument>();
                         opts.BootstrapMethod = BootstrapMethod.Failure;
                         opts.ConfigureChannel = channelOptions =>
                         {

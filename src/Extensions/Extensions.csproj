@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>A simple package to process data faster.</Description>
 	<Summary>A simple package to process data faster.</Summary>
-	<Version>0.0.0.12</Version>
+	<Version>0.0.0.13</Version>
 	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReleaseNotes></PackageReleaseNotes>
@@ -21,13 +21,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
     <PackageReference Include="System.ComponentModel.Annotations" />
     <PackageReference Include="System.Text.Json" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
 </Project>

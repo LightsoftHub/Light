@@ -10,7 +10,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Package for generate document files.</Description>
 	<Summary>Package for generate document files.</Summary>
-	<Version>0.0.0.16</Version>
+	<Version>0.0.0.17</Version>
 	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -23,11 +23,6 @@
     <PackageReference Include="ClosedXML" />
     <PackageReference Include="CsvHelper" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-	<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 	<ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+	  
+	<ExcludeSourceLink>true</ExcludeSourceLink>
   </PropertyGroup>
 
   <ItemGroup>

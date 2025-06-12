@@ -1,5 +1,4 @@
 ﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Swagger

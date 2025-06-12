@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Extension services connect to Active Directory support on Windows.</Description>
 	<Summary>Extension services connect to Active Directory support on Windows.</Summary>
-	<Version>0.0.0.16</Version>
+	<Version>0.0.0.17</Version>
 	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -23,13 +23,8 @@
   <ItemGroup>
 	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
 	<PackageReference Include="Microsoft.Extensions.Options" />
-	<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
 	<PackageReference Include="Novell.Directory.Ldap.NETStandard" />
 	<PackageReference Include="System.DirectoryServices.AccountManagement" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
 </Project>

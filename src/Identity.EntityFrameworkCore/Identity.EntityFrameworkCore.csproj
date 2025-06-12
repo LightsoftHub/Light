@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Identity module provider that uses Entity Framework Core.</Description>
 	<Summary>Identity module provider that uses Entity Framework Core.</Summary>
-	<Version>0.0.0.23</Version>
+	<Version>9.0.6.1</Version>
 	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -24,16 +24,11 @@
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
 	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
 	<PackageReference Include="Microsoft.AspNetCore.Identity.UI" />
-	<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Ddd.Core\Ddd.Core.csproj" />
     <ProjectReference Include="..\Identity\Identity.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
 </Project>

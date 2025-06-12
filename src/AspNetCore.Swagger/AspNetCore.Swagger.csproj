@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>AspNetCore Swagger package.</Description>
 	<Summary>AspNetCore Swagger package.</Summary>
-	<Version>0.0.0.12</Version>
+	<Version>9.0.6.1</Version>
 	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -23,13 +23,8 @@
 
   <ItemGroup>
 	<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
-	<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
 	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
 	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<None Include="..\..\icon.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
 </Project>
