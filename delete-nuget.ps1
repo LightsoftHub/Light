@@ -1,9 +1,12 @@
-$packageIdList = @('package_name_1','package_name_2')
+$name = "Lightsoft"
+$packageFolders = Get-ChildItem -Path "src" -Directory | Select-Object -ExpandProperty Name
 
 $apiKey = "<your_api_key_with_unlist_permission>"
 
-foreach ($packageId in $packageIdList) {
+foreach ($folder in $packageFolders) {
 
+  $packageId = "$name.$folder"
+  
   $json = Invoke-WebRequest -Uri "https://api.nuget.org/v3-flatcontainer/$PackageId/index.json" | ConvertFrom-Json
 	
   foreach($version in $json.versions) {
