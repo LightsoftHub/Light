@@ -19,7 +19,6 @@ jobs:
     - name: Install dependencies
       run: |
         dotnet restore src/Ddd.Core/Ddd.Core.csproj
-        dotnet restore src/AspNetCore/AspNetCore.csproj
         dotnet restore src/AspNetCore.Extensions/AspNetCore.Extensions.csproj
         dotnet restore src/AspNetCore.Modularity/AspNetCore.Modularity.csproj
         dotnet restore src/AspNetCore.Swagger/AspNetCore.Swagger.csproj
@@ -27,7 +26,6 @@ jobs:
     - name: Build
       run: |
         dotnet build src/Ddd.Core/Ddd.Core.csproj --configuration Release --no-restore
-        dotnet build src/AspNetCore/AspNetCore.csproj --configuration Release --no-restore
         dotnet build src/AspNetCore.Extensions/AspNetCore.Extensions.csproj --configuration Release --no-restore
         dotnet build src/AspNetCore.Modularity/AspNetCore.Modularity.csproj --configuration Release --no-restore
         dotnet build src/AspNetCore.Swagger/AspNetCore.Swagger.csproj --configuration Release --no-restore
@@ -37,7 +35,6 @@ jobs:
         rm -rf nuget/
 
         dotnet pack --no-build src/Ddd.Core/Ddd.Core.csproj --configuration Release --output nuget
-        dotnet pack --no-build src/AspNetCore/AspNetCore.csproj --configuration Release --output nuget
         dotnet pack --no-build src/AspNetCore.Extensions/AspNetCore.Extensions.csproj --configuration Release --output nuget
         dotnet pack --no-build src/AspNetCore.Modularity/AspNetCore.Modularity.csproj --configuration Release --output nuget
         dotnet pack --no-build src/AspNetCore.Swagger/AspNetCore.Swagger.csproj --configuration Release --output nuget
