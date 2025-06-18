@@ -1,0 +1,11 @@
+﻿<span class="badge @(IsSuccess ? "bg-primary" : "bg-secondary")">
+    @Value.ToString()
+</span>
+
+@code {
+    [Parameter]
+    public object Value { get; set; } = null!;
+
+    [Parameter]
+    public bool IsSuccess { get; set; }
+}
