@@ -26,8 +26,8 @@
     <PackageVersion Include="Microsoft.Graph" Version="5.81.0" />
     <!-- Open Api -->
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="$(AspnetVersion)" />
-    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.4" />
-    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.4" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.1" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.1" />
     <!-- Miscellaneous -->
     <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageVersion Include="ClosedXML" Version="0.105.0" />
@@ -44,11 +44,11 @@
     <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
-	<!--Blazor-->
-	<PackageVersion Include="Lightsoft.Extensions" Version="0.0.0.13" />
-	<PackageVersion Include="Lightsoft.FileGenerator" Version="0.0.0.17" />
-	<PackageVersion Include="Lightsoft.Result" Version="0.0.0.15" />
-	<PackageVersion Include="Microsoft.AspNetCore.Components.Web" Version="9.0.6" />
-	<PackageVersion Include="MudBlazor" Version="8.7.0" />
+    <!--Blazor-->
+    <PackageVersion Include="Lightsoft.Extensions" Version="0.0.0.13" />
+    <PackageVersion Include="Lightsoft.FileGenerator" Version="0.0.0.17" />
+    <PackageVersion Include="Lightsoft.Result" Version="0.0.0.15" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.Web" Version="9.0.6" />
+    <PackageVersion Include="MudBlazor" Version="8.8.0" />
   </ItemGroup>
 </Project>
