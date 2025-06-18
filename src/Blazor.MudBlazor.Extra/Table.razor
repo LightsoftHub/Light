@@ -1,53 +1,58 @@
 ﻿@typeparam T where T : class
 
-<div class="d-flex justify-content-between mb-3">
-    <IconActionButtons IconAction="IconActionButtons.Action.Refresh" OnClick="ReloadAsync" />
+<Card>
 
-    @if (State.SearchFunc is not null)
-    {
-        <MudInput Value="@searchValue" TextChanged="OnLocalSearchAsync" Placeholder="search..." Adornment="Adornment.End" AdornmentIcon="@Icon.Search" IconSize="Size.Medium" Class="mt-0"></MudInput>
-    }
-</div>
-<div class="table-responsive">
-    <table class="table table-bordered table-hover">
-        @if (HeadContent?.HasSingleTarget is true)
+    <div class="d-flex justify-content-between mb-3">
+        <IconActionButtons IconAction="IconActionButtons.Action.Refresh" OnClick="ReloadAsync" />
+
+        @if (State.SearchFunc is not null)
         {
-            <thead>
-                <tr>
-                    @HeadContent
-                </tr>
-            </thead>
+            <MudInput Value="@searchValue" TextChanged="OnLocalSearchAsync" Placeholder="search..." Adornment="Adornment.End" AdornmentIcon="@Icon.Search" IconSize="Size.Medium" Class="mt-0"></MudInput>
         }
+    </div>
 
-        <tbody>
-            @if (RowTemplate?.HasSingleTarget is true)
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            @if (HeadContent?.HasSingleTarget is true)
             {
-                foreach (var record in records)
+                <thead>
+                    <tr>
+                        @HeadContent
+                    </tr>
+                </thead>
+            }
+
+            <tbody>
+                @if (RowTemplate?.HasSingleTarget is true)
+                {
+                    foreach (var record in records)
+                    {
+                        <tr>
+                            @RowTemplate(record)
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        @RowTemplate(record)
+                        <td>
+                            <i class="text-danger">View template not define...</i>
+                        </td>
                     </tr>
                 }
-            }
-            else
-            {
-                <tr>
-                    <td>
-                        <i class="text-danger">View template not define...</i>
-                    </td>
-                </tr>
-            }
-        </tbody>
+            </tbody>
 
-    </table>
-</div>
+        </table>
+    </div>
 
-@if (pagination is not null && pagination.TotalPages > 1)
-{
-    <Pagination State=State.Pagination StateChanged="OnPagedChangedAsync" />
-}
+    @if (pagination is not null && pagination.TotalPages > 1)
+    {
+        <Pagination State=State.Pagination StateChanged="OnPagedChangedAsync" />
+    }
 
-<Overlay IsProcessing="processing" />
+    <Overlay IsProcessing="processing" />
+
+</Card>
 
 @code {
     [Parameter]
