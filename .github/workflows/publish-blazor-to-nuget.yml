@@ -1,4 +1,4 @@
-name: Publish AspNetCore to Nuget.org
+name: Publish Blazor to Nuget.org
 
 on:
   workflow_dispatch
