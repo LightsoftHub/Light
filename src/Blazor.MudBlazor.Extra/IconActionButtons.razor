@@ -30,7 +30,8 @@
         Update,
         Delete,
         Save,
-        Refresh
+        Refresh,
+        Cancel
     }
 
     private Color color = Color.Primary;
@@ -75,6 +76,12 @@
             case Action.Refresh:
                 {
                     icon = Icon.Refresh;
+                    color = Color.Default;
+                    break;
+                }
+            case Action.Cancel:
+                {
+                    icon = Icon.Clear;
                     color = Color.Default;
                     break;
                 }
