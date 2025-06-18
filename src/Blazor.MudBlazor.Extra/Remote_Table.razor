@@ -38,28 +38,36 @@
     <div class="d-flex justify-content-between mb-3">
         <IconActionButtons IconAction="IconActionButtons.Action.Refresh" OnClick="ReloadAsync" />
     </div>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            @if (HeadContent?.HasSingleTarget is true)
-            {
-                <thead>
-                    <tr>
-                        @HeadContent
-                    </tr>
-                </thead>
-            }
-
-            <tbody>
-                @foreach (var record in records)
+    
+    @if (RowTemplate?.HasSingleTarget is true)
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                @if (HeadContent?.HasSingleTarget is true)
                 {
-                    <tr>
-                        @RowTemplate(record)
-                    </tr>
+                    <thead>
+                        <tr>
+                            @HeadContent
+                        </tr>
+                    </thead>
                 }
-            </tbody>
 
-        </table>
-    </div>
+                <tbody>
+                    @foreach (var record in records)
+                    {
+                        <tr>
+                            @RowTemplate(record)
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    }
+    else if (CustomRows?.HasSingleTarget is true)
+    {
+        @CustomRows
+    }
 
     @if (pagination is not null && pagination.TotalPages > 1)
     {
@@ -84,6 +92,9 @@
 
     [Parameter]
     public RenderFragment<T> RowTemplate { get; set; } = default!;
+
+    [Parameter]
+    public RenderFragment? CustomRows { get; set; }
 
     [Parameter]
     public RemoteTable<T, TLookup> State { get; set; } = default!;
