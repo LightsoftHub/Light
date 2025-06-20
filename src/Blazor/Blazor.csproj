@@ -11,7 +11,7 @@
 	<Authors>minhvu</Authors>
 	<Description>Blazor extra components.</Description>
 	<Summary>Blazor extra components.</Summary>
-	<Version>0.0.0.1-beta1</Version>
+	<Version>0.0.0.1-beta2</Version>
 	<PackageTags>lightframework;dotnet;aspnetcore</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
