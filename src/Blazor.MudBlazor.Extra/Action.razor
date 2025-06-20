@@ -1,4 +1,8 @@
-﻿<MudLink Class="@($"action-link {Class}")" Href="@Href" OnClick="@OnClick">@Name</MudLink>
+﻿<MudLink
+    Class="@($"action-link {Class}")"
+    Href="@Href"
+    Target="@(TargetBlank ? "_blank" : "")"
+    OnClick="@OnClick">@Name</MudLink>
 
 @code {
     [Parameter]
