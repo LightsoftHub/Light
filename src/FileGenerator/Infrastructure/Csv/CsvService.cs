@@ -128,19 +128,18 @@ namespace Light.Infrastructure.Csv
 
             var writer = new StreamWriter(memoryStream, Encoding.UTF8);
 
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            {
-                if (excludeHeader is false)
-                {
-                    csv.WriteHeader<T>();
-                    csv.NextRecord();
-                }
+            var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
-                foreach (var record in records)
-                {
-                    csv.WriteRecord(record);
-                    csv.NextRecord();
-                }
+            if (excludeHeader is false)
+            {
+                csv.WriteHeader<T>();
+                csv.NextRecord();
+            }
+
+            foreach (var record in records)
+            {
+                csv.WriteRecord(record);
+                csv.NextRecord();
             }
 
             writer.Flush(); // Ensure all data is written to the stream
