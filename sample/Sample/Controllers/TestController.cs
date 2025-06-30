@@ -41,7 +41,9 @@ namespace Sample.Controllers
         [HttpGet("throw")]
         public IActionResult ThrowAsync()
         {
-            throw new InternalServerErrorException("Server error");
+            Throw();
+
+            return Ok();
         }
 
         [HttpGet("now")]
@@ -55,6 +57,13 @@ namespace Sample.Controllers
         {
             var res = HttpContext.TraceIdentifier;
             return Ok(res);
+        }
+
+        private static void Throw()
+        {
+            Console.WriteLine("...");
+
+            throw new InternalServerErrorException("Server error");
         }
     }
 }

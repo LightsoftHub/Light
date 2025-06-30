@@ -21,6 +21,6 @@ namespace Light.File.Csv
 
         DictionaryData? Read(Stream stream);
 
-        Stream Write<T>(IEnumerable<T> records);
+        Stream Write<T>(IEnumerable<T> records, bool excludeHeader = false);
     }
 }

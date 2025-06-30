@@ -122,15 +122,26 @@ namespace Light.Infrastructure.Csv
             return Read(reader);
         }
 
-        public Stream Write<T>(IEnumerable<T> records)
+        public Stream Write<T>(IEnumerable<T> records, bool excludeHeader = false)
         {
             var memoryStream = new MemoryStream();
 
             var writer = new StreamWriter(memoryStream, Encoding.UTF8);
 
-            var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                if (excludeHeader is false)
+                {
+                    csv.WriteHeader<T>();
+                    csv.NextRecord();
+                }
 
-            csv.WriteRecords(records);
+                foreach (var record in records)
+                {
+                    csv.WriteRecord(record);
+                    csv.NextRecord();
+                }
+            }
 
             writer.Flush(); // Ensure all data is written to the stream
 
