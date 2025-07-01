@@ -66,7 +66,7 @@ try
         .AddInvalidModelStateHandler()
         .AddDefaultJsonOptions();
 
-    builder.Services.AddApiVersion(1);
+    builder.Services.AddApiVersion(1, 0, false);
     builder.Services.AddSwagger(builder.Configuration);
 
     //builder.Services.AddGlobalExceptionHandler();

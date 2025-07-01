@@ -8,7 +8,10 @@ public static class ApiVersionServiceCollectionExtensions
     /// <summary>
     /// add API version
     /// </summary>
-    public static IApiVersioningBuilder AddApiVersion(this IServiceCollection services, int version, int minorVersion = 0)
+    public static IApiVersioningBuilder AddApiVersion(
+        this IServiceCollection services,
+        int version, int minorVersion = 0,
+        bool groupByNameAndVersion = true)
         => services
         .AddApiVersioning(config =>
         {
@@ -20,6 +23,6 @@ public static class ApiVersionServiceCollectionExtensions
         {
             o.GroupNameFormat = "'v'VVV";
             o.SubstituteApiVersionInUrl = true;
-            o.FormatGroupName = (groupName, apiVersion) => $"{groupName}_{apiVersion}";
+            o.FormatGroupName = (groupName, apiVersion) => groupByNameAndVersion ? $"{groupName}_{apiVersion}" : apiVersion;
         });
 }

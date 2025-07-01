@@ -1,13 +1,18 @@
 using Light.ActiveDirectory.Interfaces;
 using Light.Identity;
+using Light.Identity.Extensions;
+using Light.Identity.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Sample.Identity.Controllers;
 
 public class UserController(
     IUserService userService,
     IUserAttributeService userAttributeService,
-    IActiveDirectoryService activeDirectoryService) : VersionedApiController
+    IActiveDirectoryService activeDirectoryService,
+    UserManager<User> userManager) : VersionedApiController
 {
     [HttpGet]
     public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
@@ -76,5 +81,35 @@ public class UserController(
     {
         var res = await userAttributeService.GetUsersAsync(key, value);
         return Ok(res);
+    }
+
+    [HttpGet("test")]
+    public async Task<IActionResult> Test()
+    {
+        var user = await userManager.FindByNameAsync("super");
+
+        await userManager.AddClaimsAsync(user, new List<Claim>
+        {
+            new Claim("Ckey1", "Cvalue1"),
+            new Claim("Ckey2", "old2"),
+            new Claim("Ckey3", "old3")
+        });
+
+        var existingClaims = await userManager.GetClaimsAsync(user);
+
+        var requestClaims = new List<Claim>
+        {
+            new Claim("Ckey1", "Cvalue1"),
+            new Claim("Ckey2", "new2"),
+            new Claim("Ckey3", "new3")
+        };
+
+        var claimsToRemove = existingClaims.Except(requestClaims);
+        await userManager.RemoveClaimsAsync(user, claimsToRemove);
+
+        var claimsToAdd = requestClaims.Except(existingClaims);
+        await userManager.AddClaimsAsync(user, claimsToAdd);
+
+        return Ok(await userManager.GetClaimsAsync(user));
     }
 }
