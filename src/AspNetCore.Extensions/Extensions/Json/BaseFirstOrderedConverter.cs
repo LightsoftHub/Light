@@ -37,6 +37,7 @@ public class BaseFirstOrderedConverter<T>(JsonSerializerOptions options) : Order
         {
             var currentType = types.Pop();
             var props = currentType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                .Where(p => p.GetIndexParameters().Length == 0)
                 .OrderBy(p => p.GetCustomAttribute<JsonPropertyOrderAttribute>()?.Order ?? 0);
             allProps.AddRange(props);
         }
