@@ -13,7 +13,7 @@ namespace Sample.Controllers
         public IActionResult Get()
         {
             var value = "";
-            return Ok(value.Left("-"));
+            return Ok(123);
         }
 
         [HttpGet("right")]

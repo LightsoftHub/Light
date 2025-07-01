@@ -8,7 +8,14 @@ public class BaseFirstOrderedConverterFactory : JsonConverterFactory
 {
     public override bool CanConvert(Type typeToConvert)
     {
-        return typeToConvert.IsClass && typeToConvert != typeof(string);
+        // fix when return result is IEnumerable or Dictionary
+        var isNotIEnumerable = !typeof(System.Collections.IEnumerable).IsAssignableFrom(typeToConvert);
+
+        bool canConvert = typeToConvert.IsClass
+            && typeToConvert != typeof(string)
+            && isNotIEnumerable;
+
+        return canConvert;
     }
 
     public override JsonConverter CreateConverter(Type type, JsonSerializerOptions options)
@@ -37,7 +44,6 @@ public class BaseFirstOrderedConverter<T>(JsonSerializerOptions options) : Order
         {
             var currentType = types.Pop();
             var props = currentType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .Where(p => p.GetIndexParameters().Length == 0)
                 .OrderBy(p => p.GetCustomAttribute<JsonPropertyOrderAttribute>()?.Order ?? 0);
             allProps.AddRange(props);
         }

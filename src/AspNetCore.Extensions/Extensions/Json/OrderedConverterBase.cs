@@ -36,7 +36,7 @@ public abstract class OrderedConverterBase<T> : JsonConverter<T> where T : class
 
         foreach (var prop in orderedProps)
         {
-            var propValue = prop.GetValue(value);
+            var propValue = prop.GetValue(value, null);
             var propName = _safeOptions.PropertyNamingPolicy?.ConvertName(prop.Name) ?? prop.Name;
 
             writer.WritePropertyName(propName);
