@@ -84,28 +84,23 @@ public class RoleService(RoleManager<Role> roleManager) : IRoleService
         // get claims of role
         var roleClaims = await roleManager.GetClaimsAsync(role);
 
+        var requestClaims = request.Claims.Select(s => new Claim(s.Type, s.Value));
+
+        var roleClaimsToRemove = roleClaims.Except(requestClaims);
+
         // remove claims not in request list
-        foreach (var roleClaim in roleClaims)
+        foreach (var claim in roleClaimsToRemove)
         {
-            // hold this claim if claim contains in request update list
-            var hold = request.Claims.Any(a => a.Type == roleClaim.Type && a.Value == roleClaim.Value);
-
-            if (hold) continue;
-
             // remove claim if not in request update list
-            await roleManager.RemoveClaimAsync(role, roleClaim);
+            await roleManager.RemoveClaimAsync(role, claim);
         }
 
-        // add new claims in request list & skip exist claims
-        foreach (var claim in request.Claims)
+        var roleClaimsToAdd = requestClaims.Except(roleClaims);
+
+        // add new claims in request list
+        foreach (var claim in roleClaimsToAdd)
         {
-            var owned = roleClaims.Any(a => a.Type == claim.Type && a.Value == claim.Value);
-
-            if (owned) continue;
-
-            // add new claim if role has not own it
-            var newClaim = new Claim(claim.Type, claim.Value);
-            await roleManager.AddClaimAsync(role, newClaim);
+            await roleManager.AddClaimAsync(role, claim);
         }
 
         return result.ToResult();
@@ -118,7 +113,7 @@ public class RoleService(RoleManager<Role> roleManager) : IRoleService
         if (role == null)
             return Result.NotFound($"Role {id} not found");
 
-        //Check claim exist for role
+        // Check claim exist for role
         var claimsByRole = await roleManager.GetClaimsAsync(role);
 
         if (claimsByRole.Any())
