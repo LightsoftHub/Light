@@ -62,28 +62,12 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddJwtTokenProvider(this IServiceCollection services, Action<JwtOptions>? action = null)
     {
-        services.AddSingleton<IClaimType, DefaultClaimType>();
-
         if (action != null)
         {
             services.Configure(action);
         }
 
-        services.AddScoped<ITokenService, TokenService>();
-
-        return services;
-    }
-
-    /// <summary>
-    /// Custom claim types when generate token
-    /// </summary>
-    /// <returns></returns>
-    public static IServiceCollection AddJwtTokenProvider<TClaimType>(this IServiceCollection services, Action<JwtOptions>? action = null)
-        where TClaimType : class, IClaimType
-    {
-        services.AddSingleton<IClaimType, TClaimType>();
-
-        services.AddJwtTokenProvider(action);
+        services.AddScoped<JwtTokenMananger>();
 
         return services;
     }

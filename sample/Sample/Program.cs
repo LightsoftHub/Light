@@ -6,6 +6,7 @@ using Light.AspNetCore.Middlewares;
 using Light.AspNetCore.Swagger;
 using Light.Caching.Infrastructure;
 using Light.Extensions.DependencyInjection;
+using Light.Identity;
 using Light.Serilog;
 using Sample.Data;
 using Sample.HealthChecks;
@@ -54,7 +55,7 @@ try
     // Overide by BindConfiguration
     var issuer = builder.Configuration.GetValue<string>("JWT:Issuer");
     var key = builder.Configuration.GetValue<string>("JWT:SecretKey");
-    builder.Services.AddJwtAuth(issuer!, key!);
+    builder.Services.AddJwtAuth(issuer!, key!, ClaimTypes.Role);
     builder.Services.AddActiveDirectory(opt => opt.Name = "domain.local");
 
     //builder.Services.AddTelegram();

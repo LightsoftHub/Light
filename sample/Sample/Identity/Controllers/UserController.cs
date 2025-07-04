@@ -83,6 +83,13 @@ public class UserController(
         return Ok(res);
     }
 
+    [HttpGet("by_claim/{key}/{value}")]
+    public async Task<IActionResult> GetByClaimAsync(string key, string value)
+    {
+        var res = await userService.GetUsersHasClaim(key, value);
+        return Ok(res);
+    }
+
     [HttpGet("test")]
     public async Task<IActionResult> Test()
     {

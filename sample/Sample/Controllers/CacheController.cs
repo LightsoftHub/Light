@@ -9,7 +9,7 @@ namespace Sample.Controllers
     {
         private readonly string _cacheKey;
 
-        private readonly Dictionary<string, int> _data;
+        private readonly Dictionary<string, int> _data = [];
 
         private readonly ICacheService _cacheService;
 
@@ -17,12 +17,10 @@ namespace Sample.Controllers
         {
             _cacheKey = "CacheValues";
 
-            var data = new Dictionary<string, int>();
             for (var i = 1; i <= 10; i++)
             {
-                data.Add($"Key{i}", i);
+                _data.Add($"Key{i}", i);
             }
-            _data = data;
 
             _cacheService = cacheService;
         }

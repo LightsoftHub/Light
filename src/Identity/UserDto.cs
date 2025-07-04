@@ -21,4 +21,6 @@ public record UserDto
     public bool IsDeleted { get; set; }
 
     public IEnumerable<string> Roles { get; set; } = [];
+
+    public IEnumerable<ClaimDto> Claims { get; set; } = [];
 }

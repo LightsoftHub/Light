@@ -6,7 +6,7 @@ public class JwtToken : BaseEntity<string>
 {
     public JwtToken() => Id = LightId.NewId();
 
-    public string UserId { get; set; } = null!;
+    public required string UserId { get; set; }
 
     public string Token { get; set; } = null!;
 

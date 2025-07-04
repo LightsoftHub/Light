@@ -1,24 +1,34 @@
-﻿using Light.Identity;
+﻿using Azure.Core;
+using Light.Identity;
+using Light.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Sample.Identity.Controllers;
 
-public class TokenController(ITokenService tokenService) : VersionedApiController
+public class TokenController(JwtTokenMananger tokenService) : VersionedApiController
 {
+    [HttpGet]
+    public async Task<IActionResult> Get()
+    {
+        await Task.Yield(); // Simulate async operation
+
+        return Ok(tokenService.TimeNow);
+    }
+
     [HttpPost("token")]
     public async Task<IActionResult> GetTokenAsync(string userName)
     {
-        var token = await tokenService.GenerateTokenByUserNameAsync(userName);
+        var user = await tokenService.UserManager.FindByNameAsync(userName);
 
-        return Ok(token);
+        return Ok(await tokenService.GenerateTokenByAsync(user!, "Web", "Chrome"));
     }
 
     [HttpPost("token/refresh")]
-    public async Task<IActionResult> RefreshTokenAsync(string accessToken, string refreshToken)
+    public async Task<IActionResult> RefreshTokenAsync(string userName, string refreshToken)
     {
-        var token = await tokenService.RefreshTokenAsync(accessToken, refreshToken);
+        var user = await tokenService.UserManager.FindByNameAsync(userName);
 
-        return Ok(token);
+        return Ok(await tokenService.RefreshTokenAsync(user!, refreshToken));
     }
 
     [HttpPost("token/revoke")]

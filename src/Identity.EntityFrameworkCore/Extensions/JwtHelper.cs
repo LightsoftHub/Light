@@ -8,6 +8,25 @@ namespace Light.Identity.Extensions;
 
 public static class JwtHelper
 {
+    public static string GenerateToken(string issuer, IEnumerable<Claim> claims, DateTime expiresAt, string secretKey)
+    {
+        var secret = Encoding.UTF8.GetBytes(secretKey);
+
+        var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            issuer: issuer,
+            claims: claims,
+            expires: expiresAt,
+            signingCredentials: signingCredentials);
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        var encryptedToken = tokenHandler.WriteToken(token);
+
+        return encryptedToken;
+    }
+
     public static string GenerateRefreshToken()
     {
         var randomNumber = new byte[32];
@@ -16,7 +35,7 @@ public static class JwtHelper
         return Convert.ToBase64String(randomNumber);
     }
 
-    public static ClaimsPrincipal GetPrincipalFromExpiredToken(string token, string key, string issuer, string roleClaimType)
+    public static ClaimsPrincipal GetPrincipalFromExpiredToken(string token, string issuer, string key, string roleClaimType)
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
@@ -29,8 +48,11 @@ public static class JwtHelper
             ClockSkew = TimeSpan.Zero,
             ValidateLifetime = false
         };
+
         var tokenHandler = new JwtSecurityTokenHandler();
+
         var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
+
         if (securityToken is not JwtSecurityToken jwtSecurityToken
             || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
         {

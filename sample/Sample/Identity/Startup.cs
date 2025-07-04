@@ -1,4 +1,6 @@
+using Light.Extensions.DependencyInjection;
 using Light.Identity;
+using Light.Identity.Options;
 using Microsoft.EntityFrameworkCore;
 
 namespace Sample.Identity;
@@ -32,7 +34,17 @@ public static class Startup
             options.User.RequireUniqueEmail = false;
         });
 
-        services.AddJwtTokenProvider();
+        var jwtSettings = configuration.GetSection("JWT").Get<JwtOptions>();
+
+        ArgumentNullException.ThrowIfNull(jwtSettings, nameof(JwtOptions));
+
+        services.AddJwtTokenProvider(opt =>
+        {
+            opt.Issuer = jwtSettings.Issuer;
+            opt.SecretKey = jwtSettings.SecretKey;
+            opt.AccessTokenExpirationSeconds = jwtSettings.AccessTokenExpirationSeconds;
+            opt.RefreshTokenExpirationDays = jwtSettings.RefreshTokenExpirationDays;
+        });
 
         return services;
     }

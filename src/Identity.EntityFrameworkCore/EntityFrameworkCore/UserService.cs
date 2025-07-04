@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Light.Identity.EntityFrameworkCore;
 
@@ -16,6 +17,56 @@ public class UserService(UserManager<User> userManager) : IUserService
             .ToListAsync(cancellationToken);
     }
 
+    private async Task<UserDto> GetByAsync(User user)
+    {
+        var dto = user.MapToDto();
+
+        dto.Roles = await userManager.GetRolesAsync(user);
+
+        var userClaims = await userManager.GetClaimsAsync(user);
+        dto.Claims = userClaims.Select(s => new ClaimDto
+        {
+            Type = s.Type,
+            Value = s.Value
+        });
+
+        return dto;
+    }
+
+    private async Task UpdateRolesAsync(User user, IEnumerable<string> roles)
+    {
+        var userRoles = await userManager.GetRolesAsync(user);
+
+        var removeRoles = userRoles.Except(roles);
+        if (removeRoles.Any())
+        {
+            await userManager.RemoveFromRolesAsync(user, removeRoles);
+        }
+
+        var assignRoles = roles.Except(userRoles);
+        if (assignRoles.Any())
+        {
+            await userManager.AddToRolesAsync(user, assignRoles);
+        }
+    }
+
+    private async Task UpdateClaimsAsync(User user, IEnumerable<Claim> claims)
+    {
+        var userClaims = await userManager.GetClaimsAsync(user);
+
+        var removeClaims = userClaims.Except(claims);
+        if (removeClaims.Any())
+        {
+            await userManager.RemoveClaimsAsync(user, removeClaims);
+        }
+
+        var assignClaims = claims.Except(userClaims);
+        if (assignClaims.Any())
+        {
+            await userManager.AddClaimsAsync(user, assignClaims);
+        }
+    }
+
     public virtual async Task<IResult<UserDto>> GetByIdAsync(string id)
     {
         var user = await userManager.FindByIdAsync(id);
@@ -23,10 +74,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         if (user == null)
             return Result<UserDto>.NotFound($"User {id} not found");
 
-        var dto = user.MapToDto();
-        dto.Roles = await userManager.GetRolesAsync(user);
-
-        return Result<UserDto>.Success(dto);
+        return Result<UserDto>.Success(await GetByAsync(user));
     }
 
     public virtual async Task<IResult<UserDto>> GetByUserNameAsync(string userName)
@@ -36,10 +84,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         if (user == null)
             return Result<UserDto>.NotFound($"User {userName} not found");
 
-        var dto = user.MapToDto();
-        dto.Roles = await userManager.GetRolesAsync(user);
-
-        return Result<UserDto>.Success(dto);
+        return Result<UserDto>.Success(await GetByAsync(user));
     }
 
     public virtual async Task<IResult<string>> CreateAsync(CreateUserRequest newUser)
@@ -78,30 +123,16 @@ public class UserService(UserManager<User> userManager) : IUserService
         // update status
         user.UpdateStatus(updateUser.Status);
 
-        // auth by Domain
+        // auth via Domain
         user.ConnectDomain(updateUser.UseDomainPassword);
 
         var updatedResult = await userManager.UpdateAsync(user);
         if (!updatedResult.Succeeded)
             return updatedResult.ToResult();
 
-        var currentRoles = await userManager.GetRolesAsync(user);
-        var addRoles = updateUser.Roles.Except(currentRoles);
-        var removeRoles = currentRoles.Except(updateUser.Roles);
+        await UpdateRolesAsync(user, updateUser.Roles);
 
-        if (addRoles.Any())
-        {
-            var addRole = await userManager.AddToRolesAsync(user, addRoles);
-            if (!addRole.Succeeded)
-                return addRole.ToResult();
-        }
-
-        if (removeRoles.Any())
-        {
-            var removeRole = await userManager.RemoveFromRolesAsync(user, removeRoles);
-            if (!removeRole.Succeeded)
-                return removeRole.ToResult();
-        }
+        await UpdateClaimsAsync(user, updateUser.Claims.Select(c => new Claim(c.Type, c.Value)));
 
         return Result.Success();
     }
@@ -132,5 +163,12 @@ public class UserService(UserManager<User> userManager) : IUserService
         var identityResult = await userManager.ResetPasswordAsync(user, token, password);
 
         return identityResult.ToResult();
+    }
+
+    public virtual async Task<IEnumerable<UserDto>> GetUsersHasClaim(string claimType, string claimValue)
+    {
+        var users = await userManager.GetUsersForClaimAsync(new Claim(claimType, claimValue));
+
+        return users.Select(s => s.MapToDto());
     }
 }

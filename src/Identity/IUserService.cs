@@ -36,4 +36,9 @@ public interface IUserService
     /// Force change password with auto generate reset token for user 
     /// </summary>
     Task<IResult> ForcePasswordAsync(string id, string password);
+
+    /// <summary>
+    /// Get users who have the claim
+    /// </summary>
+    Task<IEnumerable<UserDto>> GetUsersHasClaim(string claimType, string claimValue);
 }

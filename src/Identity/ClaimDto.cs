@@ -2,7 +2,7 @@
 
 public record ClaimDto
 {
-    public string Type { get; set; } = null!;
+    public required string Type { get; set; }
 
-    public string Value { get; set; } = null!;
+    public required string Value { get; set; }
 }

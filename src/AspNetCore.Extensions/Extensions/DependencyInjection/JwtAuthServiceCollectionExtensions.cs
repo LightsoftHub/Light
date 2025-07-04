@@ -2,7 +2,6 @@ using Light.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using System.Text;
 
 namespace Light.Extensions.DependencyInjection;
@@ -12,7 +11,7 @@ public static class JwtAuthServiceCollectionExtensions
     /// <summary>
     /// Add JWT Authentication with validate Issuer & SecretKey
     /// </summary>
-    public static IServiceCollection AddJwtAuth(this IServiceCollection services, string issuer, string secretKey, JwtBearerEvents jwtBearerEvents)
+    public static IServiceCollection AddJwtAuth(this IServiceCollection services, string issuer, string secretKey, JwtBearerEvents jwtBearerEvents, string roleClaimType)
     {
         var keyAsBytes = Encoding.ASCII.GetBytes(secretKey);
 
@@ -33,7 +32,7 @@ public static class JwtAuthServiceCollectionExtensions
                     ValidateIssuer = true,
                     ValidIssuer = issuer,
                     ValidateAudience = false,
-                    RoleClaimType = ClaimTypes.Role,
+                    RoleClaimType = roleClaimType,
                     ClockSkew = TimeSpan.Zero
                 };
 
@@ -43,7 +42,7 @@ public static class JwtAuthServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddJwtAuth(this IServiceCollection services, string issuer, string secretKey, string signalRHub = "/signalr-hub")
+    public static IServiceCollection AddJwtAuth(this IServiceCollection services, string issuer, string secretKey, string roleClaimType, string signalRHub = "/signalr-hub")
     {
         var jwtBearerEvents = new JwtBearerEvents
         {
@@ -75,6 +74,6 @@ public static class JwtAuthServiceCollectionExtensions
             }
         };
 
-        return services.AddJwtAuth(issuer, secretKey, jwtBearerEvents);
+        return services.AddJwtAuth(issuer, secretKey, jwtBearerEvents, roleClaimType);
     }
 }
