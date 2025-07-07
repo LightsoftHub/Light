@@ -23,7 +23,7 @@
     <PackageVersion Include="System.DirectoryServices.AccountManagement" Version="$(AspnetVersion)" />
     <!-- Graph -->
     <PackageVersion Include="Azure.Identity" Version="1.14.1" />
-    <PackageVersion Include="Microsoft.Graph" Version="5.83.0" />
+    <PackageVersion Include="Microsoft.Graph" Version="5.84.0" />
     <!-- Open Api -->
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="$(AspnetVersion)" />
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.1" />

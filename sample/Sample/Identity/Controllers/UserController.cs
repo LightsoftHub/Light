@@ -10,7 +10,6 @@ namespace Sample.Identity.Controllers;
 
 public class UserController(
     IUserService userService,
-    IUserAttributeService userAttributeService,
     IActiveDirectoryService activeDirectoryService,
     UserManager<User> userManager) : VersionedApiController
 {
@@ -32,13 +31,6 @@ public class UserController(
     public async Task<IActionResult> GetByUserNameAsync([FromRoute] string userName)
     {
         var res = await userService.GetByUserNameAsync(userName);
-        return Ok(res);
-    }
-
-    [HttpGet("{id}/attribute")]
-    public async Task<IActionResult> GetAttributeAsync([FromRoute] string id)
-    {
-        var res = await userAttributeService.GetByAsync(id);
         return Ok(res);
     }
 
@@ -73,13 +65,6 @@ public class UserController(
     public async Task<IActionResult> GetDomainUserAsync([FromRoute] string userName)
     {
         var res = await activeDirectoryService.GetByUserNameAsync(userName);
-        return Ok(res);
-    }
-
-    [HttpGet("attribute/{key}/{value}")]
-    public async Task<IActionResult> GetDomainUserAsync(string key, string value)
-    {
-        var res = await userAttributeService.GetUsersAsync(key, value);
         return Ok(res);
     }
 

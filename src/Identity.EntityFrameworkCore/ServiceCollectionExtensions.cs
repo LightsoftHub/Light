@@ -51,7 +51,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IIdentityContext>(provider => provider.GetRequiredService<TContext>());
 
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IUserAttributeService, UserAttributeService>();
         services.AddScoped<IRoleService, RoleService>();
 
         return services;

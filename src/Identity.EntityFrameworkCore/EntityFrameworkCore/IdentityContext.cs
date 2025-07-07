@@ -6,8 +6,6 @@ public abstract class IdentityContext(DbContextOptions options) :
     IdentityDbContext<User, Role, string, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>(options),
     IIdentityContext
 {
-    public virtual DbSet<UserAttribute> UserAttributes => Set<UserAttribute>();
-
     public virtual DbSet<JwtToken> JwtTokens => Set<JwtToken>();
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -34,8 +32,6 @@ public abstract class IdentityContext(DbContextOptions options) :
         builder.Entity<UserClaim>().ToTable(name: Tables.UserClaims, Schemas.Identity);
 
         builder.Entity<UserToken>().ToTable(name: Tables.UserTokens, Schemas.Identity);
-
-        builder.Entity<UserAttribute>().ToTable(name: Tables.UserAttributes, Schemas.Identity);
 
         builder.Entity<JwtToken>(e =>
         {
