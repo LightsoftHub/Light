@@ -43,6 +43,8 @@
     <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
+	<!-- Light Framework -->
+	<PackageVersion Include="Lightsoft.Mediator" Version="0.0.0.1-beta1" />
     <!--Blazor-->
     <PackageVersion Include="Lightsoft.Extensions" Version="0.0.0.13" />
     <PackageVersion Include="Lightsoft.FileGenerator" Version="0.0.0.17" />
