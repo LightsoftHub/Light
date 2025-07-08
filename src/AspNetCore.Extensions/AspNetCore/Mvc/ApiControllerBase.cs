@@ -1,5 +1,5 @@
 ﻿using Light.Contracts;
-using MediatR;
+using Light.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 

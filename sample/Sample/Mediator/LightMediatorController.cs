@@ -13,4 +13,18 @@ public class LightMediatorController(ISender sender) : ControllerBase
         var res = await sender.Send(new GetValue.Query());
         return Ok(res);
     }
+
+    [HttpPut("value")]
+    public async Task<IActionResult> PutAsync(string id)
+    {
+        var res = await sender.Send(new UpdateValue.Command(id));
+        return Ok(res);
+    }
+
+    [HttpDelete("value")]
+    public async Task<IActionResult> DeleteAsync(string id)
+    {
+        await sender.Send(new DeleteValue.Command(id));
+        return Ok();
+    }
 }

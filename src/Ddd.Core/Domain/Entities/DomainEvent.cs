@@ -1,4 +1,4 @@
-using MediatR;
+using Light.Mediator;
 
 namespace Light.Domain.Entities;
 

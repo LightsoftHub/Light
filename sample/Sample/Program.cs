@@ -1,5 +1,6 @@
 global using Light.AspNetCore.Mvc;
 global using Light.Repositories;
+using FluentValidation;
 using Light.ActiveDirectory;
 using Light.AspNetCore.Builder;
 using Light.AspNetCore.Middlewares;
@@ -12,6 +13,7 @@ using Light.Serilog;
 using Sample.Data;
 using Sample.HealthChecks;
 using Sample.Identity;
+using Sample.Mediator;
 using Sample.SoapCore;
 using Sample.TestOption;
 using Serilog;
@@ -73,7 +75,6 @@ try
 
     //builder.Services.AddGlobalExceptionHandler();
 
-    builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
     builder.Services.AutoAddDependencies();
 
     builder.Services.AddInfrastructureIdentity(builder.Configuration);
@@ -82,7 +83,11 @@ try
 
     builder.Services.AddAppSoapCore();
 
-    builder.Services.AddMediatorFromAssemblies(Assembly.GetExecutingAssembly());
+    builder.Services.AddValidatorsFromAssemblies([executingAssembly]);
+
+    builder.Services.AddMediatorFromAssemblies(executingAssembly);
+    builder.Services.AddPipelinesFromAssemblies(executingAssembly);
+    //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
     builder.Services.AddHealthChecksService();
 
