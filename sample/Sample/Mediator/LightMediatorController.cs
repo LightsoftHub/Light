@@ -14,6 +14,13 @@ public class LightMediatorController(ISender sender) : ControllerBase
         return Ok(res);
     }
 
+    [HttpPost("value")]
+    public async Task<IActionResult> PostAsync(string id)
+    {
+        var res = await sender.Send(new CreateValueCommand(id));
+        return Ok(res);
+    }
+
     [HttpPut("value")]
     public async Task<IActionResult> PutAsync(string id)
     {

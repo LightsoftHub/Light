@@ -6,6 +6,7 @@ using Light.AspNetCore.Builder;
 using Light.AspNetCore.Middlewares;
 using Light.AspNetCore.Swagger;
 using Light.Caching.Infrastructure;
+using Light.Contracts;
 using Light.Extensions.DependencyInjection;
 using Light.Identity;
 using Light.Mediator;
@@ -14,6 +15,7 @@ using Sample.Data;
 using Sample.HealthChecks;
 using Sample.Identity;
 using Sample.Mediator;
+using Sample.Mediator.Behaviors;
 using Sample.SoapCore;
 using Sample.TestOption;
 using Serilog;
@@ -86,8 +88,9 @@ try
     builder.Services.AddValidatorsFromAssemblies([executingAssembly]);
 
     builder.Services.AddMediatorFromAssemblies(executingAssembly);
-    builder.Services.AddPipelinesFromAssemblies(executingAssembly);
-    //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+    builder.Services.AddBehaviors(
+        typeof(ValidationBehavior<,>),
+        typeof(LoggingBehavior<,>));
 
     builder.Services.AddHealthChecksService();
 

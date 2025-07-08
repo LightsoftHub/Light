@@ -12,10 +12,11 @@ public static class ServiceCollectionExtensions
             throw new Exception("At least one assembly must be provided.");
         }
 
-        services.AddScoped<MediatorImp>();
-        services.AddScoped<IMediator>(sp => sp.GetRequiredService<MediatorImp>());
-        services.AddScoped<ISender>(sp => sp.GetRequiredService<MediatorImp>());
-        services.AddScoped<IPublisher>(sp => sp.GetRequiredService<MediatorImp>());
+        services.AddTransient<MediatorImp>();
+
+        services.AddTransient<IMediator>(sp => sp.GetRequiredService<MediatorImp>());
+        services.AddTransient<ISender>(sp => sp.GetRequiredService<MediatorImp>());
+        services.AddTransient<IPublisher>(sp => sp.GetRequiredService<MediatorImp>());
 
         services.AddHandlers(typeof(IRequestHandler<,>), assemblies);
         services.AddHandlers(typeof(INotificationHandler<>), assemblies);
@@ -34,29 +35,22 @@ public static class ServiceCollectionExtensions
 
         foreach (var handler in handlerTypes)
         {
-            services.AddScoped(handler.Interface, handler.Implementation);
+            services.AddTransient(handler.Interface, handler.Implementation);
         }
     }
 
-    public static IServiceCollection AddPipelinesFromAssemblies(this IServiceCollection services, params Assembly[] assemblies)
+    public static IServiceCollection AddBehaviors(this IServiceCollection services, params Type[] behaviorTypes)
     {
-        if (assemblies is null || assemblies.Length == 0)
+        foreach (var behaviorType in behaviorTypes)
         {
-            throw new Exception("At least one assembly must be provided.");
-        }
+            var pipelineType = typeof(IPipelineBehavior<,>);
 
-        var pipelineInterfaceType = typeof(IPipelineBehavior<,>);
+            var descriptor = new ServiceDescriptor(
+                pipelineType,
+                behaviorType,
+                ServiceLifetime.Transient);
 
-        var handlerTypes = assemblies
-            .SelectMany(s => s.GetTypes())
-            .Where(type => !type.IsAbstract && !type.IsInterface)
-            .SelectMany(type => type.GetInterfaces()
-                .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == pipelineInterfaceType)
-                .Select(i => new { Implementation = type }));
-
-        foreach (var handler in handlerTypes)
-        {
-            services.AddTransient(pipelineInterfaceType, handler.Implementation);
+            services.Add(descriptor);
         }
 
         return services;

@@ -6,7 +6,7 @@ public class DeleteValue
 {
     public record Command(string Id) : ICommand;
 
-    public class Handler(ILogger<Handler> logger) : ICommandHandler<Command>
+    internal class Handler(ILogger<Handler> logger) : ICommandHandler<Command>
     {
         public async Task<Light.Contracts.Result> Handle(Command request, CancellationToken cancellationToken)
         {
