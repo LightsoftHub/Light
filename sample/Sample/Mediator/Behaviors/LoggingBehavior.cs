@@ -7,13 +7,16 @@ public class LoggingBehavior<TRequest, TResponse>(
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
-    public async Task<TResponse> Handle(TRequest request, Func<Task<TResponse>> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(
+        TRequest request,
+        Func<CancellationToken, Task<TResponse>> next,
+        CancellationToken cancellationToken)
     {
         var timer = System.Diagnostics.Stopwatch.StartNew();
 
         logger.LogInformation("Handling {RequestType}", typeof(TRequest).FullName);
 
-        var response = await next();
+        var response = await next(cancellationToken);
 
         timer.Stop();
 

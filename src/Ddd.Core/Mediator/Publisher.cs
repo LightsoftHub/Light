@@ -20,23 +20,21 @@ public class MediatorImp(IServiceProvider provider) : IMediator
 
         dynamic handler = provider.GetRequiredService(handlerType);
 
-        Func<Task<TResponse>> handlerDelegate = () =>
-        {
-            return handler.Handle((dynamic)request, cancellationToken);
-        };
+        Func<CancellationToken, Task<TResponse>> handlerDelegate =
+                ct => handler.Handle((dynamic)request, ct);
 
         // Chain behaviors in reverse order
         foreach (var behavior in behaviors.Reverse())
         {
             var next = handlerDelegate;
-            handlerDelegate = () =>
+            handlerDelegate = ct =>
             {
                 dynamic b = behavior;
                 return b.Handle((dynamic)request, next, cancellationToken);
             };
         }
 
-        return await handlerDelegate();
+        return await handlerDelegate(cancellationToken);
     }
 
     public Task Publish(INotification notification, CancellationToken cancellationToken = default)

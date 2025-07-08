@@ -8,7 +8,10 @@ public class ValidationBehavior<TRequest, TResponse>(
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
-    public async Task<TResponse> Handle(TRequest request, Func<Task<TResponse>> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(
+        TRequest request,
+        Func<CancellationToken, Task<TResponse>> next,
+        CancellationToken cancellationToken)
     {
         if (validators.Any())
         {
@@ -31,6 +34,6 @@ public class ValidationBehavior<TRequest, TResponse>(
                 throw new Light.Exceptions.ValidationException(errors);
         }
 
-        return await next();
+        return await next(cancellationToken);
     }
 }
