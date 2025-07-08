@@ -7,6 +7,7 @@ using Light.AspNetCore.Swagger;
 using Light.Caching.Infrastructure;
 using Light.Extensions.DependencyInjection;
 using Light.Identity;
+using Light.Mediator;
 using Light.Serilog;
 using Sample.Data;
 using Sample.HealthChecks;
@@ -80,6 +81,8 @@ try
     builder.Services.AddModules(builder.Configuration, [executingAssembly]);
 
     builder.Services.AddAppSoapCore();
+
+    builder.Services.AddMediatorFromAssemblies(Assembly.GetExecutingAssembly());
 
     builder.Services.AddHealthChecksService();
 
