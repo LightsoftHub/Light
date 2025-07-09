@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
-    <AspnetVersion>9.0.6</AspnetVersion>
+    <AspnetVersion>9.0.7</AspnetVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- Core -->
@@ -23,11 +23,11 @@
     <PackageVersion Include="System.DirectoryServices.AccountManagement" Version="$(AspnetVersion)" />
     <!-- Graph -->
     <PackageVersion Include="Azure.Identity" Version="1.14.1" />
-    <PackageVersion Include="Microsoft.Graph" Version="5.84.0" />
+    <PackageVersion Include="Microsoft.Graph" Version="5.85.0" />
     <!-- Open Api -->
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="$(AspnetVersion)" />
-    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.1" />
-    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.3" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.3" />
     <!-- Miscellaneous -->
     <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageVersion Include="ClosedXML" Version="0.105.0" />
@@ -43,8 +43,8 @@
     <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
-	<!-- Light Framework -->
-	<PackageVersion Include="Lightsoft.Mediator" Version="0.0.0.1-beta1" />
+    <!-- Light Framework -->
+    <PackageVersion Include="Lightsoft.Mediator" Version="0.0.0.1" />
     <!--Blazor-->
     <PackageVersion Include="Lightsoft.Extensions" Version="0.0.0.13" />
     <PackageVersion Include="Lightsoft.FileGenerator" Version="0.0.0.17" />
